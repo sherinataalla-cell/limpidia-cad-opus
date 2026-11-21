@@ -58,8 +58,35 @@ def stair_poly(model):
     return rect_poly(bounds(s))
 
 
+def _poly_coords(g):
+    g = g.simplify(0)
+    return [[round(x), round(y)] for x, y in list(g.exterior.coords)[:-1]]
+
+
+def rooms(model):
+    """Stanze con 'outer' e 'net' RICAVATI dai tramezzi indicati in 'bounded_by' (nessuna coordinata duplicata).
+
+    bounded_by = {'x_wall': id, 'y_wall': id}: la stanza occupa la parte dell'involucro oltre il tramezzo
+    parallelo a Y (lato +x) e oltre quello parallelo a X (lato +y). Senza bounded_by restano i poligoni dichiarati.
+    """
+    out = []
+    env = envelope_poly(model)
+    walls = {w['id']: w for w in model.get('walls', [])}
+    for r in model.get('rooms', []):
+        r = dict(r)
+        bb = r.get('bounded_by')
+        if bb:
+            xw, yw = walls[bb['x_wall']], walls[bb['y_wall']]
+            big = 10 ** 6
+            outer = env.intersection(sbox(xw['x'], yw['y'], big, big))
+            net = env.intersection(sbox(xw['x'] + xw['width'], yw['y'] + yw['depth'], big, big))
+            r['outer'], r['net'] = _poly_coords(outer), _poly_coords(net)
+        out.append(r)
+    return out
+
+
 def room(model, rid):
-    return next(r for r in model.get('rooms', []) if r['id'] == rid)
+    return next(r for r in rooms(model) if r['id'] == rid)
 
 
 def walls_poly(model):
@@ -74,7 +101,7 @@ def floor_poly(model):
 def shop_poly(model):
     """Zona vendita: pavimento meno l'impronta esterna della saletta (tramezzi compresi)."""
     out = floor_poly(model)
-    for r in model.get('rooms', []):
+    for r in rooms(model):
         out = out.difference(Polygon(r['outer']))
     return out
 
@@ -165,22 +192,127 @@ def door_open_leaf(op):
     return (hx, hy), (hx, hy + sy * op['leaf'])
 
 
-def smart_layout(model):
-    """Composizione della parete smart: posizioni lungo Y e controllo dello sviluppo."""
+def smart_wall_geom(model):
+    """Faccia della parete smart ricavata dal tramezzo e dal rivestimento (nessuna coordinata duplicata)."""
     sw = model['smart_wall']
+    w = next(w for w in model['walls'] if w['id'] == sw['wall'])
+    return {'face_x': w['x'], 'cladding_face': w['x'] - sw['cladding']['thickness'],
+            'y0': w['y'], 'y1': w['y'] + w['depth']}
+
+
+def smart_layout(model):
+    """Composizione della parete smart sui telai esterni.
+
+    frame_outer_width = larghezza esterna del telaio; clear_gap = distanza libera fra
+    telai; interasse = frame_outer_width + clear_gap; immagine = telaio - 2 x bordo.
+    """
+    sw = model['smart_wall']
+    g = smart_wall_geom(model)
     p = sw['panels']
-    total = p['count'] * p['width'] + (p['count'] - 1) * p['gap']
-    start = sw['y1'] - sw['margin_start'] - p['width']  # vista dalla scala: da sinistra (fondo) verso destra
-    # Ordine da sinistra a destra guardando la parete (verso +X): sinistra = Y alta
+    w, gapc = p['frame_outer_width'], p['clear_gap']
+    total = p['count'] * w + (p['count'] - 1) * gapc
     ys = []
-    y = sw['y1'] - sw['margin_start']
+    y = g['y1'] - sw['margin_start']   # da sinistra (fondo, Y alta) verso destra guardando la parete
     for _ in range(p['count']):
-        ys.append((y - p['width'], y))
-        y -= p['width'] + p['gap']
-    available = sw['y1'] - sw['y0']
-    return {'total': total, 'band': sw['band']['length'], 'available': available,
-            'panels': ys, 'fits': sw['margin_start'] + total <= available,
-            'matches_band': total == sw['band']['length'], 'start': start}
+        ys.append((y - w, y))
+        y -= w + gapc
+    available = g['y1'] - g['y0']
+    return {'total': total, 'band': sw['band']['length'], 'available': available, 'panels': ys,
+            'fits': sw['margin_start'] + total <= available, 'matches_band': total == sw['band']['length'],
+            'interaxis': w + gapc, 'clear_gap': gapc, 'frame': w, 'image': w - 2 * p['frame_border'],
+            'margin_end': available - sw['margin_start'] - total}
+
+
+def product_dims(item):
+    """L/P/H del prodotto dal fronte dichiarato: L lungo il fronte, P perpendicolare.
+
+    La rotazione cambia l'ingombro X/Y, non L/P/H. Angolo: fronte -y = 0°, -x = 90°,
+    +y = 180°, +x = 270° (rotazione antioraria vista dall'alto).
+    """
+    along_x = item['front'] in ('-y', '+y')
+    L, P = (item['width'], item['depth']) if along_x else (item['depth'], item['width'])
+    angle = {'-y': 0, '-x': 90, '+y': 180, '+x': 270}[item['front']]
+    return {'L': L, 'P': P, 'H': item.get('height'), 'angle': angle}
+
+
+def _clip_pieces(model, a, b, n):
+    """Tratti del segmento a-b (spostato di 1 mm lungo n) che si affacciano sulla zona vendita."""
+    from shapely.geometry import LineString
+    off = LineString([(a[0] + n[0], a[1] + n[1]), (b[0] + n[0], b[1] + n[1])])
+    inter = off.intersection(shop_poly(model))
+    return [g for g in _geoms(inter) if g.length > 1]
+
+
+def _face(fid, a, b, n, pieces):
+    axis = 'x' if a[1] == b[1] else 'y'
+    fixed = a[1] if axis == 'x' else a[0]
+    coords = [c[0] if axis == 'x' else c[1] for g in pieces for c in g.coords]
+    lo, hi = (min(coords), max(coords)) if coords else sorted((a[0], b[0]) if axis == 'x' else (a[1], b[1]))
+    return {'id': fid, 'axis': axis, 'fixed': fixed, 'lo': lo, 'hi': hi, 'n': n, 'pieces': len(pieces)}
+
+
+def faces(model):
+    """Facce di parete con ID: lati dell'involucro (nome) e facce esterne delle stanze verso il negozio.
+
+    n = normale verso chi guarda (verso il negozio). Estremi = tratti realmente affacciati
+    sulla zona vendita, ricavati dalla geometria corrente.
+    """
+    out = {}
+    verts = model['envelope']['vertices']
+    names = model['envelope'].get('edge_names') or [f'E{i}' for i in range(len(verts))]
+    for name, (a, b) in zip(names, envelope_edges(verts)):
+        ox, oy = outward(a, b, verts)
+        n = (-ox, -oy)
+        out[name] = _face(name, a, b, n, _clip_pieces(model, a, b, n))
+    for r in rooms(model):
+        rv = r['outer']
+        for a, b in envelope_edges(rv):
+            n = outward(a, b, rv)
+            pieces = _clip_pieces(model, a, b, n)
+            if not pieces:
+                continue
+            d = {(1, 0): '+x', (-1, 0): '-x', (0, 1): '+y', (0, -1): '-y'}[n]
+            fid = f"{r['id']}:{d}"
+            out[fid] = _face(fid, a, b, n, pieces)
+    return out
+
+
+def face_of(model, spec):
+    """Faccia indicata da {'envelope': nome} oppure {'room': id, 'dir': '-x'}."""
+    fs = faces(model)
+    return fs[spec['envelope']] if 'envelope' in spec else fs[f"{spec['room']}:{spec['dir']}"]
+
+
+def view_frame(face):
+    """Riferimento del prospetto: vettore 'destra' di chi guarda la faccia e origine a sinistra."""
+    nx, ny = face['n']
+    rx, ry = -ny, nx  # chi guarda verso -n ha la destra in (-ny, nx)
+    if face['axis'] == 'x':
+        ends = [(face['lo'], face['fixed']), (face['hi'], face['fixed'])]
+    else:
+        ends = [(face['fixed'], face['lo']), (face['fixed'], face['hi'])]
+    u0 = min(x * rx + y * ry for x, y in ends)
+    return {'right': (rx, ry), 'u0': u0, 'L': face['hi'] - face['lo']}
+
+
+def to_u(frame, x, y):
+    rx, ry = frame['right']
+    return x * rx + y * ry - frame['u0']
+
+
+def host_face(model, item, tol=30):
+    """Faccia su cui appoggia il retro di un oggetto (o None)."""
+    x0, y0, x1, y1 = bounds(item)
+    back = back_side(item)
+    val = {'x0': x0, 'x1': x1, 'y0': y0, 'y1': y1}[back]
+    n_need = {'y1': (0, -1), 'y0': (0, 1), 'x1': (-1, 0), 'x0': (1, 0)}[back]
+    along = (x0, x1) if back.startswith('y') else (y0, y1)
+    for f in faces(model).values():
+        if f['n'] != n_need or abs(f['fixed'] - val) > tol:
+            continue
+        if min(along[1], f['hi']) - max(along[0], f['lo']) > 1:
+            return f['id']
+    return None
 
 
 # --- Geometria dell'involucro per i render ------------------------------------

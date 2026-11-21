@@ -12,6 +12,11 @@
 - Isola smart: Monfero cachemire, lato lungo parallelo e accostato alla ringhiera; profondità entro 40 cm; ante verso la vendita.
 - Zona smart: quattro pannelli dimostrativi e luce prodotto; mantenere grafica e cartellini.
 
+## Requisiti della committenza (R02, 21/11/2026)
+
+- Luce netta fra scala e cassa: **100–120 cm, minimo 100 cm**, misurata fra il limite fisico più sporgente di scala/parapetto/corrimano e l'ingombro completo della cassa (top compreso). Requisito di progetto, non misura rilevata né soglia normativa. Nel modello: `requirements.REQ_SCALA_CASSA`.
+- Con la cassa sul muro sinistro e la scala fino a y 3900 (ipotesi P02) la luce è 250 mm: il requisito **non è soddisfatto**. Non si sposta né si accorcia la scala; le alternative quotate sono in `outputs/proposte_layout.md` (V1 = deroga al vincolo «cassa sul muro sinistro», da approvare).
+
 ## Preferenze dimensionali da verificare
 
 - Cassettiere sul fronte saletta: due da 120 cm sono ipotesi preferita, NON ordine confermato.

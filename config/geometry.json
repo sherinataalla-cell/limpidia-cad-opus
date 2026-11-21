@@ -1,6 +1,6 @@
 {
   "project": "Limpidia - Via Andrea Solari 3 Milano",
-  "revision": "P01",
+  "revision": "P02",
   "units": "mm",
   "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla strada); X verso destra; Y verso la parete di fondo; Z verso l'alto dal pavimento finito",
   "coordinate_system_note": "Orientamento della planimetria S1: strada e vetrina in basso, ingresso e scala a sinistra, saletta sul fondo a destra. Introdotto il 21/11/2026 (commit bd07984) con una sola trasformazione Y' = 4750 - Y rispetto a P00; distanze e superfici invariate.",
@@ -64,7 +64,16 @@
     ],
     "status": "assumed",
     "source": "S1 (coincide con S0 e S3: 7,50 m; 4,75 / 4,30 m; rientro 2,00 x 0,45 m)",
-    "faces": "facce interne dei muri esistenti; spessori dei muri esistenti da rilevare"
+    "faces": "facce interne dei muri esistenti; spessori dei muri esistenti da rilevare",
+    "edge_names": [
+      "FACCIATA",
+      "PARETE_DESTRA",
+      "RIENTRO_FONDO",
+      "RIENTRO_SPALLA",
+      "FONDO",
+      "PARETE_SINISTRA"
+    ],
+    "edge_names_note": "nome di ciascun lato, nell'ordine dei vertici (lato i = vertice i → i+1)"
   },
   "facade": [
     {
@@ -169,7 +178,12 @@
         1
       ],
       "status": "assumed",
-      "source": "S1/S3: vano 90 cm, passaggio utile 85 cm, porta a destra verso l'interno; distanze dalle spallette da rilevare"
+      "source": "S1/S3: vano 90 cm, passaggio utile 85 cm, porta a destra verso l'interno; distanze dalle spallette da rilevare",
+      "host": {
+        "walls_prefix": "W_SAL_S",
+        "room": "SALETTA"
+      },
+      "swing_into": "SALETTA"
     },
     {
       "id": "P_ING",
@@ -191,67 +205,23 @@
         1
       ],
       "status": "assumed",
-      "source": "S1 misurato sul disegno 1:40; luce netta, serramento e verso da rilevare"
+      "source": "S1 misurato sul disegno 1:40; luce netta, serramento e verso da rilevare",
+      "host": {
+        "facade": "P_ING"
+      },
+      "swing_into": "NEGOZIO"
     }
   ],
   "rooms": [
     {
       "id": "SALETTA",
       "desc": "saletta di refrazione",
-      "outer": [
-        [
-          3390,
-          2680
-        ],
-        [
-          7500,
-          2680
-        ],
-        [
-          7500,
-          4300
-        ],
-        [
-          5500,
-          4300
-        ],
-        [
-          5500,
-          4750
-        ],
-        [
-          3390,
-          4750
-        ]
-      ],
-      "net": [
-        [
-          3490,
-          2780
-        ],
-        [
-          7500,
-          2780
-        ],
-        [
-          7500,
-          4300
-        ],
-        [
-          5500,
-          4300
-        ],
-        [
-          5500,
-          4750
-        ],
-        [
-          3490,
-          4750
-        ]
-      ],
       "status": "assumed",
-      "source": "S1/S3: 4,01 m di larghezza netta; 1,97 m e 1,52 m di profondita' netta; 7,00 m2 netti di progetto"
+      "source": "S1/S3: 4,01 m di larghezza netta; 1,97 m e 1,52 m di profondita' netta; 7,00 m2 netti di progetto; poligoni ricavati dai tramezzi W_SAL_O e W_SAL_S1 (bounded_by)",
+      "bounded_by": {
+        "x_wall": "W_SAL_O",
+        "y_wall": "W_SAL_S1"
+      }
     }
   ],
   "room_features": [
@@ -296,7 +266,8 @@
       "height_status": "assumed",
       "source": "DEC: fianco a muro sinistro; ingombro segnaposto",
       "note": "ingombro segnaposto del prodotto Amazon; lato operatore da definire",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "C1",
@@ -311,7 +282,8 @@
       "height_status": "assumed",
       "source": "DEC: fondo di fronte alla vetrina; 1200 o 1500",
       "note": "fondo, variante 1200 o 1500 da decidere",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "C2",
@@ -326,7 +298,8 @@
       "height_status": "assumed",
       "source": "DEC: fronte saletta; 120 cm candidata",
       "note": "fronte saletta",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "C3",
@@ -341,7 +314,8 @@
       "height_status": "assumed",
       "source": "DEC: fronte saletta; 120 cm candidata",
       "note": "fronte saletta",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "C4",
@@ -356,7 +330,8 @@
       "height_status": "assumed",
       "source": "DEC: parete laterale parallela alla scrivania; 150 cm candidata",
       "note": "laterale, frontale verso il negozio",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "SCRIVANIA",
@@ -371,7 +346,8 @@
       "height_status": "assumed",
       "source": "DEC: angolo verso la vetrina, parallela a C4; Homary 1600 x 700 da ricontrollare",
       "note": "lato operatore e lato clienti da definire",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     },
     {
       "id": "ISOLA_SMART",
@@ -386,51 +362,91 @@
       "height_status": "catalog",
       "source": "DEC: Monfero 1600 x 390 x 830 da confermare sulla variante; lato lungo lungo la ringhiera, ante verso la vendita",
       "note": "posa non verificata",
-      "kind": "catalogo"
+      "kind": "catalogo",
+      "outer_envelope": true
     }
   ],
   "adjacencies": [
     {
+      "id": "ADJ_C2_C3",
       "a": "C2",
-      "b": "C3",
+      "side": "x1",
+      "to": {
+        "furniture": "C3",
+        "side": "x0"
+      },
       "relation": "affiancate sul fronte saletta",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_C2_WSAL",
       "a": "C2",
-      "b": "W_SAL_S1",
+      "side": "y1",
+      "to": {
+        "wall": "W_SAL_S1",
+        "side": "y0"
+      },
       "relation": "retro contro il tramezzo",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_C3_WSAL",
       "a": "C3",
-      "b": "W_SAL_S1",
+      "side": "y1",
+      "to": {
+        "wall": "W_SAL_S1",
+        "side": "y0"
+      },
       "relation": "retro contro il tramezzo",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_C1_FONDO",
       "a": "C1",
-      "b": "ENVELOPE",
+      "side": "y1",
+      "to": {
+        "envelope": "FONDO"
+      },
       "relation": "retro contro la parete di fondo",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_C4_DESTRA",
       "a": "C4",
-      "b": "ENVELOPE",
+      "side": "x1",
+      "to": {
+        "envelope": "PARETE_DESTRA"
+      },
       "relation": "retro contro la parete laterale destra",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_CASSA_SINISTRA",
       "a": "CASSA",
-      "b": "ENVELOPE",
+      "side": "x0",
+      "to": {
+        "envelope": "PARETE_SINISTRA"
+      },
       "relation": "fianco a contatto con il muro sinistro",
+      "tolerance": 10,
       "source": "DEC"
     },
     {
+      "id": "ADJ_ISOLA_RINGHIERA",
       "a": "ISOLA_SMART",
-      "b": "SCALE",
-      "relation": "lato lungo accostato alla ringhiera",
-      "source": "DEC"
+      "side": "x0",
+      "to": {
+        "line": "RINGHIERA"
+      },
+      "relation": "lato lungo parallelo alla ringhiera (distanza dall'asse; luce netta in FP07)",
+      "tolerance": 60,
+      "source": "DEC",
+      "also_declares": "SCALE"
     }
   ],
   "use_assumptions": {
@@ -479,6 +495,12 @@
       "status": "assumed",
       "source": "PROP",
       "note": "soglia di screening, non requisito normativo"
+    },
+    "railing_thickness": {
+      "value": null,
+      "status": "pending",
+      "source": "rilievo",
+      "note": "spessore e sporgenza del corrimano rispetto all'asse"
     }
   },
   "functional_pairs": [
@@ -487,70 +509,150 @@
       "a": "CASSA",
       "b": "SCALE",
       "function": "lato operatore / accesso cassa",
-      "needs": [
-        "operator_zone"
-      ]
+      "scenarios": [
+        {
+          "name": "posto operatore",
+          "uses": [
+            "operator_zone"
+          ]
+        }
+      ],
+      "path": {
+        "required": false
+      }
     },
     {
       "id": "FP02",
       "a": "C3",
       "b": "SCRIVANIA",
       "function": "uso cassetti C3, sedute e percorso verso la saletta",
-      "needs": [
-        "drawer_extension",
-        "chair_zone"
-      ]
+      "scenarios": [
+        {
+          "name": "mobili chiusi",
+          "uses": []
+        },
+        {
+          "name": "cassetti C3 aperti",
+          "uses": [
+            "drawer_extension"
+          ]
+        },
+        {
+          "name": "seduta occupata",
+          "uses": [
+            "chair_zone"
+          ]
+        }
+      ],
+      "path": {
+        "required": true,
+        "criterion": "screening_passage",
+        "scenario": "cassetti C3 aperti",
+        "note": "percorso verso la saletta dichiarato su questo intervallo in P01"
+      }
     },
     {
       "id": "FP03",
       "a": "CASSA",
       "b": "C1",
       "function": "intervallo laterale cassa-fondo: servizio o passaggio da stabilire",
-      "needs": [
-        "operator_zone"
-      ]
+      "scenarios": [
+        {
+          "name": "posto operatore",
+          "uses": [
+            "operator_zone"
+          ]
+        }
+      ],
+      "path": {
+        "required": false
+      }
     },
     {
       "id": "FP04",
       "a": "C4",
       "b": "P_SAL",
       "function": "cassetti C4 aperti vicino alla porta della saletta",
-      "needs": [
-        "drawer_extension"
-      ]
+      "scenarios": [
+        {
+          "name": "cassetti C4 aperti",
+          "uses": [
+            "drawer_extension"
+          ]
+        }
+      ],
+      "path": {
+        "required": false
+      }
     },
     {
       "id": "FP05",
       "a": "SCRIVANIA",
       "b": "C4",
       "function": "sedia operatore e cassetti C4 aperti",
-      "needs": [
-        "chair_zone",
-        "drawer_extension"
-      ]
+      "scenarios": [
+        {
+          "name": "mobili chiusi",
+          "uses": []
+        },
+        {
+          "name": "seduta occupata",
+          "uses": [
+            "chair_zone"
+          ]
+        },
+        {
+          "name": "cassetti C4 aperti",
+          "uses": [
+            "drawer_extension"
+          ]
+        },
+        {
+          "name": "seduta occupata e cassetti aperti (simultaneità da confermare)",
+          "uses": [
+            "chair_zone",
+            "drawer_extension"
+          ]
+        }
+      ],
+      "path": {
+        "required": true,
+        "criterion": null,
+        "scenario": "seduta occupata e cassetti aperti (simultaneità da confermare)",
+        "note": "accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti"
+      }
     },
     {
       "id": "FP06",
       "a": "SCRIVANIA",
       "b": "FACCIATA",
       "function": "serramento, pulizia e sporgenze verso la vetrina",
-      "needs": []
+      "scenarios": [],
+      "path": {
+        "required": false
+      },
+      "criterion_missing": "serramento, sporgenze e uso del bordo da rilevare"
     },
     {
       "id": "FP07",
       "a": "ISOLA_SMART",
       "b": "RINGHIERA",
       "function": "luce netta tra isola e corrimano",
-      "needs": [
-        "railing_thickness"
-      ]
+      "scenarios": [
+        {
+          "name": "luce netta",
+          "uses": [
+            "railing_thickness"
+          ]
+        }
+      ],
+      "path": {
+        "required": false
+      }
     }
   ],
   "smart_wall": {
     "wall": "W_SAL_O",
-    "face_x": 3390,
-    "y0": 2680,
-    "y1": 4750,
     "cladding": {
       "material": "mattoni marrone scuro",
       "thickness": 20,
@@ -565,33 +667,52 @@
     "margin_start": 125,
     "panels": {
       "count": 4,
-      "width": 410,
-      "gap": 60,
       "height": 700,
       "bottom": 1150,
       "status": "assumed",
-      "source": "PROP da S4: quattro pannelli con immagine e titolo"
+      "source": "PROP da S4: quattro pannelli con immagine e titolo",
+      "frame_outer_width": 410,
+      "clear_gap": 60,
+      "frame_border": 15,
+      "frame_depth": 40,
+      "naming": "frame_outer_width = larghezza esterna del telaio; immagine = frame_outer_width - 2 x frame_border; clear_gap = distanza libera fra telai; interasse = frame_outer_width + clear_gap"
     },
     "shelf": {
       "width": 410,
       "depth": 150,
       "z": 1050,
       "status": "assumed",
-      "source": "PROP da S4: ripiano prodotto sotto ogni pannello"
+      "source": "PROP da S4: ripiano prodotto sotto ogni pannello",
+      "thickness": 25,
+      "z_ref": "base"
     },
     "label": {
       "width": 300,
       "height": 110,
       "z": 900,
       "status": "assumed",
-      "source": "PROP da S4: cartellino"
+      "source": "PROP da S4: cartellino",
+      "depth": 8,
+      "z_ref": "base"
     },
     "panel_titles": [
       "Con fotocamera",
       "Per lavoro",
       "Solo audio",
       "Con display"
-    ]
+    ],
+    "wall_note": "estremi e faccia ricavati dal tramezzo W_SAL_O e dal rivestimento",
+    "label_texts": [
+      "Scatta con un tocco.",
+      "In riunione, resta connesso e reattivo.",
+      "Ascolta la tua musica.",
+      "Segui le indicazioni nelle lenti."
+    ],
+    "label_texts_source": "S4: testi leggibili nella vista approvata",
+    "images": {
+      "status": "pending",
+      "note": "immagini dei quattro pannelli non presenti nel repository: segnaposto dichiarati nelle tavole e nei render"
+    }
   },
   "display_proposal": {
     "_nota": "Composizione delle esposizioni sopra le cassettiere secondo S4. Proposta da validare con il falegname; nessuna quota e' rilevata dall'immagine.",
@@ -609,7 +730,12 @@
     "cubby": {
       "size": 350,
       "depth": 260,
-      "board": 18
+      "board": 18,
+      "joint": {
+        "type": "mensola_interrotta",
+        "note": "la mensola che attraversa il cubotto è interrotta sui fianchi del cubotto; il cubotto appoggia sulla mensola inferiore. Proposta da validare con il falegname (D01).",
+        "status": "assumed"
+      }
     },
     "slat_mirror": {
       "width": 320,
@@ -617,9 +743,15 @@
       "slat_gap": 15,
       "mirror_width": 250,
       "mirror_height": 1000,
-      "mirror_bottom": 1300
+      "mirror_bottom": 1300,
+      "top_gap_from_ceiling": 400,
+      "top_note": "sommità listelli = soffitto - 400 (unico parametro per tavole e render)",
+      "mirror_plate": 3,
+      "mirror_thickness": 12,
+      "slat_depth": 25
     },
     "over": [
+      "CASSA",
       "C1",
       "C2",
       "C3",
@@ -629,20 +761,58 @@
       {
         "id": "LS1",
         "x": 6050,
-        "y": 2655,
+        "y": 2640,
         "width": 320,
-        "depth": 25,
-        "wall": "W_SAL_S1"
+        "depth": 40,
+        "status": "assumed",
+        "source": "PROP da S4: colonna listelli e specchio sul fronte saletta"
       },
       {
         "id": "LS2",
-        "x": 7475,
+        "x": 7460,
         "y": 1850,
-        "width": 25,
+        "width": 40,
         "depth": 320,
-        "wall": "facciata est"
+        "status": "assumed",
+        "source": "PROP da S4: colonna sulla parete laterale"
+      },
+      {
+        "id": "LS3",
+        "x": 1360,
+        "y": 4710,
+        "width": 320,
+        "depth": 40,
+        "status": "assumed",
+        "source": "PROP da S4: colonna listelli e specchio sulla parete di fondo fra cassa e C1 (P02)"
       }
-    ]
+    ],
+    "over_note": "CASSA aggiunta in P02 come adattamento della reference S4 (mensole e cubotto sopra il banco): proposta da validare",
+    "shelf_z_ref": "base",
+    "drawer_led": {
+      "axes_fraction": [
+        0.38,
+        0.7
+      ],
+      "height": 12,
+      "inset": 30,
+      "groove_depth": 6,
+      "z_ref": "asse, frazione dell'altezza totale del mobile",
+      "status": "assumed",
+      "source": "PROP da S4: due linee LED incassate nel frontale"
+    },
+    "shelf_led": {
+      "height": 6,
+      "inset": 20,
+      "status": "assumed",
+      "source": "PROP: profilo sotto mensola, sezione da scheda LED"
+    },
+    "slat_columns_note": "depth = ingombro totale: listelli 25 + piastra 3 + specchio 12",
+    "end_clearance": {
+      "C1": {
+        "right": 150
+      },
+      "_nota": "mensole sopra C1 fermate 150 mm prima della fine di C1 per non interferire con i telai smart, che sporgono 40 mm dal rivestimento (interferenza trovata in P02 sulla geometria comune). Proposta da validare."
+    }
   },
   "electrical_points": [
     {
@@ -775,7 +945,13 @@
       "quantity": "da definire",
       "access": "punto dentro l'ingombro dell'isola: serve dettaglio di collegamento e apertura per manutenzione",
       "driver": "non pertinente",
-      "route": "da definire (scala adiacente)"
+      "route": "da definire (scala adiacente)",
+      "connection_options": [
+        "A: scatola a pavimento sotto l'isola, passacavo nel fondo del mobile e accesso dall'anta",
+        "B: canalina dalla parete di fondo lungo la ringhiera (visibile: da valutare con l'estetica)",
+        "C: isola solo espositiva senza alimentazione (luce prodotto a batteria)"
+      ],
+      "decision": "scegliere A/B/C; la posa sotto arredo non è disegnata come definitiva"
     },
     {
       "id": "E06",
@@ -794,7 +970,12 @@
       "quantity": "da definire",
       "access": "punto dentro l'ingombro della scrivania: serve passacavi e accesso da sotto il piano",
       "driver": "non pertinente",
-      "route": "da definire"
+      "route": "da definire",
+      "connection_options": [
+        "A: torretta o scatola a pavimento sotto la scrivania con passacavi nel piano",
+        "B: dalla parete laterale (zona C4) con canalina a pavimento fino alla scrivania (attraversa la zona sedia)"
+      ],
+      "decision": "scegliere A/B; la posa sotto arredo non è disegnata come definitiva"
     },
     {
       "id": "E07",
@@ -851,6 +1032,177 @@
       "access": "da definire",
       "driver": "da definire",
       "route": "da definire"
+    }
+  ],
+  "elevations": [
+    {
+      "code": "F01",
+      "host": {
+        "envelope": "FONDO"
+      },
+      "title": [
+        "Prospetto parete di fondo",
+        "cassa, esposizione e C1"
+      ]
+    },
+    {
+      "code": "F02",
+      "host": {
+        "room": "SALETTA",
+        "dir": "-x"
+      },
+      "title": [
+        "Prospetto parete smart",
+        "tramezzo W_SAL_O lato scala"
+      ]
+    },
+    {
+      "code": "F03",
+      "host": {
+        "room": "SALETTA",
+        "dir": "-y"
+      },
+      "title": [
+        "Prospetto fronte saletta",
+        "C2, C3 e porta P_SAL"
+      ]
+    },
+    {
+      "code": "F04",
+      "host": {
+        "envelope": "PARETE_DESTRA"
+      },
+      "title": [
+        "Prospetto parete laterale",
+        "consulenza, C4"
+      ]
+    }
+  ],
+  "furniture_parts": {
+    "_nota": "Le dimensioni width/depth/height dei mobili sono ingombri ESTERNI totali in pianta e in altezza. Zoccoli, top, frontali e profili sono modellati dentro quell'ingombro; nessuna sporgenza grafica aggiunta. Spessori delle parti: ipotesi condivise da tavole e render, da sostituire con le schede.",
+    "status": "assumed",
+    "source": "PROP",
+    "drawers": {
+      "plinth_height": 80,
+      "plinth_inset": 20
+    },
+    "cassa": {
+      "plinth_height": 60,
+      "plinth_inset": 30,
+      "top_thickness": 25
+    },
+    "isola": {
+      "top_thickness": 30
+    },
+    "scrivania": {
+      "top_thickness": 40,
+      "pedestal_length": 450,
+      "panel_thickness": 40,
+      "inset": 40
+    }
+  },
+  "requirements": [
+    {
+      "id": "REQ_SCALA_CASSA",
+      "a": "SCALE",
+      "b": "CASSA",
+      "type": "clear_distance",
+      "min": 1000,
+      "target": [
+        1000,
+        1200
+      ],
+      "status": "requirement",
+      "source": "committenza, indicazione del 21/11/2026: «tra la scala e la cassa un metro / un metro e venti»",
+      "measure": "luce netta fra il limite fisico più sporgente di scala/parapetto/corrimano e l'ingombro completo della cassa (top compreso), a banco chiuso",
+      "note": "requisito di progetto, non misura rilevata né soglia normativa; posto operatore e uso dei cassetti sono verifiche separate"
+    }
+  ],
+  "layout_proposals": [
+    {
+      "id": "V1",
+      "sheet": true,
+      "title": "Cassa sulla parete di fondo",
+      "why": "G05: con la cassa sul muro sinistro la fascia fra fine scala e fondo e' 850 mm contro 1600-1800 necessari; la variante sposta il banco sulla parete di fondo (x 1850-3050) e C1 nell'angolo sinistro (x 0-1500) per ottenere >= 1000 mm netti dalla scala.",
+      "impact": "Deroga: cassa non piu' sul muro sinistro (decisione bloccata in docs/decisioni.md). Richiede approvazione esplicita.",
+      "focus": [
+        "REQ-REQ_SCALA_CASSA",
+        "ADJ_CASSA_SINISTRA"
+      ],
+      "furniture": {
+        "CASSA": {
+          "x": 1850
+        },
+        "C1": {
+          "x": 0
+        }
+      },
+      "slat_columns": {
+        "LS3": {
+          "x": 1515
+        }
+      }
+    },
+    {
+      "id": "V2",
+      "sheet": false,
+      "title": "C4 arretrata di 20 mm verso la vetrina",
+      "why": "APPR-P_SAL: C4 invade di 220 x 20 mm la zona di approccio alla porta saletta.",
+      "impact": "C4 resta sulla parete destra; distanza C4-facciata 280 mm, da confermare con il rilievo del serramento.",
+      "focus": [
+        "APPR-P_SAL",
+        "FP04"
+      ],
+      "furniture": {
+        "C4": {
+          "y": 280
+        }
+      }
+    },
+    {
+      "id": "V3",
+      "sheet": false,
+      "title": "Scrivania lunga 1400 mm invece di 1600 (da verificare con il catalogo)",
+      "why": "FP02: passaggio fra C3 e scrivania 230 mm con cassetti aperti; un piano lungo 1400 mm (lato verso C3) aumenta il margine.",
+      "impact": "Dimensione da confermare con scheda prodotto; il passaggio resta inferiore a 900 mm.",
+      "focus": [
+        "FP02",
+        "FP02-PERCORSO"
+      ],
+      "furniture": {
+        "SCRIVANIA": {
+          "depth": 1400
+        }
+      }
+    },
+    {
+      "id": "V4",
+      "sheet": false,
+      "title": "Accesso alla saletta dal corridoio scrivania-C4",
+      "why": "FP02-PERCORSO: invece di passare fra C3 e scrivania, il percorso verso la saletta usa il corridoio fra scrivania e C4.",
+      "impact": "Nessun mobile spostato; cambia il criterio di percorso, da confermare con l'uso reale (seduta occupata e cassetti aperti).",
+      "focus": [
+        "FP02-PERCORSO",
+        "FP05-PERCORSO"
+      ],
+      "functional_pairs": {
+        "FP02": {
+          "path": {
+            "required": false,
+            "criterion": null,
+            "scenario": null,
+            "note": "percorso spostato su FP05 (V4)"
+          }
+        },
+        "FP05": {
+          "path": {
+            "required": true,
+            "criterion": "screening_passage",
+            "scenario": "seduta occupata e cassetti aperti (simultaneità da confermare)",
+            "note": "percorso principale verso la saletta (V4)"
+          }
+        }
+      }
     }
   ]
 }
