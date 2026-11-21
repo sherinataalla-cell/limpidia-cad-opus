@@ -1,46 +1,285 @@
 {
   "project": "Limpidia - Via Andrea Solari 3 Milano",
-  "revision": "P00",
+  "revision": "P01",
   "units": "mm",
-  "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla vetrina); X verso destra; Y verso la parete di fondo",
-  "status": "assumed",
+  "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla strada); X verso destra; Y verso la parete di fondo; Z verso l'alto dal pavimento finito",
+  "coordinate_system_note": "Orientamento della planimetria S1: strada e vetrina in basso, ingresso e scala a sinistra, saletta sul fondo a destra. Introdotto il 21/11/2026 (commit bd07984) con una sola trasformazione Y' = 4750 - Y rispetto a P00; distanze e superfici invariate.",
+  "status_legend": {
+    "verified": "rilevata sul posto o confermata da documento firmato",
+    "catalog": "da scheda prodotto della variante: certifica la dimensione, non la posa",
+    "assumed": "ipotesi preliminare da fonte indicata, da rilevare",
+    "pending": "dato mancante o da decidere"
+  },
+  "sources": {
+    "S0": "Modello P00 di questo repository (planimetria preliminare 13/11/2026)",
+    "S1": "assets/review_R01/planimetria_preliminare_2026-11-13.pdf - TAV. 01 scala 1:40, quote preliminari",
+    "S2": "assets/review_R01/studio_cassa_smart_p12.png - studio cassa, pagina 12",
+    "S3": "assets/review_R01/quote_modello_precedente_p30.png - modello precedente, pagina 30",
+    "S4": "assets/approved/viste_approvate.png - render approvato v6, solo estetico",
+    "DEC": "docs/decisioni.md - decisioni approvate",
+    "LOC": "Proposta di locazione (repo Limpidia, business-plan/2026-11-09-solari-3): piano terra 45 m2",
+    "PROP": "Proposta di questa revisione da validare (non e' una misura)"
+  },
+  "ceiling": {
+    "height": 4150,
+    "status": "assumed",
+    "source": "S3",
+    "note": "quota interna del soffitto del modello precedente; ribassamenti e controsoffitti da rilevare"
+  },
+  "declared_areas": [
+    {
+      "id": "PT_DICHIARATO",
+      "value_m2": 45,
+      "status": "pending",
+      "source": "LOC",
+      "definition": "criterio non indicato (lorda, netta o catastale): da riconciliare con il rilievo, non usare per scalare la pianta"
+    }
+  ],
   "envelope": {
     "vertices": [
-      [0, 0],
-      [7500, 0],
-      [7500, 4300],
-      [5500, 4300],
-      [5500, 4750],
-      [0, 4750]
+      [
+        0,
+        0
+      ],
+      [
+        7500,
+        0
+      ],
+      [
+        7500,
+        4300
+      ],
+      [
+        5500,
+        4300
+      ],
+      [
+        5500,
+        4750
+      ],
+      [
+        0,
+        4750
+      ]
     ],
     "status": "assumed",
-    "source": "planimetria preliminare 13/11/2026, da rilevare"
+    "source": "S1 (coincide con S0 e S3: 7,50 m; 4,75 / 4,30 m; rientro 2,00 x 0,45 m)",
+    "faces": "facce interne dei muri esistenti; spessori dei muri esistenti da rilevare"
   },
+  "facade": [
+    {
+      "id": "FAC_PIL_1",
+      "type": "pier",
+      "x0": 0,
+      "x1": 850,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    },
+    {
+      "id": "P_ING",
+      "type": "door",
+      "x0": 850,
+      "x1": 1750,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    },
+    {
+      "id": "VET_1",
+      "type": "glazing",
+      "x0": 1750,
+      "x1": 3350,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    },
+    {
+      "id": "FAC_PIL_2",
+      "type": "pier",
+      "x0": 3350,
+      "x1": 4250,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    },
+    {
+      "id": "VET_2",
+      "type": "glazing",
+      "x0": 4250,
+      "x1": 6750,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40 (vetrina fissa)"
+    },
+    {
+      "id": "FAC_PIL_3",
+      "type": "pier",
+      "x0": 6750,
+      "x1": 7500,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    }
+  ],
+  "walls": [
+    {
+      "id": "W_SAL_O",
+      "desc": "tramezzo saletta lato scala (parete smart)",
+      "x": 3390,
+      "y": 2680,
+      "width": 100,
+      "depth": 2070,
+      "status": "assumed",
+      "source": "S1; spessore 10 cm ipotizzato; lunghezza coerente con S2 (2,07 m)"
+    },
+    {
+      "id": "W_SAL_S1",
+      "desc": "tramezzo saletta fronte, tratto sinistro",
+      "x": 3490,
+      "y": 2680,
+      "width": 2930,
+      "depth": 100,
+      "status": "assumed",
+      "source": "S1"
+    },
+    {
+      "id": "W_SAL_S2",
+      "desc": "tramezzo saletta fronte, spalla destra della porta",
+      "x": 7320,
+      "y": 2680,
+      "width": 180,
+      "depth": 100,
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40"
+    }
+  ],
+  "openings": [
+    {
+      "id": "P_SAL",
+      "desc": "porta saletta di refrazione",
+      "wall": "W_SAL_S",
+      "x0": 6420,
+      "x1": 7320,
+      "y": 2680,
+      "opening_width": 900,
+      "clear_width": 850,
+      "hinge": [
+        7295,
+        2780
+      ],
+      "leaf": 850,
+      "swing": "verso l'interno della saletta, cerniera a destra",
+      "swing_quadrant": [
+        -1,
+        1
+      ],
+      "status": "assumed",
+      "source": "S1/S3: vano 90 cm, passaggio utile 85 cm, porta a destra verso l'interno; distanze dalle spallette da rilevare"
+    },
+    {
+      "id": "P_ING",
+      "desc": "porta d'ingresso",
+      "wall": "facciata",
+      "x0": 850,
+      "x1": 1750,
+      "y": 0,
+      "opening_width": 900,
+      "clear_width": null,
+      "hinge": [
+        850,
+        0
+      ],
+      "leaf": 900,
+      "swing": "verso l'interno, cerniera a sinistra",
+      "swing_quadrant": [
+        1,
+        1
+      ],
+      "status": "assumed",
+      "source": "S1 misurato sul disegno 1:40; luce netta, serramento e verso da rilevare"
+    }
+  ],
+  "rooms": [
+    {
+      "id": "SALETTA",
+      "desc": "saletta di refrazione",
+      "outer": [
+        [
+          3390,
+          2680
+        ],
+        [
+          7500,
+          2680
+        ],
+        [
+          7500,
+          4300
+        ],
+        [
+          5500,
+          4300
+        ],
+        [
+          5500,
+          4750
+        ],
+        [
+          3390,
+          4750
+        ]
+      ],
+      "net": [
+        [
+          3490,
+          2780
+        ],
+        [
+          7500,
+          2780
+        ],
+        [
+          7500,
+          4300
+        ],
+        [
+          5500,
+          4300
+        ],
+        [
+          5500,
+          4750
+        ],
+        [
+          3490,
+          4750
+        ]
+      ],
+      "status": "assumed",
+      "source": "S1/S3: 4,01 m di larghezza netta; 1,97 m e 1,52 m di profondita' netta; 7,00 m2 netti di progetto"
+    }
+  ],
   "room_features": [
     {
       "id": "SCALE",
       "type": "zone",
       "x": 0,
-      "y": 1450,
+      "y": 1500,
       "width": 850,
       "depth": 2400,
-      "status": "assumed"
-    },
-    {
-      "id": "SALETTA",
-      "type": "zone",
-      "x": 3450,
-      "y": 2680,
-      "width": 4050,
-      "depth": 1620,
-      "status": "assumed"
+      "status": "assumed",
+      "source": "S1 (posizione) e S3 (foro 0,85 x 2,40 m)",
+      "opening_in_ceiling": false
     },
     {
       "id": "RINGHIERA",
       "type": "line",
-      "start": [850, 3850],
-      "end": [850, 1450],
-      "status": "assumed"
+      "start": [
+        850,
+        1500
+      ],
+      "end": [
+        850,
+        3900
+      ],
+      "thickness": null,
+      "status": "assumed",
+      "source": "S1; spessore e sporgenza del corrimano da rilevare"
     }
   ],
   "furniture": [
@@ -50,8 +289,14 @@
       "y": 4150,
       "width": 1200,
       "depth": 600,
+      "front": "-y",
+      "height": 1000,
       "status": "pending",
-      "note": "ingombro placeholder, fianco a muro sinistro"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: fianco a muro sinistro; ingombro segnaposto",
+      "note": "ingombro segnaposto del prodotto Amazon; lato operatore da definire",
+      "kind": "catalogo"
     },
     {
       "id": "C1",
@@ -59,8 +304,14 @@
       "y": 4350,
       "width": 1500,
       "depth": 400,
+      "front": "-y",
+      "height": 800,
       "status": "assumed",
-      "note": "fondo, possibile 1200"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: fondo di fronte alla vetrina; 1200 o 1500",
+      "note": "fondo, variante 1200 o 1500 da decidere",
+      "kind": "catalogo"
     },
     {
       "id": "C2",
@@ -68,8 +319,14 @@
       "y": 2280,
       "width": 1200,
       "depth": 400,
+      "front": "-y",
+      "height": 800,
       "status": "assumed",
-      "note": "fronte saletta"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: fronte saletta; 120 cm candidata",
+      "note": "fronte saletta",
+      "kind": "catalogo"
     },
     {
       "id": "C3",
@@ -77,8 +334,14 @@
       "y": 2280,
       "width": 1200,
       "depth": 400,
+      "front": "-y",
+      "height": 800,
       "status": "assumed",
-      "note": "fronte saletta"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: fronte saletta; 120 cm candidata",
+      "note": "fronte saletta",
+      "kind": "catalogo"
     },
     {
       "id": "C4",
@@ -86,8 +349,14 @@
       "y": 300,
       "width": 400,
       "depth": 1500,
+      "front": "-x",
+      "height": 800,
       "status": "assumed",
-      "note": "laterale, 1500 lungo Y; frontale verso negozio"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: parete laterale parallela alla scrivania; 150 cm candidata",
+      "note": "laterale, frontale verso il negozio",
+      "kind": "catalogo"
     },
     {
       "id": "SCRIVANIA",
@@ -95,8 +364,14 @@
       "y": 100,
       "width": 700,
       "depth": 1600,
+      "front": "-x",
+      "height": 760,
       "status": "assumed",
-      "note": "1600 lungo Y, parallela alla parete C4"
+      "position_status": "assumed",
+      "height_status": "assumed",
+      "source": "DEC: angolo verso la vetrina, parallela a C4; Homary 1600 x 700 da ricontrollare",
+      "note": "lato operatore e lato clienti da definire",
+      "kind": "catalogo"
     },
     {
       "id": "ISOLA_SMART",
@@ -104,75 +379,478 @@
       "y": 1500,
       "width": 390,
       "depth": 1600,
+      "front": "+x",
+      "height": 830,
       "status": "catalog",
-      "note": "lato lungo parallelo alla ringhiera"
+      "position_status": "assumed",
+      "height_status": "catalog",
+      "source": "DEC: Monfero 1600 x 390 x 830 da confermare sulla variante; lato lungo lungo la ringhiera, ante verso la vendita",
+      "note": "posa non verificata",
+      "kind": "catalogo"
     }
   ],
+  "adjacencies": [
+    {
+      "a": "C2",
+      "b": "C3",
+      "relation": "affiancate sul fronte saletta",
+      "source": "DEC"
+    },
+    {
+      "a": "C2",
+      "b": "W_SAL_S1",
+      "relation": "retro contro il tramezzo",
+      "source": "DEC"
+    },
+    {
+      "a": "C3",
+      "b": "W_SAL_S1",
+      "relation": "retro contro il tramezzo",
+      "source": "DEC"
+    },
+    {
+      "a": "C1",
+      "b": "ENVELOPE",
+      "relation": "retro contro la parete di fondo",
+      "source": "DEC"
+    },
+    {
+      "a": "C4",
+      "b": "ENVELOPE",
+      "relation": "retro contro la parete laterale destra",
+      "source": "DEC"
+    },
+    {
+      "a": "CASSA",
+      "b": "ENVELOPE",
+      "relation": "fianco a contatto con il muro sinistro",
+      "source": "DEC"
+    },
+    {
+      "a": "ISOLA_SMART",
+      "b": "SCALE",
+      "relation": "lato lungo accostato alla ringhiera",
+      "source": "DEC"
+    }
+  ],
+  "use_assumptions": {
+    "_nota": "Ipotesi di screening per gli ingombri d'uso. Non sono misure di prodotto: servono a mostrare dove un dato manca. Una verifica basata solo su queste ipotesi non risulta mai 'superata su dati documentati'.",
+    "drawer_extension": {
+      "value": 350,
+      "status": "assumed",
+      "source": "PROP",
+      "applies_to": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "note": "corsa cassetti; da scheda Lumio"
+    },
+    "door_leaf_island": {
+      "value": 390,
+      "status": "pending",
+      "source": "PROP",
+      "applies_to": [
+        "ISOLA_SMART"
+      ],
+      "note": "apertura ante Monfero; da scheda"
+    },
+    "chair_zone": {
+      "value": 750,
+      "status": "assumed",
+      "source": "PROP",
+      "applies_to": [
+        "SCRIVANIA"
+      ],
+      "note": "sedia occupata e arretrata; lati da definire"
+    },
+    "operator_zone": {
+      "value": 800,
+      "status": "pending",
+      "source": "PROP",
+      "applies_to": [
+        "CASSA"
+      ],
+      "note": "lato operatore della cassa non definito"
+    },
+    "screening_passage": {
+      "value": 900,
+      "status": "assumed",
+      "source": "PROP",
+      "note": "soglia di screening, non requisito normativo"
+    }
+  },
+  "functional_pairs": [
+    {
+      "id": "FP01",
+      "a": "CASSA",
+      "b": "SCALE",
+      "function": "lato operatore / accesso cassa",
+      "needs": [
+        "operator_zone"
+      ]
+    },
+    {
+      "id": "FP02",
+      "a": "C3",
+      "b": "SCRIVANIA",
+      "function": "uso cassetti C3, sedute e percorso verso la saletta",
+      "needs": [
+        "drawer_extension",
+        "chair_zone"
+      ]
+    },
+    {
+      "id": "FP03",
+      "a": "CASSA",
+      "b": "C1",
+      "function": "intervallo laterale cassa-fondo: servizio o passaggio da stabilire",
+      "needs": [
+        "operator_zone"
+      ]
+    },
+    {
+      "id": "FP04",
+      "a": "C4",
+      "b": "P_SAL",
+      "function": "cassetti C4 aperti vicino alla porta della saletta",
+      "needs": [
+        "drawer_extension"
+      ]
+    },
+    {
+      "id": "FP05",
+      "a": "SCRIVANIA",
+      "b": "C4",
+      "function": "sedia operatore e cassetti C4 aperti",
+      "needs": [
+        "chair_zone",
+        "drawer_extension"
+      ]
+    },
+    {
+      "id": "FP06",
+      "a": "SCRIVANIA",
+      "b": "FACCIATA",
+      "function": "serramento, pulizia e sporgenze verso la vetrina",
+      "needs": []
+    },
+    {
+      "id": "FP07",
+      "a": "ISOLA_SMART",
+      "b": "RINGHIERA",
+      "function": "luce netta tra isola e corrimano",
+      "needs": [
+        "railing_thickness"
+      ]
+    }
+  ],
+  "smart_wall": {
+    "wall": "W_SAL_O",
+    "face_x": 3390,
+    "y0": 2680,
+    "y1": 4750,
+    "cladding": {
+      "material": "mattoni marrone scuro",
+      "thickness": 20,
+      "status": "assumed",
+      "source": "DEC; spessore rivestimento ipotizzato"
+    },
+    "band": {
+      "length": 1820,
+      "status": "assumed",
+      "source": "S2: fascia smart riservata 1,82 m (precedente progetto, da riconciliare)"
+    },
+    "margin_start": 125,
+    "panels": {
+      "count": 4,
+      "width": 410,
+      "gap": 60,
+      "height": 700,
+      "bottom": 1150,
+      "status": "assumed",
+      "source": "PROP da S4: quattro pannelli con immagine e titolo"
+    },
+    "shelf": {
+      "width": 410,
+      "depth": 150,
+      "z": 1050,
+      "status": "assumed",
+      "source": "PROP da S4: ripiano prodotto sotto ogni pannello"
+    },
+    "label": {
+      "width": 300,
+      "height": 110,
+      "z": 900,
+      "status": "assumed",
+      "source": "PROP da S4: cartellino"
+    },
+    "panel_titles": [
+      "Con fotocamera",
+      "Per lavoro",
+      "Solo audio",
+      "Con display"
+    ]
+  },
+  "display_proposal": {
+    "_nota": "Composizione delle esposizioni sopra le cassettiere secondo S4. Proposta da validare con il falegname; nessuna quota e' rilevata dall'immagine.",
+    "status": "assumed",
+    "source": "PROP da S4",
+    "shelf_levels": [
+      1250,
+      1550,
+      1850,
+      2150
+    ],
+    "shelf_depth": 250,
+    "shelf_thickness": 25,
+    "stagger": 150,
+    "cubby": {
+      "size": 350,
+      "depth": 260,
+      "board": 18
+    },
+    "slat_mirror": {
+      "width": 320,
+      "slat": 30,
+      "slat_gap": 15,
+      "mirror_width": 250,
+      "mirror_height": 1000,
+      "mirror_bottom": 1300
+    },
+    "over": [
+      "C1",
+      "C2",
+      "C3",
+      "C4"
+    ],
+    "slat_columns": [
+      {
+        "id": "LS1",
+        "x": 6050,
+        "y": 2655,
+        "width": 320,
+        "depth": 25,
+        "wall": "W_SAL_S1"
+      },
+      {
+        "id": "LS2",
+        "x": 7475,
+        "y": 1850,
+        "width": 25,
+        "depth": 320,
+        "wall": "facciata est"
+      }
+    ]
+  },
   "electrical_points": [
     {
       "id": "E01",
       "x": 0,
       "y": 4450,
-      "service": "Cassa POS/dati",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "Cassa: POS, rete dati, stampante, monitor",
+      "kinds": [
+        "energia",
+        "dati"
+      ],
+      "support": "parete sinistra dietro il fianco cassa",
+      "owner": "CASSA",
+      "quantity": "da definire con l'elettricista",
+      "access": "da definire: dal retro cassa o con passacavi nel piano",
+      "driver": "non pertinente",
+      "route": "da definire"
     },
     {
       "id": "E02",
       "x": 1800,
       "y": 4750,
-      "service": "C1 e ripiani fondo",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "C1: due linee LED frontali e luci mensole fondo",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "parete di fondo",
+      "owner": "C1",
+      "quantity": "da definire",
+      "access": "vano driver ispezionabile nel mobile (dettaglio D01 da sviluppare)",
+      "driver": "da scheda prodotto / falegname",
+      "route": "da definire"
     },
     {
       "id": "E03A",
       "x": 3550,
       "y": 2680,
-      "service": "C2 e ripiani",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "C2: LED frontali e luci mensole",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "tramezzo saletta W_SAL_S1, lato negozio",
+      "owner": "C2",
+      "quantity": "da definire",
+      "access": "vano driver ispezionabile (D01)",
+      "driver": "da scheda prodotto / falegname",
+      "route": "nel tramezzo in cartongesso, da progettare"
     },
     {
       "id": "E03B",
       "x": 6080,
       "y": 2680,
-      "service": "C3 e ripiani",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "C3: LED frontali e luci mensole",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "tramezzo saletta W_SAL_S1, lato negozio",
+      "owner": "C3",
+      "quantity": "da definire",
+      "access": "vano driver ispezionabile (D01)",
+      "driver": "da scheda prodotto / falegname",
+      "route": "nel tramezzo in cartongesso, da progettare"
     },
     {
       "id": "E03C",
       "x": 7500,
       "y": 1900,
-      "service": "C4 e ripiani",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "C4: LED frontali e luci mensole",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "parete laterale destra",
+      "owner": "C4",
+      "quantity": "da definire",
+      "access": "vano driver ispezionabile (D01)",
+      "driver": "da scheda prodotto / falegname",
+      "route": "da definire"
     },
     {
       "id": "E04",
-      "x": 3390,
-      "y": 3750,
-      "service": "Quattro telai smart",
+      "x": 3370,
+      "y": 3715,
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "Parete smart: quattro telai con immagine e luce prodotto",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "tramezzo W_SAL_O, lato scala, sotto il rivestimento",
+      "owner": "SMART",
+      "quantity": "4 utenze telaio (numero prese da definire)",
+      "access": "da definire: dietro i telai o da vano ispezionabile",
+      "driver": "da scheda dei telai",
+      "route": "nel tramezzo, da progettare"
     },
     {
       "id": "E05",
       "x": 1070,
       "y": 2450,
-      "service": "Isola smart",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "Isola smart: ricarica e luce espositiva",
+      "kinds": [
+        "energia"
+      ],
+      "support": "pavimento sotto l'isola oppure parapetto: da decidere",
+      "owner": "ISOLA_SMART",
+      "quantity": "da definire",
+      "access": "punto dentro l'ingombro dell'isola: serve dettaglio di collegamento e apertura per manutenzione",
+      "driver": "non pertinente",
+      "route": "da definire (scala adiacente)"
     },
     {
       "id": "E06",
       "x": 5300,
       "y": 750,
-      "service": "Scrivania",
       "z": null,
-      "status": "assumed"
+      "z_status": "pending",
+      "xy_status": "assumed",
+      "service": "Scrivania consulenza: presa integrata, PC, rete",
+      "kinds": [
+        "energia",
+        "dati"
+      ],
+      "support": "pavimento sotto la scrivania oppure parete C4: da decidere",
+      "owner": "SCRIVANIA",
+      "quantity": "da definire",
+      "access": "punto dentro l'ingombro della scrivania: serve passacavi e accesso da sotto il piano",
+      "driver": "non pertinente",
+      "route": "da definire"
+    },
+    {
+      "id": "E07",
+      "x": null,
+      "y": null,
+      "z": null,
+      "z_status": "pending",
+      "xy_status": "pending",
+      "service": "Scala: illuminazione gradini e corrimano",
+      "kinds": [
+        "energia",
+        "LED"
+      ],
+      "support": "da definire",
+      "owner": "SCALE",
+      "quantity": "da definire",
+      "access": "da definire",
+      "driver": "da definire",
+      "route": "da definire"
+    },
+    {
+      "id": "E08",
+      "x": null,
+      "y": null,
+      "z": null,
+      "z_status": "pending",
+      "xy_status": "pending",
+      "service": "Saletta: strumenti di refrazione, poltrona, rete",
+      "kinds": [
+        "energia",
+        "dati"
+      ],
+      "support": "da definire dentro la saletta",
+      "owner": "SALETTA",
+      "quantity": "da definire con l'optometrista",
+      "access": "da definire",
+      "driver": "non pertinente",
+      "route": "da definire"
+    },
+    {
+      "id": "E09",
+      "x": null,
+      "y": null,
+      "z": null,
+      "z_status": "pending",
+      "xy_status": "pending",
+      "service": "Illuminazione generale ed esposizione (binari a soffitto)",
+      "kinds": [
+        "energia"
+      ],
+      "support": "soffitto",
+      "owner": "NEGOZIO",
+      "quantity": "da progetto illuminotecnico",
+      "access": "da definire",
+      "driver": "da definire",
+      "route": "da definire"
     }
-  ],
-  "coordinate_system_note": "21/11/2026: modello ribaltato rispetto a P00 (prima Y andava verso la vetrina e il lato x=0 risultava a destra entrando). Solo cambio di riferimento, nessuna misura modificata."
+  ]
 }
