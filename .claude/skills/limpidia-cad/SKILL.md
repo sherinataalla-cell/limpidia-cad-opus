@@ -5,9 +5,10 @@ description: Progetta e verifica tavole CAD coordinate per il negozio Limpidia a
 
 # Workflow
 
+0. Crea un branch dal `main` aggiornato; alla fine apri una pull request. Mai push su `main`.
 1. Leggi `CLAUDE.md`, `docs/decisioni.md`, `docs/rilievo.md`, `config/geometry.json`.
 2. Controlla unità mm, origini, assi, status di ogni quota e conflitti tra le fonti.
-3. Esegui `python -m src.generate` e `pytest -q`.
+3. Esegui `python -m src.generate` e `pytest -q`; leggi `outputs/criticita.md`. Per le anteprime 3D `python -m src.render` (altezze e finiture in `config/render.json`, solo visive).
 4. Prepara lista interferenze: passaggi, sedie estratte, cassetti aperti, porta saletta, ringhiera, operatore cassa.
 5. Produci revisioni coordinate di A01/E01 e successivamente prospetti F01–F04, sezioni D01, abaco AB01.
 6. Per ogni elemento elettrico: codice, utenza, posizione X/Y, Z da verificare, accessibilità, alimentatore, potenza da scheda prodotto.
@@ -16,7 +17,8 @@ description: Progetta e verifica tavole CAD coordinate per il negozio Limpidia a
 
 ## Strumenti
 
-- `ezdxf` per DXF; LibreCAD/QCAD/AutoCAD per ispezione.
+- `ezdxf` per DXF e PDF (PyMuPDF); LibreCAD/QCAD/AutoCAD per ispezione.
+- `bpy` (Blender come modulo Python, Cycles) per i render dal modello.
 - FreeCAD come possibile fase successiva per modelli e distinte di falegnameria.
 - Skill open source esterne solo dopo verifica di codice, licenza, compatibilità e manutenzione. Non eseguire automaticamente repository terzi.
 

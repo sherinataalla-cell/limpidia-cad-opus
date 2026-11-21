@@ -20,3 +20,25 @@ def test_generated_dxf():
         d=ezdxf.readfile(folder/f)
         assert d.header['$INSUNITS']==4
         assert len(d.modelspace())>10
+
+
+def test_pdf_and_reports():
+    folder = generate()
+    for f in ('A01_pianta_arredi_preliminare.pdf', 'E01_punti_utenza_preliminari.pdf', 'criticita.md'):
+        assert (folder / f).stat().st_size > 0
+    a01 = ezdxf.readfile(folder / 'A01_pianta_arredi_preliminare.dxf')
+    assert 'A01' in a01.layouts.names()
+    assert len(a01.modelspace().query('DIMENSION')) > 10
+
+
+def test_checks_flag_known_issues():
+    from src.checks import findings
+    text = ' '.join(t for _, t in findings(load()))
+    assert 'saletta' in text.lower()
+    assert 'cassa' in text.lower()
+
+
+def test_gap():
+    from src.model import gap
+    assert gap((0, 0, 10, 10), (20, 0, 30, 10)) == (10, 'x')
+    assert gap((0, 0, 10, 10), (5, 5, 15, 15))[1] == 'overlap'

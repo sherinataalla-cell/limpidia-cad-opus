@@ -1,8 +1,11 @@
-# Disegni generati
+# Elaborati generati
 
-Eseguire `python -m src.generate` per creare:
-- `A01_pianta_arredi_preliminare.dxf` — planimetria preliminare.
-- `E01_punti_utenza_preliminari.dxf` — predisposizioni utenze.
+Rigenerare con `python -m src.generate` (tavole) e `python -m src.render` (anteprime 3D):
+
+- `A01_pianta_arredi_preliminare.dxf` / `.pdf` — pianta arredi quotata, distanze libere, cartiglio A3 1:50.
+- `E01_punti_utenza_preliminari.dxf` / `.pdf` — punti utenza energia/dati e LED, Z da rilevare.
+- `criticita.md` — controlli geometrici ordinati per priorità.
 - `quote_da_rilevare.md` — registro quote aperte.
+- `render/R01_*.png` — anteprime 3D dal modello; non sono fonti metriche e non sostituiscono la vista approvata.
 
-I DXF sono riproducibili dalle coordinate in `config/geometry.json`. Non si tratta di disegni esecutivi.
+I file sono riproducibili da `config/geometry.json`. Non si tratta di disegni esecutivi.

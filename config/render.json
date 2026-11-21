@@ -1,0 +1,103 @@
+{
+  "_nota": "Parametri SOLO per l'anteprima 3D. Non sono quote di progetto e non vanno riportate nelle tavole. Le finiture vengono da docs/decisioni.md; altezze e spessori sono ipotesi visive da sostituire con rilievo e schede prodotto.",
+  "status": "assumed",
+  "ceiling_height": 3000,
+  "wall_thickness": 200,
+  "saletta_wall_thickness": 100,
+  "heights": {
+    "CASSA": 1000,
+    "C1": 800,
+    "C2": 800,
+    "C3": 800,
+    "C4": 800,
+    "SCRIVANIA": 760,
+    "ISOLA_SMART": 830
+  },
+  "railing_height": 1000,
+  "shelves": {
+    "levels": [1250, 1600, 1950],
+    "depth": 250,
+    "thickness": 25,
+    "over": ["C1", "C2", "C3", "C4"]
+  },
+  "finishes": {
+    "walls": {
+      "color": [0.8, 0.72, 0.6],
+      "roughness": 0.9,
+      "fonte": "beige sabbia, effetto minerale opaco (approvato)"
+    },
+    "floor": {
+      "color": [0.83, 0.77, 0.68],
+      "roughness": 0.45,
+      "fonte": "rovere sbiancato chiaro (approvato)"
+    },
+    "drawers": {
+      "color": [0.2, 0.11, 0.06],
+      "roughness": 0.45,
+      "fonte": "cassettiere noce scuro con due linee LED (approvato)"
+    },
+    "shelves": {
+      "color": [0.92, 0.92, 0.9],
+      "roughness": 0.35,
+      "fonte": "mensole bianche (approvato)"
+    },
+    "cubes": {
+      "color": [0.62, 0.45, 0.28],
+      "roughness": 0.5,
+      "fonte": "cubi rovere naturale (approvato)"
+    },
+    "cassa": {
+      "color": [0.93, 0.93, 0.92],
+      "roughness": 0.3,
+      "fonte": "cassa bianca (approvato)"
+    },
+    "desk": {
+      "color": [0.28, 0.16, 0.08],
+      "roughness": 0.4,
+      "fonte": "scrivania noce (approvato)"
+    },
+    "island": {
+      "color": [0.74, 0.67, 0.58],
+      "roughness": 0.5,
+      "fonte": "Monfero cachemire (approvato)"
+    },
+    "brick": {
+      "color": [0.17, 0.085, 0.05],
+      "mortar": [0.55, 0.5, 0.45],
+      "fonte": "parete smart in mattoni marrone scuro (approvato)"
+    },
+    "ceiling": {
+      "color": [0.95, 0.95, 0.94],
+      "roughness": 0.9,
+      "fonte": "ipotesi"
+    }
+  },
+  "brick_wall": {
+    "zone": "SALETTA",
+    "side": "west",
+    "fonte": "lato verso la zona smart, dove arriva E04; da confermare"
+  },
+  "cameras": [
+    {
+      "name": "dalla_vetrina",
+      "location": [700, 4450, 1600],
+      "target": [4600, 1700, 1000],
+      "lens": 17
+    },
+    {
+      "name": "verso_la_vetrina",
+      "location": [1300, 600, 1650],
+      "target": [3600, 4750, 1000],
+      "lens": 17
+    },
+    {
+      "name": "parete_smart",
+      "location": [1400, 4000, 1600],
+      "target": [3450, 1100, 1300],
+      "lens": 17
+    }
+  ],
+  "resolution": [1600, 1000],
+  "samples": 96,
+  "light_power_w": 55
+}
