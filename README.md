@@ -34,15 +34,19 @@ I file generati sono in `outputs/`:
 
 | File | Contenuto |
 | --- | --- |
-| `A01_pianta_arredi_preliminare.dxf/.pdf` | Pianta arredi quotata, distanze libere, legenda, cartiglio A3 1:50 |
-| `E01_punti_utenza_preliminari.dxf/.pdf` | Punti utenza energia/dati e LED con elenco, Z da rilevare |
-| `criticita.md` | Controlli geometrici: passaggi stretti, porta saletta, banco cassa, superficie |
-| `quote_da_rilevare.md` | Registro quote aperte |
+| `A01_pianta_arredi_preliminare.dxf/.pdf` | Pianta arredi quotata con porte, ingombri d'uso e coppie funzionali, A3 1:50 |
+| `E01_punti_utenza_preliminari.dxf/.pdf` | Punti utenza energia/dati e LED con abaco (supporto, accesso, alimentatore, percorso), Z da rilevare |
+| `F01`–`F04_*.dxf/.pdf` | Prospetti fondo/cassa, parete smart, fronte saletta, laterale consulenza, A3 1:20 |
+| `AB01_abaco_arredi.md` | Abaco arredi di catalogo e distinta dei pezzi su misura |
+| `Q01_quote_aperte.md` | Registro completo di quote aperte, conflitti e decisioni (`quote_da_rilevare.md` vi rimanda) |
+| `criticita.md` | Controlli: contenimento, accostamenti, coppie funzionali, porte, smart, utenze, superfici |
+| `MANIFEST.md` | Elenco dei file realmente generati con revisione e scala |
+| `revisione_correzioni.md` | Esito della revisione R01 punto per punto |
 | `render/R01_*.png` | Anteprime 3D dal modello (non fonti metriche) |
 
 **Orientamento:** in pianta la vetrina è in basso e la parete di fondo in alto; l'origine (0, 0) è l'angolo vetrina sinistro guardando il negozio dalla strada. I render usano lo stesso riferimento, quindi destra e sinistra coincidono con la pianta.
 
-I DXF si aprono con LibreCAD, QCAD o AutoCAD; nello spazio modello sono 1:1 in mm, il layout `A01`/`E01` è la tavola stampabile. I file sorgente in `config/` sono l'unica fonte di coordinate e dimensioni (`geometry.json`); `render.json` contiene solo altezze e finiture per l'anteprima 3D, non quote di progetto.
+I DXF si aprono con LibreCAD, QCAD o AutoCAD; nello spazio modello sono 1:1 in mm, il layout `A01`/`E01` è la tavola stampabile. I file sorgente in `config/` sono l'unica fonte di coordinate e dimensioni (`geometry.json`); `render.json` contiene solo colori, luci, camere e poche ipotesi grafiche per l'anteprima 3D, non quote di progetto (soffitto, altezze dei mobili e composizioni vengono da `geometry.json`).
 
 ## Claude Opus / Claude Code
 
