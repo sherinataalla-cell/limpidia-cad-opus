@@ -1,6 +1,7 @@
 {
   "project": "Limpidia - Via Andrea Solari 3 Milano",
   "revision": "P02",
+  "revision_date": "2026-11-21",
   "units": "mm",
   "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla strada); X verso destra; Y verso la parete di fondo; Z verso l'alto dal pavimento finito",
   "coordinate_system_note": "Orientamento della planimetria S1: strada e vetrina in basso, ingresso e scala a sinistra, saletta sul fondo a destra. Introdotto il 21/11/2026 (commit bd07984) con una sola trasformazione Y' = 4750 - Y rispetto a P00; distanze e superfici invariate.",

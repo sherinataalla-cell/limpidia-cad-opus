@@ -11,13 +11,18 @@ Uscite in `outputs/` (vedi MANIFEST.md generato):
 Modello in mm 1:1 nello spazio modello; la scala è solo nell'impaginazione.
 """
 import datetime as dt
+import hashlib
 import math
+import os
+import random
+import sys
 
 import ezdxf
 from ezdxf.enums import TextEntityAlignment
 
 import copy
 import json
+import re
 
 from shapely.ops import nearest_points
 from shapely.geometry import box, LineString, Polygon
@@ -30,7 +35,28 @@ from .components import all_components, union_bounds
 
 SHEET = (420, 297)         # A3 orizzontale, mm
 WARNING = 'PRELIMINARE - NON PER CANTIERE'
-TODAY = dt.date.today().isoformat()
+
+
+def _revision_date():
+    """Data stampata su tavole e registri: quella della revisione del modello.
+
+    Viene da `revision_date` in geometry.json, accanto a `revision`, così
+    rigenerare lo stesso modello in un altro giorno produce file identici.
+    Se il campo manca si usa la data di oggi, come prima.
+    """
+    try:
+        d = json.loads((ROOT / 'config' / 'geometry.json').read_text(encoding='utf-8')).get('revision_date')
+    except (OSError, ValueError):
+        d = None
+    return d or dt.date.today().isoformat()
+
+
+TODAY = _revision_date()
+
+# DXF riproducibili: senza questa opzione ezdxf scrive a ogni salvataggio data,
+# ora e GUID nuovi nell'intestazione, e i file cambiano anche a disegno identico.
+# Con l'opzione l'intestazione è fissa; la data di revisione resta nel cartiglio.
+ezdxf.options.write_fixed_meta_data_for_testing = True
 
 LAYERS = [
     ('WALLS', 7, 50), ('WALLS_NEW', 8, 35), ('FACADE', 7, 25), ('DOORS', 7, 25), ('STAIR', 8, 18),
@@ -747,15 +773,31 @@ def build_d01(model):
 
 # --- Esportazione --------------------------------------------------------------------
 
+def _stable_pdf_id(data):
+    """Sostituisce l'/ID casuale del PDF con un'impronta del contenuto.
+
+    PyMuPDF scrive un /ID nuovo a ogni salvataggio; derivandolo dal contenuto
+    lo stesso disegno dà sempre lo stesso file (stessa lunghezza, offset invariati).
+    """
+    m = re.search(rb'/ID\[<([0-9A-Fa-f]{32})><([0-9A-Fa-f]{32})>\]', data)
+    if not m:
+        return data
+    h = hashlib.md5(data[:m.start()] + data[m.end():]).hexdigest().upper().encode()
+    return data[:m.start(1)] + h + data[m.end(1):m.start(2)] + h + data[m.end(2):]
+
+
 def export_pdf(doc, layout_name, path):
     from ezdxf.addons.drawing import Frontend, RenderContext, pymupdf, layout, config
     lay = doc.layouts.get(layout_name)
+    # ezdxf sposta di pochissimo, a caso, le linee dei retini (mattoni) per evitare
+    # artefatti: con un seme fisso lo spostamento è sempre lo stesso e il PDF anche.
+    random.seed(0)
     backend = pymupdf.PyMuPdfBackend()
     cfg = config.Configuration(background_policy=config.BackgroundPolicy.WHITE,
                                color_policy=config.ColorPolicy.COLOR, lineweight_scaling=1.0)
     Frontend(RenderContext(doc), backend, config=cfg).draw_layout(lay, finalize=True)
     page = layout.Page(*SHEET, layout.Units.mm)
-    path.write_bytes(backend.get_pdf_bytes(page, settings=layout.Settings(scale=1, fit_page=False)))
+    path.write_bytes(_stable_pdf_id(backend.get_pdf_bytes(page, settings=layout.Settings(scale=1, fit_page=False))))
     return path
 
 
@@ -1083,4 +1125,10 @@ def generate(pdf=True):
 
 
 if __name__ == '__main__':
+    # Python rende casuale l'hash delle stringhe a ogni avvio e da quello dipende
+    # l'ordine di alcuni oggetti nei DXF: si riparte una volta con il seme fisso,
+    # così la stessa revisione del modello produce sempre gli stessi file.
+    if os.environ.get('PYTHONHASHSEED') != '0':
+        env = {**os.environ, 'PYTHONHASHSEED': '0'}
+        os.execvpe(sys.executable, [sys.executable, '-m', 'src.generate', *sys.argv[1:]], env)
     print(generate())
