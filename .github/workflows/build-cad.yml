@@ -1,0 +1,43 @@
+name: Genera DXF preliminari
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'config/**'
+      - 'tests/**'
+      - 'requirements.txt'
+      - '.github/workflows/build-cad.yml'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Installa librerie
+        run: pip install -r requirements.txt
+      - name: Verifica modello
+        run: pytest -q
+      - name: Genera pianta e utenze DXF
+        run: python -m src.generate
+      - name: Carica elaborati come artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: limpidia-dxf-preliminari
+          path: outputs/
+      - name: Salva i DXF generati nel repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add outputs/A01_pianta_arredi_preliminare.dxf outputs/E01_punti_utenza_preliminari.dxf outputs/quote_da_rilevare.md
+          if ! git diff --cached --quiet; then
+            git commit -m "build: aggiorna DXF preliminari dal modello parametrico"
+            git push
+          fi
