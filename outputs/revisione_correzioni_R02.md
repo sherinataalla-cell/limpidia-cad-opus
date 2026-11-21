@@ -79,7 +79,7 @@ Le sei tavole richieste sono A01, E01, F01, F02, F03, F04 (più D01 e la variant
 ## Risultati dei test e comandi
 
 - Baseline `129e25f`: `pytest -q` → 19 passed; `python -m src.generate` → completato.
-- P02: `pytest -q` → **52 passed, 0 failed, 0 skipped** (19 test P01 aggiornati + 33 casi R02; il test di scena Blender gira perché `bpy` è installato, in CI senza `bpy` risulta skipped).
+- P02: `pytest -q` → **54 passed, 0 failed, 0 skipped** (19 test P01 aggiornati + 33 casi R02 + 2 di riproducibilità; il test di scena Blender gira perché `bpy` è installato, in CI senza `bpy` risulta skipped).
 - `python -m src.generate` → completato: 8 tavole DXF+PDF (sei richieste più D01 e A01-V1) e i registri elencati in `MANIFEST.md`.
 - `python -m src.render` → 4 viste, revisione P02 registrata in `render_meta.json`.
 
