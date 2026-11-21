@@ -1,106 +1,206 @@
 {
-  "_nota": "Parametri SOLO per l'anteprima 3D. Non sono quote di progetto e non vanno riportate nelle tavole. Le finiture vengono da docs/decisioni.md; altezze e spessori sono ipotesi visive da sostituire con rilievo e schede prodotto.",
+  "_nota": "Parametri SOLO per l'anteprima 3D: colori, luci, camere e poche ipotesi grafiche che le tavole non usano. Geometria, altezze dei mobili, soffitto, parete smart, porte e mensole vengono da config/geometry.json.",
   "status": "assumed",
-  "ceiling_height": 3000,
   "wall_thickness": 200,
-  "saletta_wall_thickness": 100,
-  "heights": {
-    "CASSA": 1000,
-    "C1": 800,
-    "C2": 800,
-    "C3": 800,
-    "C4": 800,
-    "SCRIVANIA": 760,
-    "ISOLA_SMART": 830
-  },
-  "railing_height": 1000,
-  "shelves": {
-    "levels": [1250, 1600, 1950],
-    "depth": 250,
-    "thickness": 25,
-    "over": ["C1", "C2", "C3", "C4"]
-  },
   "finishes": {
     "walls": {
-      "color": [0.8, 0.72, 0.6],
+      "color": [
+        0.72,
+        0.62,
+        0.48
+      ],
       "roughness": 0.9,
       "fonte": "beige sabbia, effetto minerale opaco (approvato)"
     },
     "floor": {
-      "color": [0.83, 0.77, 0.68],
+      "color": [
+        0.83,
+        0.77,
+        0.68
+      ],
       "roughness": 0.45,
       "fonte": "rovere sbiancato chiaro (approvato)"
     },
     "drawers": {
-      "color": [0.2, 0.11, 0.06],
+      "color": [
+        0.12,
+        0.06,
+        0.03
+      ],
       "roughness": 0.45,
       "fonte": "cassettiere noce scuro con due linee LED (approvato)"
     },
     "shelves": {
-      "color": [0.92, 0.92, 0.9],
+      "color": [
+        0.92,
+        0.92,
+        0.9
+      ],
       "roughness": 0.35,
       "fonte": "mensole bianche (approvato)"
     },
     "cubes": {
-      "color": [0.62, 0.45, 0.28],
+      "color": [
+        0.62,
+        0.45,
+        0.28
+      ],
       "roughness": 0.5,
       "fonte": "cubi rovere naturale (approvato)"
     },
     "cassa": {
-      "color": [0.93, 0.93, 0.92],
+      "color": [
+        0.93,
+        0.93,
+        0.92
+      ],
       "roughness": 0.3,
       "fonte": "cassa bianca (approvato)"
     },
     "desk": {
-      "color": [0.28, 0.16, 0.08],
+      "color": [
+        0.18,
+        0.1,
+        0.05
+      ],
       "roughness": 0.4,
       "fonte": "scrivania noce (approvato)"
     },
     "island": {
-      "color": [0.74, 0.67, 0.58],
+      "color": [
+        0.74,
+        0.67,
+        0.58
+      ],
       "roughness": 0.5,
       "fonte": "Monfero cachemire (approvato)"
     },
     "brick": {
-      "color": [0.1, 0.05, 0.03],
-      "mortar": [0.36, 0.33, 0.3],
+      "color": [
+        0.1,
+        0.05,
+        0.03
+      ],
+      "mortar": [
+        0.36,
+        0.33,
+        0.3
+      ],
       "fonte": "parete smart in mattoni marrone scuro (approvato)"
     },
     "ceiling": {
-      "color": [0.95, 0.95, 0.94],
+      "color": [
+        0.95,
+        0.95,
+        0.94
+      ],
       "roughness": 0.9,
       "fonte": "ipotesi"
     }
   },
-  "brick_wall": {
-    "zone": "SALETTA",
-    "side": "west",
-    "fonte": "lato verso la zona smart, dove arriva E04; da confermare"
-  },
   "cameras": [
     {
-      "name": "dalla_vetrina",
-      "at": [0.12, 0.06, 1600],
-      "look": [0.62, 0.62, 1000],
-      "lens": 17,
-      "nota": "entrando, angolo vetrina sinistro verso il fondo a destra"
+      "name": "ingresso_verso_cassa",
+      "at": [
+        0.3,
+        0.1,
+        2300
+      ],
+      "look": [
+        0.17,
+        0.95,
+        900
+      ],
+      "lens": 16,
+      "nota": "dall'ingresso verso cassa, scala e parete smart (come vista S4 alta)"
     },
     {
-      "name": "verso_la_vetrina",
-      "at": [0.3, 0.88, 1650],
-      "look": [0.55, 0.0, 1000],
-      "lens": 17,
-      "nota": "dal fondo verso la vetrina"
+      "name": "consulenza_verso_saletta",
+      "at": [
+        0.55,
+        0.03,
+        1600
+      ],
+      "look": [
+        0.78,
+        0.58,
+        1250
+      ],
+      "lens": 16,
+      "nota": "dalla vetrina verso scrivania, C2-C3 e porta saletta (come vista S4 bassa)"
     },
     {
       "name": "parete_smart",
-      "at": [0.18, 0.3, 1600],
-      "look": [0.46, 0.75, 1300],
-      "lens": 17,
-      "nota": "verso la parete in mattoni e i telai smart"
+      "at": [
+        0.2,
+        0.3,
+        1550
+      ],
+      "look": [
+        0.45,
+        0.78,
+        1500
+      ],
+      "lens": 18,
+      "nota": "parete smart in mattoni con i quattro telai"
+    },
+    {
+      "name": "pianta_dall_alto",
+      "type": "top",
+      "nota": "vista dall'alto senza soffitto, vetrina in basso"
     }
   ],
-  "resolution": [1600, 1000],
-  "samples": 96,
-  "light_power_w": 55
+  "resolution": [
+    1600,
+    1000
+  ],
+  "samples": 64,
+  "visual_assumptions": {
+    "_nota": "ipotesi solo grafiche, non quote di progetto: altezza porte e vetrine, gradini, ringhiera",
+    "door_height": 2100,
+    "glazing_top": 3000,
+    "stair_tread": 280,
+    "stair_rise": 170,
+    "railing_height": 1000,
+    "desk_pedestal": 450,
+    "slat_top_gap": 450
+  },
+  "lighting": {
+    "daylight": 1.2,
+    "area_power_w": 30,
+    "tracks": [
+      [
+        [
+          600,
+          4450
+        ],
+        [
+          3000,
+          4450
+        ]
+      ],
+      [
+        [
+          1800,
+          1200
+        ],
+        [
+          1800,
+          3600
+        ]
+      ],
+      [
+        [
+          4000,
+          1000
+        ],
+        [
+          6800,
+          1000
+        ]
+      ]
+    ],
+    "_nota": "Luci della sola anteprima: l'energia in W delle lampade di Blender non è una potenza di installazione."
+  },
+  "exposure": -0.9
 }
