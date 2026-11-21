@@ -161,9 +161,7 @@
     "glazing_top": 3000,
     "stair_tread": 280,
     "stair_rise": 170,
-    "railing_height": 1000,
-    "desk_pedestal": 450,
-    "slat_top_gap": 450
+    "railing_height": 1000
   },
   "lighting": {
     "daylight": 1.2,

@@ -3,9 +3,11 @@
 Uso:  python -m src.render            (tutte le inquadrature)
       python -m src.render --fast     (bozza veloce)
 
-Tutta la geometria (involucro, facciata, tramezzi, porte, saletta, parete smart,
-mobili con fronte e altezza, mensole e colonne listelli della proposta, soffitto)
-viene da config/geometry.json, la stessa fonte delle tavole. config/render.json
+Tutta la geometria viene da config/geometry.json, la stessa fonte delle tavole:
+involucro, facciata, tramezzi e porte dal modello; mobili, mensole, cubotti, LED,
+colonne listelli e parete smart dagli stessi componenti 3D di src/components.py
+usati da prospetti, abaco e controlli. render_meta.json registra la revisione
+del modello di ogni immagine. config/render.json
 contiene solo parametri visivi (colori, luci, camere) e ipotesi grafiche che le
 tavole non usano. È un'anteprima: NON è una fonte metrica.
 """
@@ -13,8 +15,8 @@ import json
 import math
 import sys
 
-from .model import (load, bounds, rect_cells, floor_poly, smart_layout, envelope_edges, outward,
-                    ROOT, OUT)
+from .model import (load, bounds, rect_cells, floor_poly, envelope_edges, outward, faces, ROOT, OUT)
+from .components import all_components
 
 RENDER_CFG = ROOT / 'config' / 'render.json'
 LOGO = ROOT / 'assets' / 'brand' / 'limpidia.png'
@@ -181,42 +183,6 @@ def look_at(obj, target):
     obj.rotation_euler = d.to_track_quat('-Z', 'Y').to_euler()
 
 
-# Direzione "da sinistra a destra" guardando il fronte del mobile (come nei prospetti F01-F04)
-_RIGHT = {'-y': (1, 0), '+y': (-1, 0), '-x': (0, -1), '+x': (0, 1)}
-
-
-def along(item):
-    """Estremi del mobile lungo la parete, ordinati da sinistra a destra guardando il fronte."""
-    x0, y0, x1, y1 = bounds(item)
-    rx, ry = _RIGHT[item['front']]
-    if rx:
-        return ('x', (x0, x1) if rx > 0 else (x1, x0))
-    return ('y', (y0, y1) if ry > 0 else (y1, y0))
-
-
-def back_plane(item):
-    """Coordinata del retro e verso del fronte (+1/-1) sull'asse normale alla parete."""
-    x0, y0, x1, y1 = bounds(item)
-    return {'-y': ('y', y1, -1), '+y': ('y', y0, 1), '-x': ('x', x1, -1), '+x': ('x', x0, 1)}[item['front']]
-
-
-def wall_box(bpy, name, item, u0, u1, d0, d1, z0, z1, mat):
-    """Box definito lungo la parete (u) e in profondità dal retro (d), per qualsiasi fronte."""
-    ax, _ = along(item)
-    nax, back, s = back_plane(item)
-    a0, a1 = back + s * d0, back + s * d1
-    if ax == 'x':
-        return box(bpy, name, u0, a0, z0, u1, a1, z1, mat)
-    return box(bpy, name, a0, u0, z0, a1, u1, z1, mat)
-
-
-def u_at(item, t, off=0):
-    """Punto a frazione t lungo il mobile (sinistra→destra guardando il fronte), più offset in mm."""
-    _, (p0, p1) = along(item)
-    sgn = 1 if p1 > p0 else -1
-    return p0 + (p1 - p0) * t + sgn * off
-
-
 # --- Scena --------------------------------------------------------------------
 
 def build_scene(bpy, model, cfg):
@@ -320,26 +286,6 @@ def build_scene(bpy, model, cfg):
             box(bpy, op['id'] + '_architrave', op['x0'], w['y'], V['door_height'], op['x1'], w['y'] + w['depth'], H,
                 M['walls'])
 
-    # Parete smart: rivestimento in mattoni e composizione dal modello
-    sw = model['smart_wall']
-    fx, cl = sw['face_x'], sw['cladding']['thickness']
-    box(bpy, 'mattoni', fx - cl, sw['y0'], 0, fx, sw['y1'], H, M['brick'])
-    lay = smart_layout(model)
-    p = sw['panels']
-    face = fx - cl
-    for k, (ya, yb) in enumerate(lay['panels']):
-        z0, z1 = p['bottom'], p['bottom'] + p['height']
-        box(bpy, f'telaio_smart_{k+1}', face - 40, ya - 15, z0 - 15, face, yb + 15, z1 + 15, M['metal'])
-        box(bpy, f'pannello_smart_{k+1}', face - 45, ya, z0, face - 40, yb, z1, M['panel'])
-        title = sw['panel_titles'][k] if k < len(sw.get('panel_titles', [])) else ''
-        label(bpy, title, (face - 47, (ya + yb) / 2, z1 - 70), '-x', 45, M['ink'])
-        s = sw['shelf']
-        box(bpy, f'mensola_smart_{k+1}', face - s['depth'], (ya + yb) / 2 - s['width'] / 2, s['z'] - 25,
-            face, (ya + yb) / 2 + s['width'] / 2, s['z'], M['oak'])
-        lb = sw['label']
-        box(bpy, f'targhetta_smart_{k+1}', face - 8, (ya + yb) / 2 - lb['width'] / 2, lb['z'] - lb['height'],
-            face, (ya + yb) / 2 + lb['width'] / 2, lb['z'], M['white'])
-
     # Ringhiera lungo la linea del modello (spessore non rilevato: ipotesi visiva)
     rail = next(z for z in model['room_features'] if z['id'] == 'RINGHIERA')
     rx = rail['start'][0]
@@ -350,85 +296,33 @@ def build_scene(bpy, model, cfg):
         y = min(ry0 + k * 600, ry1 - 20)
         box(bpy, f'montante_{k}', rx - 15, y, -400, rx + 15, y + 20, rh - 40, M['steel'])
 
-    # Mobili: fronte e altezza dal modello
-    for f in model['furniture']:
-        x0, y0, x1, y1 = bounds(f)
-        h = f['height']
-        fid = f['id']
-        if fid == 'CASSA':
-            box(bpy, fid, x0, y0, 60, x1, y1, h, M['cassa'])
-            box(bpy, fid + '_zoccolo', x0 + 30, y0 + 30, 0, x1 - 30, y1 - 30, 60, M['metal'])
-            box(bpy, fid + '_led', x0 + 30, y0 + 25, 50, x1 - 30, y0 + 35, 60, M['led'])
-            box(bpy, fid + '_piano', x0 - 10, y0 - 10, h, x1 + 10, y1 + 10, h + 25, M['white'])
-            lw = (x1 - x0) * 0.55
-            plane(bpy, fid + '_marchio', ((x0 + x1) / 2, y0 - 1, h * 0.6), (lw, lw * 438 / 1380), '-y', M['logo'])
-        elif fid == 'SCRIVANIA':
-            box(bpy, fid + '_piano', x0, y0, h - 40, x1, y1, h, M['desk'])
-            ped = V['desk_pedestal']
-            box(bpy, fid + '_cassettiera', x0 + 40, y0 + 40, 0, x1 - 40, y0 + 40 + ped, h - 40, M['white'])
-            box(bpy, fid + '_fianco', x0 + 40, y1 - 80, 0, x1 - 40, y1 - 40, h - 40, M['white'])
-        elif fid == 'ISOLA_SMART':
-            box(bpy, fid, x0, y0, 0, x1, y1, h - 30, M['island'])
-            box(bpy, fid + '_piano', x0 - 10, y0 - 10, h - 30, x1 + 10, y1 + 10, h, M['white'])
-        else:
-            _, (u0, u1) = along(f)
-            d = (y1 - y0) if f['front'] in ('-y', '+y') else (x1 - x0)  # profondità dal muro
-            wall_box(bpy, fid, f, u0, u1, 0, d, 80, h, M['drawers'])
-            wall_box(bpy, fid + '_zoccolo', f, u0 + (20 if u1 > u0 else -20), u1 - (20 if u1 > u0 else -20),
-                     0, d - 30, 0, 80, M['metal'])
-            for zz in (h * 0.36, h * 0.68):  # due linee LED sul fronte (S4)
-                wall_box(bpy, fid + '_led', f, u_at(f, 0, 30), u_at(f, 1, -30), d, d + 6, zz, zz + 12, M['led'])
-
-    # Proposta espositiva da S4 (stessi parametri dei prospetti)
-    dp = model.get('display_proposal', {})
-    for fid in dp.get('over', []):
-        f = next(o for o in model['furniture'] if o['id'] == fid)
-        D, TH, stg = dp['shelf_depth'], dp['shelf_thickness'], dp['stagger']
-        for li, z in enumerate(dp['shelf_levels']):
-            off = stg if li % 2 else 0
-            a, b = u_at(f, 0, off), u_at(f, 1, off - stg)
-            wall_box(bpy, f'{fid}_mensola_{li}', f, a, b, 0, D, z, z + TH, M['shelves'])
-            wall_box(bpy, f'{fid}_led_mensola_{li}', f, u_at(f, 0, off + 20), u_at(f, 1, off - stg - 20),
-                     20, D - 20, z - 6, z, M['led'])
-            if li == 1:
-                c = dp['cubby']
-                ca = a + (b - a) * 0.62
-                cb = ca + (c['size'] if b > a else -c['size'])
-                zc = z + TH
-                bd = c['board']
-                sg = 1 if cb > ca else -1
-                wall_box(bpy, f'{fid}_cubo_fondo', f, ca, cb, 0, bd, zc, zc + c['size'], M['oak'])
-                wall_box(bpy, f'{fid}_cubo_sotto', f, ca, cb, 0, c['depth'], zc, zc + bd, M['oak'])
-                wall_box(bpy, f'{fid}_cubo_sopra', f, ca, cb, 0, c['depth'], zc + c['size'] - bd, zc + c['size'], M['oak'])
-                wall_box(bpy, f'{fid}_cubo_sx', f, ca, ca + sg * bd, 0, c['depth'], zc, zc + c['size'], M['oak'])
-                wall_box(bpy, f'{fid}_cubo_dx', f, cb - sg * bd, cb, 0, c['depth'], zc, zc + c['size'], M['oak'])
-                box_led = wall_box(bpy, f'{fid}_cubo_led', f, ca + sg * bd, cb - sg * bd, bd, c['depth'] - 20,
-                                   zc + c['size'] - bd - 6, zc + c['size'] - bd, M['led'])
-                box_led.name = f'{fid}_cubo_led'
-    sm = dp.get('slat_mirror')
-    for c in dp.get('slat_columns', []):
-        x0, y0, x1, y1 = bounds(c)
-        top = H - V['slat_top_gap']
-        if c['width'] >= c['depth']:  # parete parallela a X, fronte verso -y
-            k = x0
-            while k + sm['slat'] <= x1 + 1:
-                box(bpy, f"{c['id']}_listello", k, y0, 0, k + sm['slat'], y1, top, M['oak'])
-                k += sm['slat'] + sm['slat_gap']
-            mx = (x0 + x1) / 2
-            box(bpy, f"{c['id']}_specchio", mx - sm['mirror_width'] / 2, y0 - 12, sm['mirror_bottom'],
-                mx + sm['mirror_width'] / 2, y0 - 2, sm['mirror_bottom'] + sm['mirror_height'], M['mirror'])
-            box(bpy, f"{c['id']}_cornice", mx - sm['mirror_width'] / 2 - 15, y0 - 2, sm['mirror_bottom'] - 15,
-                mx + sm['mirror_width'] / 2 + 15, y0, sm['mirror_bottom'] + sm['mirror_height'] + 15, M['metal'])
-        else:  # parete parallela a Y, fronte verso -x
-            k = y0
-            while k + sm['slat'] <= y1 + 1:
-                box(bpy, f"{c['id']}_listello", x0, k, 0, x1, k + sm['slat'], top, M['oak'])
-                k += sm['slat'] + sm['slat_gap']
-            my = (y0 + y1) / 2
-            box(bpy, f"{c['id']}_specchio", x0 - 12, my - sm['mirror_width'] / 2, sm['mirror_bottom'],
-                x0 - 2, my + sm['mirror_width'] / 2, sm['mirror_bottom'] + sm['mirror_height'], M['mirror'])
-            box(bpy, f"{c['id']}_cornice", x0 - 2, my - sm['mirror_width'] / 2 - 15, sm['mirror_bottom'] - 15,
-                x0, my + sm['mirror_width'] / 2 + 15, sm['mirror_bottom'] + sm['mirror_height'] + 15, M['metal'])
+    # Mobili, proposta espositiva e parete smart: gli STESSI componenti di tavole, abaco e controlli
+    # (src/components.py). Nessuna quota propria del render.
+    fs = faces(model)
+    NORM = {(0, -1): '-y', (0, 1): '+y', (-1, 0): '-x', (1, 0): '+x'}
+    for c in all_components(model):
+        x0, y0, z0, x1, y1, z1 = c['box']
+        hf = fs.get(c['host']) if c.get('host') else None
+        nrm = NORM.get(tuple(hf['n'])) if hf else None
+        if c['kind'] == 'logo' and nrm:
+            # marchio ufficiale applicato sul fronte (riquadro del componente)
+            w = (x1 - x0) if nrm in ('-y', '+y') else (y1 - y0)
+            cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+            ox, oy = {'-y': (0, -1), '+y': (0, 1), '-x': (-1, 0), '+x': (1, 0)}[nrm]
+            px = (x0 if ox < 0 else x1) if ox else cx
+            py = (y0 if oy < 0 else y1) if oy else cy
+            plane(bpy, c['id'], (px + ox, py + oy, (z0 + z1) / 2), (w, z1 - z0), nrm, M['logo'])
+            continue
+        box(bpy, c['id'], x0, y0, z0, x1, y1, z1, M[c['mat']])
+        txt = c.get('title') if c['kind'] == 'frame' else c.get('text') if c['kind'] == 'label' else None
+        if txt and nrm:
+            ox, oy = {'-y': (0, -1), '+y': (0, 1), '-x': (-1, 0), '+x': (1, 0)}[nrm]
+            px = ((x0 if ox < 0 else x1) + 2 * ox) if ox else (x0 + x1) / 2
+            py = ((y0 if oy < 0 else y1) + 2 * oy) if oy else (y0 + y1) / 2
+            if c['kind'] == 'frame':   # titolo sull'immagine, davanti al pannello
+                label(bpy, txt, (px, py, z1 - 70), nrm, 45, M['ink'])
+            else:                      # testo del cartellino
+                label(bpy, txt, (px, py, (z0 + z1) / 2), nrm, 20, M['ink_dark'])
 
     # Esterno minimo davanti alla vetrina
     street = material(bpy, 'strada', (0.35, 0.35, 0.36), 0.8)
@@ -497,7 +391,10 @@ def render(fast=False, only=None):
         if only and cam['name'] not in only:
             continue
         top = cam.get('type') == 'top'
-        ceil.hide_render = top
+        # vista dall'alto = sezione orizzontale: via soffitto, architravi e binari luce
+        for o in sc.objects:
+            if o is ceil or o.name.endswith('_architrave') or o.name.startswith('binario_'):
+                o.hide_render = top
         if top:
             bpy.ops.object.camera_add(location=((X0 + X1) / 2 * MM, (Y0 + Y1) / 2 * MM - 0.15, 12))
             c = bpy.context.active_object
@@ -516,6 +413,13 @@ def render(fast=False, only=None):
         bpy.ops.render.render(write_still=True)
         caption(path, model, cam.get('nota', ''))
         done.append(path)
+        meta_path = folder / 'render_meta.json'
+        try:
+            meta = json.loads(meta_path.read_text(encoding='utf-8'))
+        except (OSError, ValueError):
+            meta = {}
+        meta[path.name] = model['revision']
+        meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     return done
 
 

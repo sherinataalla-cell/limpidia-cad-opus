@@ -1,49 +1,71 @@
 # Criticità e verifiche (generato dal modello)
 
-Revisione modello: P01. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato.
+Revisione modello: P02. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato; «coerente» riguarda solo la geometria.
 
 ## Riepilogo
 
 | Esito | Numero |
 | --- | ---: |
-| Conflitto | 2 |
-| Non verificabile (dato mancante) | 17 |
+| Conflitto | 3 |
+| Non verificabile (dato mancante) | 21 |
 | Avviso | 4 |
-| Compatibile nelle ipotesi attuali | 6 |
-| Coerente con decisione | 7 |
+| Compatibile nelle ipotesi attuali | 8 |
+| Coerente (solo geometria) | 16 |
 
-## Ingombri d'uso e coppie funzionali
+## Requisiti della committenza
 
 | ID | Esito | Dettaglio | Stato dei dati |
 | --- | --- | --- | --- |
-| FP02 | Conflitto | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza 580 mm; luce residua stimata 230 mm sotto la soglia di screening 900 mm. | ipotesi |
-| FP01 | Non verificabile (dato mancante) | CASSA–SCALE (lato operatore / accesso cassa): distanza 250 mm; manca: operator_zone. | da definire |
-| FP03 | Non verificabile (dato mancante) | CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza 640 mm; manca: operator_zone. | da definire |
-| FP06 | Non verificabile (dato mancante) | SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza 100 mm; manca: nessun criterio documentato (serramento, sporgenze, spessori da rilevare). | ipotesi |
-| FP07 | Non verificabile (dato mancante) | ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza 50 mm; manca: railing_thickness. | ipotesi |
-| FP04 | Compatibile nelle ipotesi attuali | C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza 879 mm, nessuna interferenza con le ipotesi d'uso. | ipotesi |
-| FP05 | Compatibile nelle ipotesi attuali | SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza 1450 mm, nessuna interferenza con le ipotesi d'uso. | ipotesi |
+| REQ-REQ_SCALA_CASSA | Conflitto | luce netta 250 mm fra SCALE (bordo del foro) e ingombro completo di CASSA; richiesta committenza ≥ 1000 mm, obiettivo 1000–1200 mm: insufficiente. Fascia fra fine scala e fondo 850 mm; servono 1600–1800 mm con questo banco: mancano 750–950 mm. | da definire |
+
+## Ingombri dei componenti (pianta = abaco = render)
+
+7 controlli coerenti su 7.
+
+## Vincoli approvati
+
+| ID | Esito | Dettaglio | Stato dei dati |
+| --- | --- | --- | --- |
+| DEC-ISOLA-P | Compatibile nelle ipotesi attuali | Isola: profondità esterna 390 mm (prodotto P 390 mm), limite approvato 400 mm. | da catalogo |
+
+## Ingombri d'uso, scenari e percorsi
+
+| ID | Esito | Dettaglio | Stato dei dati |
+| --- | --- | --- | --- |
+| FP02-PERCORSO | Conflitto | C3–SCRIVANIA: percorso/accesso nello scenario «cassetti C3 aperti»: residuo 230 mm < soglia di screening 900 mm (parametro di progetto, non requisito normativo). | ipotesi |
+| FP01 | Non verificabile (dato mancante) | CASSA–SCALE (lato operatore / accesso cassa): distanza statica 250 mm; posto operatore: manca operator_zone. | da definire |
+| FP03 | Non verificabile (dato mancante) | CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza statica 640 mm; posto operatore: manca operator_zone. | da definire |
+| FP05-PERCORSO | Non verificabile (dato mancante) | SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criterio di passaggio e simultaneità degli usi non stabiliti (accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti). | ipotesi |
+| FP06 | Non verificabile (dato mancante) | SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenze e uso del bordo da rilevare. | ipotesi |
+| FP07 | Non verificabile (dato mancante) | ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza statica 50 mm; luce netta: manca railing_thickness. | ipotesi |
+| USE-door_leaf_island | Non verificabile (dato mancante) | door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato. | da definire |
+| USE-operator_zone | Non verificabile (dato mancante) | operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato. | da definire |
+| FP02 | Compatibile nelle ipotesi attuali | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti: residuo 230 mm; seduta occupata: residuo 580 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
+| FP04 | Compatibile nelle ipotesi attuali | C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
+| FP05 | Compatibile nelle ipotesi attuali | SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo 700 mm; cassetti C4 aperti: residuo 1100 mm; seduta occupata e cassetti aperti (simultaneità da confermare): residuo 350 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 
 ## Porte
 
 | ID | Esito | Dettaglio | Stato dei dati |
 | --- | --- | --- | --- |
-| APPR-P_SAL | Conflitto | P_SAL: nella zona di accesso di 900 mm davanti al vano: C4 (220 × 20 mm dentro la zona). | ipotesi |
+| APPR-P_SAL | Conflitto | P_SAL: nella zona di accesso di 900 mm davanti al vano (screening): C4 (220 × 20 mm dentro la zona). | ipotesi |
 | CLEAR-P_ING | Non verificabile (dato mancante) | P_ING: luce netta di passaggio non documentata. | da definire |
-| SWING-P_ING | Compatibile nelle ipotesi attuali | P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza. | ipotesi |
-| SWING-P_SAL | Compatibile nelle ipotesi attuali | P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza. | ipotesi |
+| SWING-P_ING | Compatibile nelle ipotesi attuali | P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini): ipotesi. | ipotesi |
+| SWING-P_SAL | Compatibile nelle ipotesi attuali | P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini): ipotesi. | ipotesi |
+| HOST-P_ING | Coerente (solo geometria) | P_ING: vano, muro ospite, cerniera e verso coerenti. | ipotesi |
+| HOST-P_SAL | Coerente (solo geometria) | P_SAL: vano, muro ospite, cerniera e verso coerenti. | ipotesi |
 
-## Accostamenti dichiarati
+## Accostamenti dichiarati (muro e lato)
 
 | ID | Esito | Dettaglio | Stato dei dati |
 | --- | --- | --- | --- |
-| ADJ-C1-ENV | Coerente con decisione | C1: retro contro la parete di fondo, distanza dal muro 0 mm. | ipotesi |
-| ADJ-C2-C3 | Coerente con decisione | C2–C3: accostamento dichiarato (affiancate sul fronte saletta), distanza 0 mm. | ipotesi |
-| ADJ-C2-W_SAL_S1 | Coerente con decisione | C2–W_SAL_S1: accostamento dichiarato (retro contro il tramezzo), distanza 0 mm. | ipotesi |
-| ADJ-C3-W_SAL_S1 | Coerente con decisione | C3–W_SAL_S1: accostamento dichiarato (retro contro il tramezzo), distanza 0 mm. | ipotesi |
-| ADJ-C4-ENV | Coerente con decisione | C4: retro contro la parete laterale destra, distanza dal muro 0 mm. | ipotesi |
-| ADJ-CASSA-ENV | Coerente con decisione | CASSA: fianco a contatto con il muro sinistro, distanza dal muro 0 mm. | da definire |
-| ADJ-ISOLA_SMART-SCALE | Coerente con decisione | ISOLA_SMART–SCALE: accostamento dichiarato (lato lungo accostato alla ringhiera), distanza 50 mm. | ipotesi |
+| ADJ_C1_FONDO | Coerente (solo geometria) | C1 lato y1 → FONDO (retro contro la parete di fondo): distanza 0 mm, tratto di affaccio 1500 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
+| ADJ_C2_C3 | Coerente (solo geometria) | C2 lato x1 → C3 lato x0 (affiancate sul fronte saletta): distanza 0 mm, tratto di affaccio 400 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
+| ADJ_C2_WSAL | Coerente (solo geometria) | C2 lato y1 → W_SAL_S1 lato y0 (retro contro il tramezzo): distanza 0 mm, tratto di affaccio 1200 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
+| ADJ_C3_WSAL | Coerente (solo geometria) | C3 lato y1 → W_SAL_S1 lato y0 (retro contro il tramezzo): distanza 0 mm, tratto di affaccio 1200 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
+| ADJ_C4_DESTRA | Coerente (solo geometria) | C4 lato x1 → PARETE_DESTRA (retro contro la parete laterale destra): distanza 0 mm, tratto di affaccio 1500 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
+| ADJ_CASSA_SINISTRA | Coerente (solo geometria) | CASSA lato x0 → PARETE_SINISTRA (fianco a contatto con il muro sinistro): distanza 0 mm, tratto di affaccio 600 mm. Solo vincolo geometrico: posto operatore e uso a parte. | da definire |
+| ADJ_ISOLA_RINGHIERA | Coerente (solo geometria) | ISOLA_SMART lato x0 → RINGHIERA (asse) (lato lungo parallelo alla ringhiera (distanza dall'asse; luce netta in FP07)): distanza 50 mm, tratto di affaccio 1600 mm. Solo vincolo geometrico: posto operatore e uso a parte. | ipotesi |
 
 ## Prossimità non dichiarate
 
@@ -56,7 +78,8 @@ Revisione modello: P01. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 
 | ID | Esito | Dettaglio | Stato dei dati |
 | --- | --- | --- | --- |
-| SMART-FIT | Compatibile nelle ipotesi attuali | Parete smart 2070 mm: composizione 1820 mm (4 × 410 + 3 × 60), margini 125 / 125 mm. | ipotesi |
+| SMART-IMG | Non verificabile (dato mancante) | Immagini dei pannelli: immagini dei quattro pannelli non presenti nel repository: segnaposto dichiarati nelle tavole e nei render. | da definire |
+| SMART-FIT | Compatibile nelle ipotesi attuali | Parete smart 2070 mm: 4 telai esterni da 410 mm (immagine 380 mm), distanza libera fra telai 60 mm, interasse 470 mm; sviluppo dei telai 1820 mm; margini 125 / 125 mm. | ipotesi |
 
 ## Utenze
 
@@ -73,8 +96,8 @@ Revisione modello: P01. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | EL-Z-E04 | Non verificabile (dato mancante) | E04: quota Z da rilevare. | da definire |
 | EL-Z-E05 | Non verificabile (dato mancante) | E05: quota Z da rilevare. | da definire |
 | EL-Z-E06 | Non verificabile (dato mancante) | E06: quota Z da rilevare. | da definire |
-| EL-IN-E05 | Avviso | E05 cade dentro l'ingombro di ISOLA_SMART: punto dentro l'ingombro dell'isola: serve dettaglio di collegamento e apertura per manutenzione. | ipotesi |
-| EL-IN-E06 | Avviso | E06 cade dentro l'ingombro di SCRIVANIA: punto dentro l'ingombro della scrivania: serve passacavi e accesso da sotto il piano. | ipotesi |
+| EL-IN-E05 | Avviso | E05 cade dentro l'ingombro di ISOLA_SMART: alternative A: scatola a pavimento sotto l'isola, passacavo nel fondo del mobile e accesso dall'anta / B: canalina dalla parete di fondo lungo la ringhiera (visibile: da valutare con l'estetica) / C: isola solo espositiva senza alimentazione (luce prodotto a batteria). scegliere A/B/C; la posa sotto arredo non è disegnata come definitiva | ipotesi |
+| EL-IN-E06 | Avviso | E06 cade dentro l'ingombro di SCRIVANIA: alternative A: torretta o scatola a pavimento sotto la scrivania con passacavi nel piano / B: dalla parete laterale (zona C4) con canalina a pavimento fino alla scrivania (attraversa la zona sedia). scegliere A/B; la posa sotto arredo non è disegnata come definitiva | ipotesi |
 
 ## Superfici
 
