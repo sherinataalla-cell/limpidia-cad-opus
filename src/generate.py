@@ -57,6 +57,13 @@ TODAY = _revision_date()
 # Con l'opzione l'intestazione è fissa; la data di revisione resta nel cartiglio.
 ezdxf.options.write_fixed_meta_data_for_testing = True
 
+# Caratteri delle scritte nel repo (assets/fonts, licenza OFL): senza, ezdxf disegna i
+# PDF con i caratteri installati sul computer e, se OpenSans manca, con un sostituto
+# diverso da macchina a macchina; i testi cambiano larghezza e i PDF non coincidono.
+# I DXF non cambiano: contengono solo il nome del carattere.
+from ezdxf.fonts import fonts as _fonts  # noqa: E402
+_fonts.font_manager.scan_folder(ROOT / 'assets' / 'fonts')
+
 LAYERS = [
     ('WALLS', 7, 50), ('WALLS_NEW', 8, 35), ('FACADE', 7, 25), ('DOORS', 7, 25), ('STAIR', 8, 18),
     ('ROOMS', 8, 18), ('FURNITURE_ASSUMED', 30, 35), ('FURNITURE_PENDING', 1, 35), ('FURNITURE_CATALOG', 3, 35),

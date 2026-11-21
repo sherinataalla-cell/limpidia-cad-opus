@@ -37,3 +37,12 @@ def test_id_pdf_esadecimale_e_letterale():
     esa = corpo + b'/ID[<' + b'A' * 32 + b'><' + b'B' * 32 + b'>]' + coda
     lett = corpo + b'/ID[(n0\\021~]\\302\\214w?\\(cu6mdy)<' + b'C' * 32 + b'>]' + coda
     assert gen._stable_pdf_id(esa) == gen._stable_pdf_id(lett)
+
+
+def test_caratteri_dal_repo():
+    # i PDF devono usare i caratteri di assets/fonts, non quelli installati sul computer
+    from ezdxf.fonts import fonts
+    from src.model import ROOT
+    for nome in ('OpenSans-Regular.ttf', 'OpenSansCondensed-Light.ttf'):
+        voce = fonts.font_manager._font_cache.get(nome, '')
+        assert voce is not None and (ROOT / 'assets' / 'fonts') in voce.file_path.resolve().parents, nome
