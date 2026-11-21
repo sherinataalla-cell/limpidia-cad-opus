@@ -1,0 +1,201 @@
+{
+  "project": "Limpidia - Via Andrea Solari 3 Milano",
+  "revision": "P00",
+  "units": "mm",
+  "coordinate_system": "origine nell'angolo fondo sinistro; X verso destra; Y verso la vetrina",
+  "status": "assumed",
+  "envelope": {
+    "vertices": [
+      [
+        0,
+        0
+      ],
+      [
+        5500,
+        0
+      ],
+      [
+        5500,
+        450
+      ],
+      [
+        7500,
+        450
+      ],
+      [
+        7500,
+        4750
+      ],
+      [
+        0,
+        4750
+      ]
+    ],
+    "status": "assumed",
+    "source": "planimetria preliminare 13/11/2026, da rilevare"
+  },
+  "room_features": [
+    {
+      "id": "SCALE",
+      "type": "zone",
+      "x": 0,
+      "y": 900,
+      "width": 850,
+      "depth": 2400,
+      "status": "assumed"
+    },
+    {
+      "id": "SALETTA",
+      "type": "zone",
+      "x": 3450,
+      "y": 450,
+      "width": 4050,
+      "depth": 1620,
+      "status": "assumed"
+    },
+    {
+      "id": "RINGHIERA",
+      "type": "line",
+      "start": [
+        850,
+        900
+      ],
+      "end": [
+        850,
+        3300
+      ],
+      "status": "assumed"
+    }
+  ],
+  "furniture": [
+    {
+      "id": "CASSA",
+      "x": 0,
+      "y": 0,
+      "width": 1200,
+      "depth": 600,
+      "status": "pending",
+      "note": "ingombro placeholder, fianco a muro sinistro"
+    },
+    {
+      "id": "C1",
+      "x": 1840,
+      "y": 0,
+      "width": 1500,
+      "depth": 400,
+      "status": "assumed",
+      "note": "fondo, possibile 1200"
+    },
+    {
+      "id": "C2",
+      "x": 3600,
+      "y": 2070,
+      "width": 1200,
+      "depth": 400,
+      "status": "assumed",
+      "note": "fronte saletta"
+    },
+    {
+      "id": "C3",
+      "x": 4800,
+      "y": 2070,
+      "width": 1200,
+      "depth": 400,
+      "status": "assumed",
+      "note": "fronte saletta"
+    },
+    {
+      "id": "C4",
+      "x": 7100,
+      "y": 2950,
+      "width": 400,
+      "depth": 1500,
+      "status": "assumed",
+      "note": "laterale, 1500 lungo Y; frontale verso negozio"
+    },
+    {
+      "id": "SCRIVANIA",
+      "x": 4950,
+      "y": 3050,
+      "width": 700,
+      "depth": 1600,
+      "status": "assumed",
+      "note": "1600 lungo Y, parallela alla parete C4"
+    },
+    {
+      "id": "ISOLA_SMART",
+      "x": 900,
+      "y": 1650,
+      "width": 390,
+      "depth": 1600,
+      "status": "catalog",
+      "note": "lato lungo parallelo alla ringhiera"
+    }
+  ],
+  "electrical_points": [
+    {
+      "id": "E01",
+      "x": 0,
+      "y": 300,
+      "service": "Cassa POS/dati",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E02",
+      "x": 1800,
+      "y": 0,
+      "service": "C1 e ripiani fondo",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E03A",
+      "x": 3550,
+      "y": 2070,
+      "service": "C2 e ripiani",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E03B",
+      "x": 6080,
+      "y": 2070,
+      "service": "C3 e ripiani",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E03C",
+      "x": 7500,
+      "y": 2850,
+      "service": "C4 e ripiani",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E04",
+      "x": 3390,
+      "y": 1000,
+      "service": "Quattro telai smart",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E05",
+      "x": 1070,
+      "y": 2300,
+      "service": "Isola smart",
+      "z": null,
+      "status": "assumed"
+    },
+    {
+      "id": "E06",
+      "x": 5300,
+      "y": 4000,
+      "service": "Scrivania",
+      "z": null,
+      "status": "assumed"
+    }
+  ]
+}
