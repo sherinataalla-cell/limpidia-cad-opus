@@ -1,0 +1,787 @@
+{
+  "schema_version": 1,
+  "document_type": "specifica_di_accettazione_non_suite_eseguibile",
+  "review": "R02",
+  "language": "it",
+  "units": "mm",
+  "repository": "sherinataalla-cell/limpidia-cad-opus",
+  "baseline_commit": "129e25f5e45297869ed50ed01be6f99819933c50",
+  "reviewed_sources_commit": "a6eb4a57ff0512389c4c3540116289488f816699",
+  "created_date": "2026-11-21",
+  "required_requirement_ids": [
+    "R02-H01",
+    "R02-H02",
+    "R02-H03",
+    "R02-H04",
+    "R02-H05",
+    "R02-H06",
+    "R02-H07",
+    "R02-H08",
+    "R02-G01",
+    "R02-G02",
+    "R02-G03",
+    "R02-G04",
+    "R02-H09",
+    "R02-G05"
+  ],
+  "instructions": [
+    "Implementare i casi pertinenti nel framework del repository; questo JSON non costituisce una suite già eseguita.",
+    "Le sonde sintetiche non sono proposte di modifica del negozio.",
+    "Le misure di esempio ricreano la baseline: non devono bloccare future varianti valide e documentate.",
+    "Usare una tolleranza numerica dichiarata per i confronti geometrici, distinta dalle tolleranze di posa e dai criteri di passaggio.",
+    "Confrontare geometrie ed esportazioni effettive; la ricerca di stringhe nel sorgente non sostituisce tali controlli.",
+    "Conservare le correzioni successive alla baseline e adattare i fixture allo schema corrente senza perderne il significato."
+  ],
+  "cases": [
+    {
+      "id": "T01",
+      "requirements": [
+        "R02-H01"
+      ],
+      "type": "geometry",
+      "title": "Ingombro completo isola",
+      "setup": {
+        "fixture": "P01, dimensioni esterne 390 × 1600 × 830 mm; componenti corpo e piano",
+        "probe": "Costruire la geometria effettiva usata dal renderer e confrontarla con modello, pianta e abaco."
+      },
+      "expected": [
+        "Profondità esterna del fixture 390 mm e lunghezza 1600 mm, senza i 10 mm aggiunti per lato.",
+        "Per la configurazione del negozio rispettare il limite esterno di 400 mm e segnalare qualsiasi prodotto che lo superi.",
+        "Eventuali sporgenze documentate fanno parte del modello e dei controlli; nessuna correzione di posizione per mascherarle."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "model": [
+            390,
+            1600
+          ],
+          "render_top": [
+            410,
+            1620
+          ]
+        },
+        "source": "src/render.py:370–372"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T02",
+      "requirements": [
+        "R02-H01"
+      ],
+      "type": "geometry",
+      "title": "Ingombro completo cassa",
+      "setup": {
+        "fixture": "P01, cassa x=0, y=4150, ingombro dichiarato 1200 × 600 × 1000 mm",
+        "probe": "Verificare l'unione dei componenti geometrici e la relazione con le facce dei muri."
+      },
+      "expected": [
+        "L'ingombro rappresentato coincide con quello dichiarato, compresi piano e altezza totale.",
+        "Il piano non oltrepassa x=0 o y=4750 nel fixture.",
+        "Il test non conferma il prodotto reale della cassa: misure e variante restano da acquisire."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "render_top_xy": [
+            1220,
+            620
+          ],
+          "render_top_z": 1025,
+          "render_x_min": -10,
+          "render_y_max": 4760
+        },
+        "source": "src/render.py:358–364"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T03",
+      "requirements": [
+        "R02-H02"
+      ],
+      "type": "geometry",
+      "title": "Quote mensolina e cartellino smart",
+      "setup": {
+        "fixture": "Parametri P01 di mensolina e cartellino; costruire prospetto e componenti 3D",
+        "probe": "Confrontare z_min, z_max e riferimento della quota senza ricavare il risultato dal testo del sorgente."
+      },
+      "expected": [
+        "Stesso intervallo Z nei due elaborati per ogni componente.",
+        "Riferimento base/asse/sommità esplicito.",
+        "Scelta della quota preliminare registrata senza trasformarla in misura verificata."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "shelf_2d": [
+            1050,
+            1075
+          ],
+          "shelf_3d": [
+            1025,
+            1050
+          ],
+          "label_2d": [
+            900,
+            1010
+          ],
+          "label_3d": [
+            790,
+            900
+          ]
+        },
+        "sources": [
+          "src/generate.py:528–532",
+          "src/render.py:336–341"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T04",
+      "requirements": [
+        "R02-H02"
+      ],
+      "type": "geometry",
+      "title": "Quote LED con variazione di altezza",
+      "setup": {
+        "fixture": "Cassettiera H=800 mm e almeno un'altezza sintetica alternativa; non modificare le misure reali del progetto",
+        "probe": "Confrontare gli stessi riferimenti delle due linee LED nel prospetto e nella scena."
+      },
+      "expected": [
+        "Assi o estremi definiti in modo univoco e uguali nei due elaborati.",
+        "Una variazione del parametro aggiorna entrambe le rappresentazioni.",
+        "Il test verifica coordinate effettive, non stringhe come 'h * 0.36'."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "led_2d": [
+            304,
+            560
+          ],
+          "led_3d": [
+            288,
+            544
+          ]
+        },
+        "sources": [
+          "src/generate.py:459–460",
+          "src/render.py:379–380"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T05",
+      "requirements": [
+        "R02-H02"
+      ],
+      "type": "geometry",
+      "title": "Sommità listelli",
+      "setup": {
+        "fixture": "Soffitto preliminare H=4150 mm e un fixture sintetico alternativo",
+        "probe": "Confrontare la quota superiore derivata nei prospetti e nel 3D."
+      },
+      "expected": [
+        "Un solo parametro geometrico determina il limite dei listelli.",
+        "Gli estremi Z coincidono e lo stato preliminare è preservato."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "top_2d": 3750,
+          "top_3d": 3700
+        },
+        "sources": [
+          "src/generate.py:494",
+          "src/render.py:411",
+          "config/render.json:visual_assumptions"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T06",
+      "requirements": [
+        "R02-H03"
+      ],
+      "type": "export",
+      "title": "Dimensioni prodotto e rotazione",
+      "setup": {
+        "fixture": "C4, scrivania e isola; copia sintetica con rotazione differente",
+        "probe": "Esportare AB01 e confrontare L/P/H del prodotto, orientamento e ingombro X/Y."
+      },
+      "expected": [
+        "La rotazione cambia X/Y, non le dimensioni nominali del prodotto.",
+        "L/P non sono ottenuti ordinando arbitrariamente i lati.",
+        "Fonti/stati di prodotto, posizione e altezza rimangono separati."
+      ],
+      "baseline_evidence": {
+        "status": "verificata_in_abaco",
+        "observed": "AB01 chiama L×P×H i valori X/Y di C4 400×1500, scrivania 700×1600, isola 390×1600.",
+        "source": "src/generate.py:668–671"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T07",
+      "requirements": [
+        "R02-H04"
+      ],
+      "type": "parametric",
+      "title": "Variazione sintetica di una parete",
+      "setup": {
+        "fixture": "Copia geometricamente coerente con parete spostata/allungata e dipendenze aggiornate; nessuna modifica al layout approvato",
+        "probe": "Rigenerare pianta, prospetti, Q01 e componenti 3D dalla stessa variante."
+      },
+      "expected": [
+        "Estremi e sviluppo del prospetto seguono l'ID della parete.",
+        "Quote Q01 e posizione degli elementi associati si aggiornano.",
+        "Nessun elemento scompare per un filtro ancora legato a coordinate della P01."
+      ],
+      "baseline_evidence": {
+        "status": "rilevata_nel_sorgente",
+        "observed": "ELEVATIONS e alcune quote Q01 sono costanti numeriche.",
+        "sources": [
+          "src/generate.py:406–415",
+          "src/generate.py:610"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T08",
+      "requirements": [
+        "R02-H05"
+      ],
+      "type": "visual_manual",
+      "title": "Parete di fondo e cassa",
+      "setup": {
+        "fixture": "F01 e vista ingresso/cassa della revisione corretta",
+        "reference": "assets/approved/viste_approvate.png oppure assets/review_R01/render_approvato_v6.jpeg"
+      },
+      "expected": [
+        "Confronto annotato con esposizione sopra la cassa e colonna specchio/listelli.",
+        "Stessi componenti nel modello, F01, abaco e render.",
+        "Adattamenti compositivi identificati come proposte; nessuna misura estratta dalla prospettiva.",
+        "Cassa al muro sinistro e quattro cassettiere conservate."
+      ],
+      "baseline_evidence": {
+        "status": "verificata_visivamente",
+        "observed": "La P01 pubblicata lascia la parte sopra la cassa quasi vuota e non include la colonna specchio sulla parete di fondo.",
+        "source": "outputs/render/R01_ingresso_verso_cassa.png"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T09",
+      "requirements": [
+        "R02-H06"
+      ],
+      "type": "geometry_and_export",
+      "title": "Pannelli, cornici e interasse",
+      "setup": {
+        "fixture": "Quattro pannelli P01 larghi 410 mm e spazi di 60 mm; cornici incluse nella geometria",
+        "probe": "Confrontare dimensioni dell'immagine, telaio esterno, spazi, interassi e margini tra F02/abaco/3D."
+      },
+      "expected": [
+        "60 mm etichettato come distanza libera fra pannelli; interasse pannelli 470 mm.",
+        "L'ingombro dei telai esterni è calcolato e distinto da quello dei pannelli.",
+        "La fascia 1820 mm non è attribuita indistintamente a pannelli e cornici.",
+        "Nessun ridimensionamento automatico nascosto per far rientrare il gruppo."
+      ],
+      "baseline_evidence": {
+        "status": "lessico_errato_verificato_cornici_da_coordinare",
+        "observed": "4×410+3×60=1820; render.py allarga ogni cornice di 15 mm per lato.",
+        "sources": [
+          "src/render.py:332",
+          "src/generate.py:624",
+          "outputs/revisione_correzioni.md"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T10",
+      "requirements": [
+        "R02-H06"
+      ],
+      "type": "visual_manual",
+      "title": "Grafica e prodotto nei pannelli smart",
+      "setup": {
+        "fixture": "Nuovo F02 e vista smart",
+        "reference": "Composizione approvata e asset disponibili nel repository"
+      },
+      "expected": [
+        "Immagini, cartellini e appoggi corrispondono alla composizione scelta.",
+        "Gli asset mancanti sono elencati e i segnaposto dichiarati.",
+        "Non dichiarare completata la fedeltà estetica se le grafiche restano vuote."
+      ],
+      "baseline_evidence": {
+        "status": "verificata_visivamente",
+        "observed": "Pannelli grigi con titoli, cartellini bianchi, prodotti non presenti.",
+        "source": "outputs/render/R01_parete_smart.png"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T11",
+      "requirements": [
+        "R02-H07"
+      ],
+      "type": "geometry_and_manual",
+      "title": "Raccordo mensola/cubotto",
+      "setup": {
+        "fixture": "Nodo C1 e nodi analoghi; soluzioni preliminari del dettaglio D01",
+        "probe": "Confrontare solidi, distinta e sezioni del raccordo."
+      },
+      "expected": [
+        "Intersezioni intenzionali spiegate da incastro/interruzione/componenti condivisi.",
+        "Nessuna sovrapposizione non motivata fra pezzi da costruire.",
+        "Driver/cavi e accessi rappresentati schematicamente; ferramenta e portate ignote restano aperte."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed_mm": {
+          "cubby_bounds": [
+            2827,
+            4490,
+            1575,
+            3177,
+            4750,
+            1925
+          ],
+          "shelf_bounds": [
+            1840,
+            4500,
+            1850,
+            3190,
+            4750,
+            1875
+          ]
+        },
+        "source": "src/render.py:display_proposal"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T12",
+      "requirements": [
+        "R02-H08"
+      ],
+      "type": "export",
+      "title": "Registro utenze completo",
+      "setup": {
+        "fixture": "Undici utenze P01; includere una quota Z futura verificata in un fixture separato",
+        "probe": "Esportare registro e tavole con tutti i campi pertinenti."
+      },
+      "expected": [
+        "ID, utenza, quantità, X/Y/Z, supporto, accesso, driver, percorso e stati/fonti rintracciabili.",
+        "quantity e route non omessi o troncati.",
+        "E07–E09 senza posizione restano aperte; nessuna coordinata fittizia.",
+        "Una Z verificata nel fixture è rappresentata come tale; non forzare tutte le Z a pending."
+      ],
+      "baseline_evidence": {
+        "status": "rilevata_nell_esportazione",
+        "observed": "La tabella E01 non esporta quantity e route; diverse coordinate sono esplicitamente pending.",
+        "source": "src/generate.py:384–396"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T13",
+      "requirements": [
+        "R02-G01"
+      ],
+      "type": "negative_fixture",
+      "title": "Cassa a contatto con il muro sbagliato",
+      "setup": {
+        "fixture": "Copia P01",
+        "mutations": [
+          {
+            "entity": "CASSA",
+            "fields": {
+              "x": 3000,
+              "y": 0
+            }
+          }
+        ],
+        "invariant": "Vincolo al muro sinistro invariato"
+      },
+      "expected": [
+        "Il contatto con la facciata non soddisfa l'accostamento al muro sinistro.",
+        "Il risultato indica muro, lato e relazione effettivamente valutati."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed": "ADJ-CASSA-ENV resta OK nonostante il trasferimento sul fronte.",
+        "source": "src/checks.py:122–129"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T14",
+      "requirements": [
+        "R02-G01"
+      ],
+      "type": "positive_and_negative_fixture",
+      "title": "Muro, lato e tratto di contatto",
+      "setup": {
+        "fixture": "Posa corrente corretta; casi sintetici con lato, orientamento o tratto di affaccio errati"
+      },
+      "expected": [
+        "La posa corretta soddisfa il solo vincolo geometrico con stato ipotizzato.",
+        "Lato/orientamento o contatto con segmento errati non passano sulla sola distanza minima.",
+        "Posto operatore e percorsi sono verifiche separate."
+      ],
+      "baseline_evidence": {
+        "status": "requisito_derivato_dal_bug_G01",
+        "source": "src/checks.py:proximity"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T15",
+      "requirements": [
+        "R02-G02"
+      ],
+      "type": "negative_fixture",
+      "title": "Porta verificata con ostacoli ipotizzati",
+      "setup": {
+        "fixture": "Copia P01",
+        "mutations": [
+          {
+            "entity": "P_SAL",
+            "fields": {
+              "status": "verified"
+            }
+          }
+        ],
+        "invariant": "Posizioni e geometrie pertinenti degli ostacoli rimangono assumed"
+      },
+      "expected": [
+        "SWING-P_SAL non risulta SUPERATO su una geometria di contesto ipotizzata.",
+        "Il risultato elenca o traccia le dipendenze che determinano la qualità."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed": "Il solo cambio dello stato della porta produce SUPERATO.",
+        "source": "src/checks.py:224–226"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T16",
+      "requirements": [
+        "R02-G02"
+      ],
+      "type": "quality_propagation",
+      "title": "Dati completi, mancanti e collisione",
+      "setup": {
+        "fixture": "Tre casi sintetici: dipendenze necessarie tutte verificate; dato necessario mancante; interferenza con dati ipotizzati"
+      },
+      "expected": [
+        "Il caso completo può superare soltanto il controllo geometrico dichiarato.",
+        "Un dato necessario mancante produce NON_VERIFICABILE.",
+        "L'interferenza resta visibile con la qualità dei dati, senza diventare approvazione."
+      ],
+      "baseline_evidence": {
+        "status": "requisito_derivato_dal_bug_G02",
+        "source": "src/checks.py:doors"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T17",
+      "requirements": [
+        "R02-G03"
+      ],
+      "type": "negative_fixture",
+      "title": "Porta fuori dal locale",
+      "setup": {
+        "fixture": "Copia P01",
+        "mutations": [
+          {
+            "entity": "P_ING",
+            "fields": {
+              "x0": 9000,
+              "x1": 9900,
+              "hinge": [
+                9000,
+                0
+              ]
+            }
+          }
+        ]
+      },
+      "expected": [
+        "Errore di collocazione o muro ospite prima del solo controllo collisioni.",
+        "Nessun esito compatibile perché non si trovano ostacoli."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "observed": "SWING-P_ING risulta COMPATIBILE_IPOTESI per la porta fuori dal locale.",
+        "source": "src/checks.py:201–250"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T18",
+      "requirements": [
+        "R02-G03"
+      ],
+      "type": "host_consistency",
+      "title": "Muro ospite, cerniera e dimensioni del vano",
+      "setup": {
+        "fixture": "Casi con muro errato, cerniera incoerente, opening_width incompatibile; caso valido con vano e luce utile diversi"
+      },
+      "expected": [
+        "Le incoerenze sono distinte dalle collisioni dell'anta.",
+        "Vano, luce utile e anta non devono essere artificialmente uguali.",
+        "Una porta esterna è valutata secondo il verso documentato, non forzando ogni settore nel poligono interno."
+      ],
+      "baseline_evidence": {
+        "status": "requisito_derivato_dal_bug_G03",
+        "source": "src/checks.py:doors"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T19",
+      "requirements": [
+        "R02-G04"
+      ],
+      "type": "functional",
+      "title": "FP05: collisione e percorso separati",
+      "setup": {
+        "fixture": "P01, scrivania–C4; scenario simultaneo sedia 750 e cassetto 350 mm",
+        "values_mm": {
+          "static_gap": 1450,
+          "chair": 750,
+          "drawer": 350
+        }
+      },
+      "expected": [
+        "Nessuna sovrapposizione delle due fasce e residuo di 350 mm riportati separatamente.",
+        "Esito del percorso/accesso distinto: con criterio dichiarato oppure NON_VERIFICABILE se manca.",
+        "La soglia di screening non viene presentata come certificazione normativa."
+      ],
+      "baseline_evidence": {
+        "status": "calcolo_verificato",
+        "observed": "FP05 compatibile verifica soltanto non sovrapposizione.",
+        "source": "src/checks.py:functional_pairs"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T20",
+      "requirements": [
+        "R02-G04"
+      ],
+      "type": "semantic_invariance",
+      "title": "Descrizione libera indipendente dall'esito",
+      "setup": {
+        "fixture": "Stessi campi funzionali strutturati; cambiare soltanto la descrizione aggiungendo/togliendo le parole accesso, passaggio, percorso"
+      },
+      "expected": [
+        "Misure, criteri ed esiti invariati.",
+        "La logica dipende da scenario e tipo di controllo, non dal testo libero."
+      ],
+      "baseline_evidence": {
+        "status": "rilevata_nel_sorgente",
+        "observed": "La scelta dello screening dipende dalle parole della descrizione.",
+        "source": "src/checks.py:182–184"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T21",
+      "requirements": [
+        "R02-G04"
+      ],
+      "type": "functional_unknowns",
+      "title": "Scenari, operatore e ringhiera mancanti",
+      "setup": {
+        "fixture": "Assenza del criterio del percorso o della simultaneità; cassa con operator_zone pending; spessore ringhiera e ante isola non documentati"
+      },
+      "expected": [
+        "Le verifiche interessate restano aperte senza inventare dati.",
+        "Misura asse ringhiera e luce netta sono distinte.",
+        "L'apertura delle ante isola viene trattata come verifica da eseguire, non omessa.",
+        "Le informazioni mancanti non impediscono di correggere bug software indipendenti.",
+        "Il posto operatore mancante non nasconde l’insufficienza dei 250 mm P01 rispetto al nuovo minimo di progetto di 1000 mm; i controlli sono distinti."
+      ],
+      "baseline_evidence": {
+        "status": "dati_aperti_documentati",
+        "sources": [
+          "config/geometry.json:use_assumptions",
+          "outputs/criticita.md"
+        ]
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T22",
+      "requirements": [
+        "R02-G04"
+      ],
+      "type": "regression_fixture",
+      "title": "Conflitti fisici della baseline ancora rilevati",
+      "setup": {
+        "fixture": "Fixture della P01 prima di eventuali varianti di layout",
+        "observed_mm": {
+          "c3_desk_gap": 580,
+          "drawer_extension": 350,
+          "residual": 230,
+          "c4_access_overlap": [
+            220,
+            20
+          ]
+        }
+      },
+      "expected": [
+        "Il refactoring non fa sparire i due conflitti nel fixture invariato.",
+        "Conflitto accesso saletta distinto dall'apertura dell'anta.",
+        "Una variante futura può risolverli solo con nuove geometrie/scenari documentati; nessun test deve obbligare a mantenere un conflitto nel progetto."
+      ],
+      "baseline_evidence": {
+        "status": "riprodotta_in_audit",
+        "source": "outputs/criticita.md"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T23",
+      "requirements": [
+        "R02-H09"
+      ],
+      "type": "delivery",
+      "title": "Manifesto e revisione dei render",
+      "setup": {
+        "fixture": "Nomi delle camere nella configurazione corrente; alterare in un fixture un file atteso o la revisione di origine"
+      },
+      "expected": [
+        "Tutti i render dichiarati presenti con revisione/configurazione coerenti.",
+        "Un PNG assente o di una revisione non identificata impedisce di dichiarare completo il set.",
+        "Gli archivi precedenti sono separati chiaramente dalla consegna corrente.",
+        "Nella baseline i quattro P01 sono già presenti: non riaprire l'errore storico."
+      ],
+      "baseline_evidence": {
+        "status": "consegna_P01_verificata_protezione_futura_da_implementare",
+        "source": ".github/workflows/build-cad.yml"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T24",
+      "requirements": [
+        "R02-H09"
+      ],
+      "type": "integration_and_visual",
+      "title": "Rigenerazione e rapporto finale",
+      "setup": {
+        "fixture": "Revisione corretta, sei tavole e quattro viste; registri AB01/Q01/E01 e dettaglio D01 nei limiti dei dati",
+        "probe": "Eseguire test e generatori, controllare gli output e compilare il rapporto R02."
+      },
+      "expected": [
+        "DXF in mm 1:1 e PDF alle scale dichiarate, orientamento conservato.",
+        "Componenti/ID/quote coerenti fra pianta, prospetti, abaco e 3D.",
+        "Vista dall'alto leggibile senza cancellare porte/architravi dal modello tecnico.",
+        "Report per tutti i quattordici requisiti, con test eseguiti, residui e file realmente prodotti.",
+        "Stato preliminare conservato finché mancano quote e validazioni; nessun merge automatico."
+      ],
+      "baseline_evidence": {
+        "status": "specifica_di_consegna",
+        "source": "docs/reviews/R02_errori_e_correzioni_opus.md"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T25",
+      "requirements": [
+        "R02-G05"
+      ],
+      "type": "client_clearance_requirement",
+      "title": "Scala–cassa: minimo netto richiesto",
+      "setup": {
+        "fixture": "P01 e casi sintetici con ingombri completi definiti",
+        "net_gaps_mm": [
+          250,
+          999,
+          1000,
+          1100,
+          1200
+        ],
+        "criterion_source": "committenza"
+      },
+      "expected": [
+        "250 e 999 mm risultano insufficienti rispetto al minimo richiesto.",
+        "1000, 1100 e 1200 mm soddisfano soltanto il criterio numerico di luce in quello scenario, mantenendo la qualità delle quote.",
+        "Il valore non è misurato da un asse né dal solo corpo del mobile: top, parapetto e corrimano sono inclusi.",
+        "Con riferimenti fisici mancanti, nessun OK definitivo della luce netta; altre verifiche d’uso restano distinte.",
+        "Un valore maggiore di 1200 mm va documentato rispetto al layout e non fallisce automaticamente un falso limite massimo."
+      ],
+      "baseline_evidence": {
+        "status": "nuovo_vincolo_committente_confrontato_con_modello",
+        "observed_gap_mm": 250,
+        "source": "config/geometry.json e ultima richiesta utente"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    },
+    {
+      "id": "T26",
+      "requirements": [
+        "R02-G05"
+      ],
+      "type": "layout_feasibility_and_provenance",
+      "title": "Fascia sul fondo e conservazione delle geometrie reali",
+      "setup": {
+        "fixture": "Coordinate assunte P01",
+        "stair_y_end_mm": 3900,
+        "back_wall_y_mm": 4750,
+        "cash_depth_mm": 600,
+        "target_clearance_mm": [
+          1000,
+          1200
+        ]
+      },
+      "expected": [
+        "Disponibilità del fixture 850 mm, richiesta complessiva 1600–1800 mm; deficit 750–950 mm documentato.",
+        "Il fixture attuale non è dichiarato compatibile semplicemente sostituendo 250 con 1000 nell’etichetta.",
+        "Scala e perimetro non vengono ridimensionati o spostati senza fonte.",
+        "La soluzione o alternativa conserva cassa al muro sinistro e mostra posizione, luce netta e interferenze aggiornate.",
+        "La conclusione riguarda le ipotesi del modello; dimensioni reali ancora da verificare e varianti da valutare restano esplicite."
+      ],
+      "baseline_evidence": {
+        "status": "calcolo_riprodotto_da_coordinate_P01",
+        "source": "config/geometry.json"
+      },
+      "execution_status": "specifica_da_implementare_non_eseguita"
+    }
+  ],
+  "package_update": "Integrazione richiesta committenza: 100–120 cm netti fra scala e cassa",
+  "client_constraints": [
+    {
+      "id": "CC_CASSA_SCALA_CLEARANCE",
+      "requirement": "R02-G05",
+      "source": "ultima indicazione della committenza in conversazione",
+      "source_text": "tra la scala e la cassa dovrebbe esserci un metro barra un metro e venti",
+      "kind": "design_requirement",
+      "units": "mm",
+      "target_interval_mm": [
+        1000,
+        1200
+      ],
+      "minimum_required_mm": 1000,
+      "hard_maximum_mm": null,
+      "measured_on_site": false,
+      "retain": "cassa sul muro sinistro",
+      "measurement": "luce netta lungo il passaggio fra ingombro fisico scala/parapetto/corrimano e bordo esterno completo della cassa",
+      "unknown_geometry_status": "pending",
+      "note": "La soglia è richiesta dalla committenza; non è una dichiarazione normativa."
+    }
+  ]
+}
