@@ -1,12 +1,13 @@
-"""Test del modello P01 e casi di accettazione T01-T12 della revisione R01
-(docs/reviews/R01_regressioni.json). I fixture sintetici non sono misure del negozio."""
+"""Test del modello (rev. P02) e casi di accettazione T01-T12 della revisione R01
+(docs/reviews/R01_regressioni.json), aggiornati allo schema P02. I casi R02 sono in test_r02.py.
+I fixture sintetici non sono misure del negozio."""
 import copy
 import json
 
 import ezdxf
 import pytest
 
-from src.model import (load, areas, bounds, contains, gap, placement_status, weakest, smart_layout,
+from src.model import (load, areas, bounds, contains, gap, placement_status, weakest, smart_layout, smart_wall_geom,
                        rect_cells, floor_poly, envelope_poly, room, ROOT)
 from src import checks
 from src.generate import generate
@@ -86,8 +87,8 @@ def test_T02_saletta_topology(model):
     assert outer.difference(net).area == pytest.approx(walls + door, rel=0.001)  # tramezzi + vano porta
     w = next(w for w in model['walls'] if w['id'] == 'W_SAL_O')
     assert w['width'] == 100 and w['source']
-    assert model['smart_wall']['face_x'] == w['x']
-    assert model['smart_wall']['y1'] - model['smart_wall']['y0'] == 2070  # S2, ipotesi di riferimento
+    g = smart_wall_geom(model)                            # parete smart ricavata dal tramezzo, non duplicata
+    assert g['face_x'] == w['x'] and g['y0'] == w['y'] and g['y1'] - g['y0'] == w['depth'] == 2070  # S2
     assert model['smart_wall']['band']['status'] != 'verified'
 
 
@@ -123,7 +124,8 @@ def _probes(model, declared):
         {'id': 'PROBE_A', 'x': 1000, 'y': 3000, 'width': 100, 'depth': 100, 'status': 'assumed', 'front': '-y'},
         {'id': 'PROBE_B', 'x': 1130, 'y': 3000, 'width': 100, 'depth': 100, 'status': 'assumed', 'front': '-y'}]
     m['walls'], m['functional_pairs'] = [], []
-    m['adjacencies'] = [{'a': 'PROBE_A', 'b': 'PROBE_B', 'relation': 'accostati'}] if declared else []
+    m['adjacencies'] = [{'id': 'ADJ_PROBE', 'a': 'PROBE_A', 'side': 'x1', 'to': {'furniture': 'PROBE_B', 'side': 'x0'},
+                         'relation': 'accostati', 'tolerance': 50}] if declared else []
     return m
 
 
@@ -132,7 +134,8 @@ def test_T04_nonexplicit_adjacency(model):
     assert res['PRX-PROBE_A-PROBE_B']['outcome'] == 'AVVISO'
     assert 'non dichiarata' in res['PRX-PROBE_A-PROBE_B']['text']
     res_d = by_id(checks.proximity(_probes(model, True)))
-    assert res_d['ADJ-PROBE_A-PROBE_B']['outcome'] == 'OK'
+    assert 'PRX-PROBE_A-PROBE_B' not in res_d                       # dichiarato: nessun avviso di prossimità
+    assert by_id(checks.adjacency(_probes(model, True)))['ADJ_PROBE']['outcome'] == 'OK'
     m = _probes(model, True)
     m['furniture'][1]['x'] = 1050  # sovrapposizione: resta conflitto anche se dichiarato
     assert by_id(checks.proximity(m))['OVL-PROBE_A-PROBE_B']['outcome'] == 'CONFLITTO'
@@ -219,11 +222,12 @@ def test_T10_smart_elevation(model, out):
     sw = model['smart_wall']
     assert len(L['panels']) == sw['panels']['count'] == 4
     assert L['fits'] and L['matches_band']
-    assert all(round(b - a) == sw['panels']['width'] for a, b in L['panels'])
+    fw = sw['panels']['frame_outer_width']
+    assert all(round(b - a) == fw for a, b in L['panels'])
     assert len(sw['panel_titles']) == 4
     doc = ezdxf.readfile(out / 'F02_prospetto_smart.dxf')
     meas = [round(d.get_measurement()) for d in doc.modelspace().query('DIMENSION')]
-    assert meas.count(sw['panels']['width']) >= 4 and 1820 in meas and 2070 in meas
+    assert meas.count(fw) >= 4 and 1820 in meas and 2070 in meas and 470 in meas
 
 
 # --- T11 componenti approvati --------------------------------------------------------------
@@ -231,12 +235,11 @@ def test_T10_smart_elevation(model, out):
 def test_T11_approved_components(model):
     dp = model['display_proposal']
     assert dp['status'] == 'assumed' and dp['stagger'] > 0 and dp['cubby']['board'] > 0
-    assert dp['slat_mirror'] and len(dp['slat_columns']) == 2
+    assert dp['slat_mirror'] and {c['id'] for c in dp['slat_columns']} == {'LS1', 'LS2', 'LS3'}  # LS3 sul fondo (H05)
     assert (ROOT / 'assets' / 'brand' / 'limpidia.png').exists()
     assert (ROOT / 'assets' / 'approved' / 'viste_approvate.png').exists()
     src = (ROOT / 'src' / 'render.py').read_text(encoding='utf-8')
-    assert 'for zz in (h * 0.36, h * 0.68)' in src  # due linee LED sulle cassettiere
-    assert 'LOGO' in src
+    assert 'all_components' in src and 'LOGO' in src  # LED e componenti: geometria comune (test R02 T04)
 
 
 # --- T12 utenze e consegne -------------------------------------------------------------------

@@ -36,17 +36,22 @@ I file generati sono in `outputs/`:
 | --- | --- |
 | `A01_pianta_arredi_preliminare.dxf/.pdf` | Pianta arredi quotata con porte, ingombri d'uso e coppie funzionali, A3 1:50 |
 | `E01_punti_utenza_preliminari.dxf/.pdf` | Punti utenza energia/dati e LED con abaco (supporto, accesso, alimentatore, percorso), Z da rilevare |
-| `F01`–`F04_*.dxf/.pdf` | Prospetti fondo/cassa, parete smart, fronte saletta, laterale consulenza, A3 1:20 |
+| `F01`–`F04_*.dxf/.pdf` | Prospetti ricavati dalle facce di parete del modello (fondo/cassa, parete smart, fronte saletta, laterale consulenza), A3 1:20 |
+| `D01_dettagli_schema_preliminare.dxf/.pdf` | Schema preliminare di mensole, cubotti, LED e colonne listelli dai componenti comuni, A3 1:10 |
+| `A01_V1_proposta.dxf/.pdf` | Variante di layout da approvare (cassa sul fondo, requisito scala–cassa) |
+| `proposte_layout.md` | Proposte quotate V1–V4 per gli spazi ancora critici, con confronto dei controlli |
+| `E01_registro_utenze.md` | Registro utenze con quantità, percorso, accesso e stati |
 | `AB01_abaco_arredi.md` | Abaco arredi di catalogo e distinta dei pezzi su misura |
 | `Q01_quote_aperte.md` | Registro completo di quote aperte, conflitti e decisioni (`quote_da_rilevare.md` vi rimanda) |
 | `criticita.md` | Controlli: contenimento, accostamenti, coppie funzionali, porte, smart, utenze, superfici |
 | `MANIFEST.md` | Elenco dei file realmente generati con revisione e scala |
 | `revisione_correzioni.md` | Esito della revisione R01 punto per punto |
-| `render/R01_*.png` | Anteprime 3D dal modello (non fonti metriche) |
+| `revisione_correzioni_R02.md` | Esito della revisione R02 (H01–H09, G01–G05) |
+| `render/R01_*.png` | Anteprime 3D dai componenti del modello (non fonti metriche); `render_meta.json` = revisione di ogni immagine |
 
 **Orientamento:** in pianta la vetrina è in basso e la parete di fondo in alto; l'origine (0, 0) è l'angolo vetrina sinistro guardando il negozio dalla strada. I render usano lo stesso riferimento, quindi destra e sinistra coincidono con la pianta.
 
-I DXF si aprono con LibreCAD, QCAD o AutoCAD; nello spazio modello sono 1:1 in mm, il layout `A01`/`E01` è la tavola stampabile. I file sorgente in `config/` sono l'unica fonte di coordinate e dimensioni (`geometry.json`); `render.json` contiene solo colori, luci, camere e poche ipotesi grafiche per l'anteprima 3D, non quote di progetto (soffitto, altezze dei mobili e composizioni vengono da `geometry.json`).
+I DXF si aprono con LibreCAD, QCAD o AutoCAD; nello spazio modello sono 1:1 in mm, il layout `A01`/`E01` è la tavola stampabile. Mobili, mensole, cubotti, LED, listelli e parete smart sono costruiti una sola volta come solidi in `src/components.py`: pianta, prospetti, abaco, controlli e render leggono gli stessi componenti. I file sorgente in `config/` sono l'unica fonte di coordinate e dimensioni (`geometry.json`); `render.json` contiene solo colori, luci, camere e poche ipotesi grafiche per l'anteprima 3D, non quote di progetto (soffitto, altezze dei mobili e composizioni vengono da `geometry.json`).
 
 ## Claude Opus / Claude Code
 
