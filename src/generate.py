@@ -13,7 +13,7 @@ import datetime as dt
 import ezdxf
 from ezdxf.enums import TextEntityAlignment
 
-from .model import load, bounds, OUT, STATUS_LABEL
+from .model import load, bounds, back_side, OUT, STATUS_LABEL
 from .checks import clearances, write_report, PASSAGGIO_MM, ACCOSTATO_MM
 
 SCALE = 50                 # 1:50
@@ -104,10 +104,11 @@ def draw_base(m, model):
     # Lati di riferimento, solo testo descrittivo
     xs = [v[0] for v in env['vertices']]
     ys = [v[1] for v in env['vertices']]
-    label(m, 'VETRINA / INGRESSO (posizione porta da rilevare)', (min(xs) + max(xs)) / 2, max(ys) + 2.5 * SCALE,
-          'TEXT', TXT, TextEntityAlignment.BOTTOM_CENTER)
-    label(m, 'PARETE DI FONDO', (min(xs) + max(xs)) / 2, min(ys) - 1.2 * SCALE, 'TEXT', TXT * 0.9,
-          TextEntityAlignment.TOP_CENTER)
+    # Convenzione del modello: vetrina sul lato a Y minima (in basso), fondo in alto
+    label(m, 'VETRINA / INGRESSO (posizione porta da rilevare)', (min(xs) + max(xs)) / 2, min(ys) - 10 * SCALE,
+          'TEXT', TXT, TextEntityAlignment.TOP_CENTER)
+    label(m, 'PARETE DI FONDO', (min(xs) + max(xs)) / 2, max(ys) + 7.5 * SCALE, 'TEXT', TXT * 0.9,
+          TextEntityAlignment.BOTTOM_CENTER)
 
 
 def dims_envelope(m, model):
@@ -117,23 +118,32 @@ def dims_envelope(m, model):
     ys = [p[1] for p in v]
     x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
     off = 12 * SCALE
-    # Totale lungo X sopra la vetrina, totale lungo Y a sinistra
+    # Totali sopra (fondo) e a sinistra, catena dei lati all'esterno di ciascun lato
     dim(m, (x0, y1), (x1, y1), (0, y1 + off), 'DIM_ENVELOPE', 0, st)
     dim(m, (x0, y0), (x0, y1), (x0 - off, 0), 'DIM_ENVELOPE', 90, st)
-    # Ogni lato del perimetro, catena interna
+    ccw = sum(ax * by - bx * ay for (ax, ay), (bx, by) in zip(v, v[1:] + v[:1])) > 0
     for (ax, ay), (bx, by) in zip(v, v[1:] + v[:1]):
-        if ay == by and ay not in (y1,):
-            dim(m, (ax, ay), (bx, by), (0, ay - 6 * SCALE if ay == y0 else ay - 3 * SCALE), 'DIM_ENVELOPE', 0, st)
+        dx, dy = bx - ax, by - ay
+        nx, ny = (dy, -dx) if ccw else (-dy, dx)
+        nx, ny = (nx > 0) - (nx < 0), (ny > 0) - (ny < 0)
+        if ay == by:
+            dim(m, (ax, ay), (bx, by), (0, ay + ny * 5 * SCALE), 'DIM_ENVELOPE', 0, st)
         elif ax == bx and ax != x0:
-            dim(m, (ax, ay), (bx, by), (ax + 6 * SCALE, 0), 'DIM_ENVELOPE', 90, st)
+            dim(m, (ax, ay), (bx, by), (ax + nx * 5 * SCALE, 0), 'DIM_ENVELOPE', 90, st)
 
 
 def dims_furniture(m, model):
+    """Larghezza sul fronte del mobile, profondità sul fianco libero."""
+    verts = model['envelope']['vertices']
+    zones = [z for z in model['room_features'] if z['type'] == 'zone']
     for f in model['furniture']:
-        x0, y0, x1, y1 = bounds(f)
+        x0, y0, x1, y1 = r = bounds(f)
         st = mark(f['status'])
-        dim(m, (x0, y1), (x1, y1), (0, y1 + 2 * SCALE), 'DIM_FURNITURE', 0, st)
-        dim(m, (x1, y0), (x1, y1), (x1 + 2 * SCALE, 0), 'DIM_FURNITURE', 90, st)
+        back = back_side(r, verts, zones)
+        yd = y0 - 2 * SCALE if back == 'y1' else y1 + 2 * SCALE
+        xd = x0 - 2 * SCALE if back == 'x1' else x1 + 2 * SCALE
+        dim(m, (x0, y0), (x1, y0), (0, yd), 'DIM_FURNITURE', 0, st)
+        dim(m, (x0, y0), (x0, y1), (xd, 0), 'DIM_FURNITURE', 90, st)
 
 
 def dims_clearances(m, model):
@@ -237,7 +247,7 @@ def sheet(doc, name, title, legend, model, limits):
 def plot_limits(model):
     xs = [v[0] for v in model['envelope']['vertices']]
     ys = [v[1] for v in model['envelope']['vertices']]
-    pad = 18 * SCALE
+    pad = 22 * SCALE
     return min(xs) - pad, min(ys) - pad, max(xs) + pad, max(ys) + pad
 
 
@@ -271,7 +281,7 @@ def build_a01(model):
     dims_envelope(m, model)
     dims_furniture(m, model)
     dims_clearances(m, model)
-    label(m, WARNING, 0, plot_limits(model)[1] + 3 * SCALE, 'WARNING', TXT * 1.4)
+    label(m, WARNING, 0, plot_limits(model)[1] + 2 * SCALE, 'WARNING', TXT * 1.4)
     sheet(d, 'A01', ['Pianta arredi quotata', 'Piano terra'], LEGEND_A01, model, plot_limits(model))
     return d
 
@@ -289,7 +299,7 @@ def build_e01(model):
         label(m, p['id'], p['x'] + 2.2 * SCALE, p['y'] + 1.2 * SCALE, 'ELECTRICAL', TXT)
         rows.append(p)
     lim = plot_limits(model)
-    label(m, WARNING + ' - SIMBOLI = UTENZE, NON CIRCUITI O PRESE DEFINITIVE', 0, lim[1] + 3 * SCALE,
+    label(m, WARNING + ' - SIMBOLI = UTENZE, NON CIRCUITI O PRESE DEFINITIVE', 0, lim[1] + 2 * SCALE,
           'WARNING', TXT * 1.2)
     sheet(d, 'E01', ['Punti utenza energia/dati', 'e alimentazioni LED', 'Piano terra'], LEGEND_E01, model, lim)
     lay = d.layouts.get('E01')

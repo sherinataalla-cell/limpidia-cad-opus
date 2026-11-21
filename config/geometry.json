@@ -2,34 +2,16 @@
   "project": "Limpidia - Via Andrea Solari 3 Milano",
   "revision": "P00",
   "units": "mm",
-  "coordinate_system": "origine nell'angolo fondo sinistro; X verso destra; Y verso la vetrina",
+  "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla vetrina); X verso destra; Y verso la parete di fondo",
   "status": "assumed",
   "envelope": {
     "vertices": [
-      [
-        0,
-        0
-      ],
-      [
-        5500,
-        0
-      ],
-      [
-        5500,
-        450
-      ],
-      [
-        7500,
-        450
-      ],
-      [
-        7500,
-        4750
-      ],
-      [
-        0,
-        4750
-      ]
+      [0, 0],
+      [7500, 0],
+      [7500, 4300],
+      [5500, 4300],
+      [5500, 4750],
+      [0, 4750]
     ],
     "status": "assumed",
     "source": "planimetria preliminare 13/11/2026, da rilevare"
@@ -39,7 +21,7 @@
       "id": "SCALE",
       "type": "zone",
       "x": 0,
-      "y": 900,
+      "y": 1450,
       "width": 850,
       "depth": 2400,
       "status": "assumed"
@@ -48,7 +30,7 @@
       "id": "SALETTA",
       "type": "zone",
       "x": 3450,
-      "y": 450,
+      "y": 2680,
       "width": 4050,
       "depth": 1620,
       "status": "assumed"
@@ -56,14 +38,8 @@
     {
       "id": "RINGHIERA",
       "type": "line",
-      "start": [
-        850,
-        900
-      ],
-      "end": [
-        850,
-        3300
-      ],
+      "start": [850, 3850],
+      "end": [850, 1450],
       "status": "assumed"
     }
   ],
@@ -71,7 +47,7 @@
     {
       "id": "CASSA",
       "x": 0,
-      "y": 0,
+      "y": 4150,
       "width": 1200,
       "depth": 600,
       "status": "pending",
@@ -80,7 +56,7 @@
     {
       "id": "C1",
       "x": 1840,
-      "y": 0,
+      "y": 4350,
       "width": 1500,
       "depth": 400,
       "status": "assumed",
@@ -89,7 +65,7 @@
     {
       "id": "C2",
       "x": 3600,
-      "y": 2070,
+      "y": 2280,
       "width": 1200,
       "depth": 400,
       "status": "assumed",
@@ -98,7 +74,7 @@
     {
       "id": "C3",
       "x": 4800,
-      "y": 2070,
+      "y": 2280,
       "width": 1200,
       "depth": 400,
       "status": "assumed",
@@ -107,7 +83,7 @@
     {
       "id": "C4",
       "x": 7100,
-      "y": 2950,
+      "y": 300,
       "width": 400,
       "depth": 1500,
       "status": "assumed",
@@ -116,7 +92,7 @@
     {
       "id": "SCRIVANIA",
       "x": 4950,
-      "y": 3050,
+      "y": 100,
       "width": 700,
       "depth": 1600,
       "status": "assumed",
@@ -125,7 +101,7 @@
     {
       "id": "ISOLA_SMART",
       "x": 900,
-      "y": 1650,
+      "y": 1500,
       "width": 390,
       "depth": 1600,
       "status": "catalog",
@@ -136,7 +112,7 @@
     {
       "id": "E01",
       "x": 0,
-      "y": 300,
+      "y": 4450,
       "service": "Cassa POS/dati",
       "z": null,
       "status": "assumed"
@@ -144,7 +120,7 @@
     {
       "id": "E02",
       "x": 1800,
-      "y": 0,
+      "y": 4750,
       "service": "C1 e ripiani fondo",
       "z": null,
       "status": "assumed"
@@ -152,7 +128,7 @@
     {
       "id": "E03A",
       "x": 3550,
-      "y": 2070,
+      "y": 2680,
       "service": "C2 e ripiani",
       "z": null,
       "status": "assumed"
@@ -160,7 +136,7 @@
     {
       "id": "E03B",
       "x": 6080,
-      "y": 2070,
+      "y": 2680,
       "service": "C3 e ripiani",
       "z": null,
       "status": "assumed"
@@ -168,7 +144,7 @@
     {
       "id": "E03C",
       "x": 7500,
-      "y": 2850,
+      "y": 1900,
       "service": "C4 e ripiani",
       "z": null,
       "status": "assumed"
@@ -176,7 +152,7 @@
     {
       "id": "E04",
       "x": 3390,
-      "y": 1000,
+      "y": 3750,
       "service": "Quattro telai smart",
       "z": null,
       "status": "assumed"
@@ -184,7 +160,7 @@
     {
       "id": "E05",
       "x": 1070,
-      "y": 2300,
+      "y": 2450,
       "service": "Isola smart",
       "z": null,
       "status": "assumed"
@@ -192,10 +168,11 @@
     {
       "id": "E06",
       "x": 5300,
-      "y": 4000,
+      "y": 750,
       "service": "Scrivania",
       "z": null,
       "status": "assumed"
     }
-  ]
+  ],
+  "coordinate_system_note": "21/11/2026: modello ribaltato rispetto a P00 (prima Y andava verso la vetrina e il lato x=0 risultava a destra entrando). Solo cambio di riferimento, nessuna misura modificata."
 }

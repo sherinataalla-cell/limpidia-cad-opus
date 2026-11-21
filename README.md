@@ -40,6 +40,8 @@ I file generati sono in `outputs/`:
 | `quote_da_rilevare.md` | Registro quote aperte |
 | `render/R01_*.png` | Anteprime 3D dal modello (non fonti metriche) |
 
+**Orientamento:** in pianta la vetrina è in basso e la parete di fondo in alto; l'origine (0, 0) è l'angolo vetrina sinistro guardando il negozio dalla strada. I render usano lo stesso riferimento, quindi destra e sinistra coincidono con la pianta.
+
 I DXF si aprono con LibreCAD, QCAD o AutoCAD; nello spazio modello sono 1:1 in mm, il layout `A01`/`E01` è la tavola stampabile. I file sorgente in `config/` sono l'unica fonte di coordinate e dimensioni (`geometry.json`); `render.json` contiene solo altezze e finiture per l'anteprima 3D, non quote di progetto.
 
 ## Claude Opus / Claude Code

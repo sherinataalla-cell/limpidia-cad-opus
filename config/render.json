@@ -62,8 +62,8 @@
       "fonte": "Monfero cachemire (approvato)"
     },
     "brick": {
-      "color": [0.17, 0.085, 0.05],
-      "mortar": [0.55, 0.5, 0.45],
+      "color": [0.1, 0.05, 0.03],
+      "mortar": [0.36, 0.33, 0.3],
       "fonte": "parete smart in mattoni marrone scuro (approvato)"
     },
     "ceiling": {
@@ -80,21 +80,24 @@
   "cameras": [
     {
       "name": "dalla_vetrina",
-      "location": [700, 4450, 1600],
-      "target": [4600, 1700, 1000],
-      "lens": 17
+      "at": [0.12, 0.06, 1600],
+      "look": [0.62, 0.62, 1000],
+      "lens": 17,
+      "nota": "entrando, angolo vetrina sinistro verso il fondo a destra"
     },
     {
       "name": "verso_la_vetrina",
-      "location": [1300, 600, 1650],
-      "target": [3600, 4750, 1000],
-      "lens": 17
+      "at": [0.3, 0.88, 1650],
+      "look": [0.55, 0.0, 1000],
+      "lens": 17,
+      "nota": "dal fondo verso la vetrina"
     },
     {
       "name": "parete_smart",
-      "location": [1400, 4000, 1600],
-      "target": [3450, 1100, 1300],
-      "lens": 17
+      "at": [0.18, 0.3, 1600],
+      "look": [0.46, 0.75, 1300],
+      "lens": 17,
+      "nota": "verso la parete in mattoni e i telai smart"
     }
   ],
   "resolution": [1600, 1000],
