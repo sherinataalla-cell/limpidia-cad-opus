@@ -1,0 +1,205 @@
+{
+  "schema": "limpidia-review-test-cases-v1",
+  "audit_id": "REVIEW-R01",
+  "baseline_sha": "63373a5a028f69c4ec065fe68090572f28f3cb54",
+  "units": "mm",
+  "purpose": "Acceptance cases for Opus to implement against the updated schema. These are not executable tests and are not replacement project measurements.",
+  "cases": [
+    {
+      "id": "T01_orientation",
+      "issue_ids": [
+        "R01-01"
+      ],
+      "kind": "geometry_and_visual",
+      "setup": "Use the documented physical anchors after applying the chosen coordinate convention once.",
+      "expected": "Storefront at the bottom of the reference plan; entry and stairs left; refraction room rear-right. Same physical locations in A01, E01, elevations and cameras; dimensions/area unchanged.",
+      "note": "Preserve an existing correction on a newer HEAD; no second reflection."
+    },
+    {
+      "id": "T02_saletta_topology",
+      "issue_ids": [
+        "R01-02"
+      ],
+      "kind": "geometry",
+      "setup": "Model the room against the stepped rear envelope with identified outer/inner wall faces.",
+      "observed_baseline": {
+        "zone_rect_mm": {
+          "x": 3450,
+          "y": 450,
+          "width": 4050,
+          "depth": 1620
+        },
+        "west_smart_span_mm": 1620
+      },
+      "expected": "No spurious strip behind the west side; no extension into the rear-right recess. Explicit inner polygon and wall thickness/source. Previous2070/1820 values are reference hypotheses, not surveyed targets."
+    },
+    {
+      "id": "T03_concave_containment",
+      "issue_ids": [
+        "R01-05"
+      ],
+      "kind": "synthetic_fixture",
+      "fixture": {
+        "envelope_vertices": [
+          [
+            0,
+            0
+          ],
+          [
+            5500,
+            0
+          ],
+          [
+            5500,
+            450
+          ],
+          [
+            7500,
+            450
+          ],
+          [
+            7500,
+            4750
+          ],
+          [
+            0,
+            4750
+          ]
+        ],
+        "object": {
+          "id": "REVIEW_RECESS_PROBE",
+          "x": 6000,
+          "y": 100,
+          "width": 100,
+          "depth": 100,
+          "status": "assumed"
+        }
+      },
+      "observed_baseline": "No outside-envelope warning.",
+      "expected": "Containment fails for the entire footprint. Add separate inside/touching/crossing-boundary cases; do not test only the bounding box or object center."
+    },
+    {
+      "id": "T04_nonexplicit_adjacency",
+      "issue_ids": [
+        "R01-06"
+      ],
+      "kind": "synthetic_fixture",
+      "fixture": {
+        "objects": [
+          {
+            "id": "PROBE_A",
+            "x": 1000,
+            "y": 3000,
+            "width": 100,
+            "depth": 100
+          },
+          {
+            "id": "PROBE_B",
+            "x": 1130,
+            "y": 3000,
+            "width": 100,
+            "depth": 100
+          }
+        ],
+        "declared_adjacencies": []
+      },
+      "observed_baseline": "30 mm gap is silently treated as intentional by findings().",
+      "expected": "Do not label the gap approved/intentional. Report unresolved proximity/use when relevant. Explicit approved adjacency must have a different result; overlap must remain flagged."
+    },
+    {
+      "id": "T05_functional_pairs",
+      "issue_ids": [
+        "R01-04",
+        "R01-06"
+      ],
+      "kind": "geometry_and_use",
+      "observed_baseline": {
+        "desk_C4_gap_mm": 1450,
+        "desk_facade_gap_mm": 100,
+        "first_gap_in_generic_clearance_report": false
+      },
+      "expected": "Both functional relations are assessed regardless of1200mm generic cutoff. Include measured or explicit hypothetical chair/drawer envelopes; unresolved sizes produce NOT_VERIFIED, not PASS."
+    },
+    {
+      "id": "T06_door_states",
+      "issue_ids": [
+        "R01-03"
+      ],
+      "kind": "parameterized_fixture",
+      "variants": [
+        "door_missing",
+        "door_present_no_collision",
+        "door_present_swing_collision"
+      ],
+      "expected": "Missing warning only for missing door; collision only for intersecting door sweep. Door is an opening in both2D/3D and preserves documented right-side/inward topology."
+    },
+    {
+      "id": "T07_quality_propagation",
+      "issue_ids": [
+        "R01-08"
+      ],
+      "kind": "data_model_and_dxf",
+      "variants": [
+        "dimension_catalog_position_assumed",
+        "derived_gap_with_assumed_endpoint",
+        "future_verified_Z"
+      ],
+      "expected": "Catalog dimensions do not certify placement. Derived gaps visibly retain unverified status. Verified future Z with a source is valid input; do not assert all Z remain null."
+    },
+    {
+      "id": "T08_area_semantics",
+      "issue_ids": [
+        "R01-07"
+      ],
+      "kind": "numeric_fixture",
+      "observed_baseline": {
+        "envelope_area_m2": 34.725,
+        "stair_opening_area_m2": 2.04,
+        "saletta_rectangle_area_m2": 6.561
+      },
+      "expected": "These values are labeled by geometry/definition. No scaling to45m2 and no equivalence of gross rectangular zone to7m2 net room. Update expected numbers only when actual geometry changes with documented source."
+    },
+    {
+      "id": "T09_render_mesh_bounds",
+      "issue_ids": [
+        "R01-05",
+        "R01-09"
+      ],
+      "kind": "scene_geometry",
+      "expected": "Floor mesh covers only the intended envelope minus staircase opening. No occupied footprint outside polygon. Reconcile ceiling heights/soffits and document visual assumptions."
+    },
+    {
+      "id": "T10_smart_elevation",
+      "issue_ids": [
+        "R01-11"
+      ],
+      "kind": "parametric_composition",
+      "observed_baseline": {
+        "auto_frame_size_mm": [
+          325,
+          422.5
+        ],
+        "formula": "span/4-80; height=width*1.3"
+      },
+      "expected": "Four explicitly configured elements with margins, interaxes and source/status; no silent resize to conceal invalid wall length. Elevation agrees with scene geometry."
+    },
+    {
+      "id": "T11_approved_components",
+      "issue_ids": [
+        "R01-10"
+      ],
+      "kind": "visual_and_catalog",
+      "expected": "Open cubbies, staggered shelves, continuous mirror slats, two drawer LED lines, chosen products and official logo match the applicable approved references. Do not derive fabrication dimensions from imagery."
+    },
+    {
+      "id": "T12_electrical_and_deliverables",
+      "issue_ids": [
+        "R01-12",
+        "R01-13",
+        "R01-14"
+      ],
+      "kind": "cross_artifact",
+      "expected": "Stable object IDs; electrical ownership/support/access fields known or pending; E05/E06 connection/access explained. Actual output manifest, readable CAD/PDF inspection and test commands/results recorded. Renderer light energy is not installation wattage."
+    }
+  ]
+}

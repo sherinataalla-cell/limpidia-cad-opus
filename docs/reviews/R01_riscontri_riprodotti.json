@@ -1,0 +1,191 @@
+{
+  "snapshot_sha": "63373a5a028f69c4ec065fe68090572f28f3cb54",
+  "units": "mm",
+  "checks": {
+    "smart_span_mm": 1620,
+    "smart_frame_mm": [
+      325.0,
+      422.5
+    ],
+    "saletta_rectangular_zone_m2": 6.561,
+    "envelope_polygon_m2": 34.725,
+    "stairs_void_m2": 2.04,
+    "desk_C4_gap_mm": 1450,
+    "desk_facade_gap_mm": 100,
+    "island_to_rail_axis_mm": 50,
+    "reference_smart_difference_mm": 450,
+    "recess_probe_outside_reported": false,
+    "unapproved_30mm_gap_reported": false,
+    "desk_C4_in_clearance_list": false
+  },
+  "baseline_clearances": [
+    {
+      "a": "C2",
+      "b": "C3",
+      "mm": 0,
+      "axis": "x",
+      "ra": [
+        3600,
+        2070,
+        4800,
+        2470
+      ],
+      "rb": [
+        4800,
+        2070,
+        6000,
+        2470
+      ]
+    },
+    {
+      "a": "C2",
+      "b": "SALETTA",
+      "mm": 0,
+      "axis": "y",
+      "ra": [
+        3600,
+        2070,
+        4800,
+        2470
+      ],
+      "rb": [
+        3450,
+        450,
+        7500,
+        2070
+      ]
+    },
+    {
+      "a": "C3",
+      "b": "SALETTA",
+      "mm": 0,
+      "axis": "y",
+      "ra": [
+        4800,
+        2070,
+        6000,
+        2470
+      ],
+      "rb": [
+        3450,
+        450,
+        7500,
+        2070
+      ]
+    },
+    {
+      "a": "ISOLA_SMART",
+      "b": "SCALE",
+      "mm": 50,
+      "axis": "x",
+      "ra": [
+        900,
+        1650,
+        1290,
+        3250
+      ],
+      "rb": [
+        0,
+        900,
+        850,
+        3300
+      ]
+    },
+    {
+      "a": "CASSA",
+      "b": "SCALE",
+      "mm": 300,
+      "axis": "y",
+      "ra": [
+        0,
+        0,
+        1200,
+        600
+      ],
+      "rb": [
+        0,
+        900,
+        850,
+        3300
+      ]
+    },
+    {
+      "a": "C3",
+      "b": "SCRIVANIA",
+      "mm": 580,
+      "axis": "y",
+      "ra": [
+        4800,
+        2070,
+        6000,
+        2470
+      ],
+      "rb": [
+        4950,
+        3050,
+        5650,
+        4650
+      ]
+    },
+    {
+      "a": "CASSA",
+      "b": "C1",
+      "mm": 640,
+      "axis": "x",
+      "ra": [
+        0,
+        0,
+        1200,
+        600
+      ],
+      "rb": [
+        1840,
+        0,
+        3340,
+        400
+      ]
+    },
+    {
+      "a": "C4",
+      "b": "SALETTA",
+      "mm": 880,
+      "axis": "y",
+      "ra": [
+        7100,
+        2950,
+        7500,
+        4450
+      ],
+      "rb": [
+        3450,
+        450,
+        7500,
+        2070
+      ]
+    },
+    {
+      "a": "CASSA",
+      "b": "ISOLA_SMART",
+      "mm": 1050,
+      "axis": "y",
+      "ra": [
+        0,
+        0,
+        1200,
+        600
+      ],
+      "rb": [
+        900,
+        1650,
+        1290,
+        3250
+      ]
+    }
+  ],
+  "reference_reconciliation_only": {
+    "left_saletta_outer_x_from_reference_mm": 3390,
+    "left_saletta_outer_x_in_snapshot_mm": 3450,
+    "net_area_if_reference_geometry_used_m2": 6.9997,
+    "note": "Arithmetic consistency of earlier preliminary references only; not a measured or approved replacement geometry."
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "repository": "sherinataalla-cell/limpidia-cad-opus",
+  "pr_url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/pull/1",
+  "baseline_sha": "63373a5a028f69c4ec065fe68090572f28f3cb54",
+  "review_date": "2026-11-21",
+  "files": [
+    {
+      "path": "config/geometry.json",
+      "sha": "09f34c175305ce5324753e8ef00cbe382cdee100",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/config/geometry.json"
+    },
+    {
+      "path": "CLAUDE.md",
+      "sha": "7a1bbf06fddc3d8b2aebc2b3e913768054dd46e5",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/CLAUDE.md"
+    },
+    {
+      "path": "src/checks.py",
+      "sha": "b6eed6e0576e27fe9f678290c6e537bec08a662c",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/src/checks.py"
+    },
+    {
+      "path": "config/render.json",
+      "sha": "a9d779b61e6e9d1e69c03cd266309ebd0f32edfb",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/config/render.json"
+    },
+    {
+      "path": "src/model.py",
+      "sha": "77cfa1d3c7a9e95fb119dd012d56377fb2ba4335",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/src/model.py"
+    },
+    {
+      "path": "src/generate.py",
+      "sha": "214ac819752cabeba9b15cc53aa2cd6e5521105e",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/src/generate.py"
+    },
+    {
+      "path": "src/render.py",
+      "sha": "b2119328d8f84e27e7a4548ef424e9cb5cf9bc94",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/src/render.py"
+    },
+    {
+      "path": "tests/test_model.py",
+      "sha": "1efdcf87f35188897ab14127eeb086d0fd4c052d",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/tests/test_model.py"
+    },
+    {
+      "path": "docs/decisioni.md",
+      "sha": "48d15bfab38d42923bc40c04aa43d4061e4c810e",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/docs/decisioni.md"
+    },
+    {
+      "path": "docs/rilievo.md",
+      "sha": "87873630311f50890c485590bc6813dbac8357e3",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/docs/rilievo.md"
+    },
+    {
+      "path": "docs/fonti_prodotti.md",
+      "sha": "3ee0523e6592f490f44b1d48fe119c975ea3cb6c",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/docs/fonti_prodotti.md"
+    },
+    {
+      "path": "docs/opus_prompt.md",
+      "sha": "e7852668af11ea0ed2111323febdb01d93120cf5",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/docs/opus_prompt.md"
+    },
+    {
+      "path": "README.md",
+      "sha": "53cb96626e75cf8f9c8d64f812fc5fc85d4a7888",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/README.md"
+    },
+    {
+      "path": "outputs/criticita.md",
+      "sha": "c9c37e68d1e358d30493f1bed1d992e1c5fabbf3",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/outputs/criticita.md"
+    },
+    {
+      "path": "assets/approved/README.md",
+      "sha": "8a590f391da759fe61c0bb382d4d37017ea6dc16",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/assets/approved/README.md"
+    },
+    {
+      "path": "requirements.txt",
+      "sha": "b3c6fe85fe9cd60c0368cb9b24abf36f633f67bd",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/requirements.txt"
+    },
+    {
+      "path": "requirements-render.txt",
+      "sha": "271dc6874d55ce78f4e288ab42944b01fd62b9f0",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/requirements-render.txt"
+    },
+    {
+      "path": ".claude/skills/limpidia-cad/SKILL.md",
+      "sha": "8ae47859c714c703109a71176fef60a1618311bf",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/.claude/skills/limpidia-cad/SKILL.md"
+    },
+    {
+      "path": "pyproject.toml",
+      "sha": "3c32f93c82c4c22f1ab3296bb86b8628842f8dd9",
+      "url": "https://github.com/sherinataalla-cell/limpidia-cad-opus/blob/63373a5a028f69c4ec065fe68090572f28f3cb54/pyproject.toml"
+    }
+  ],
+  "review_scope": "Read source and reproduced geometric checks. Viewed supplied reference plan and approved image; PR-render PNGs not inspected. No complete pytest run asserted."
+}
