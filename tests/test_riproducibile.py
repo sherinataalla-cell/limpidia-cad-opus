@@ -28,3 +28,12 @@ def test_data_dalla_revisione():
     model = gen.load()
     assert model.get('revision_date'), 'manca revision_date in geometry.json'
     assert gen.TODAY == model['revision_date']
+
+
+def test_id_pdf_esadecimale_e_letterale():
+    # PyMuPDF a volte scrive l'/ID come stringa letterale: deve diventare la stessa impronta
+    corpo = b'%PDF-1.7\n1 0 obj<<>>endobj\nxref\ntrailer\n<</Size 2/Root 1 0 R'
+    coda = b'>>\nstartxref\n9\n%%EOF\n'
+    esa = corpo + b'/ID[<' + b'A' * 32 + b'><' + b'B' * 32 + b'>]' + coda
+    lett = corpo + b'/ID[(n0\\021~]\\302\\214w?\\(cu6mdy)<' + b'C' * 32 + b'>]' + coda
+    assert gen._stable_pdf_id(esa) == gen._stable_pdf_id(lett)

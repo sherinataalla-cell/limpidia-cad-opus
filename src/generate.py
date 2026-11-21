@@ -22,7 +22,6 @@ from ezdxf.enums import TextEntityAlignment
 
 import copy
 import json
-import re
 
 from shapely.ops import nearest_points
 from shapely.geometry import box, LineString, Polygon
@@ -773,17 +772,43 @@ def build_d01(model):
 
 # --- Esportazione --------------------------------------------------------------------
 
+def _pdf_string_end(data, i):
+    """Fine (esclusa) della stringa PDF che inizia in i: esadecimale <...> o letterale (...)."""
+    if data[i:i + 1] == b'<':
+        return data.index(b'>', i) + 1
+    depth, j = 0, i
+    while j < len(data):
+        c = data[j:j + 1]
+        if c == b'\\':
+            j += 2
+            continue
+        if c == b'(':
+            depth += 1
+        elif c == b')':
+            depth -= 1
+            if depth == 0:
+                return j + 1
+        j += 1
+    raise ValueError('stringa PDF non chiusa')
+
+
 def _stable_pdf_id(data):
     """Sostituisce l'/ID casuale del PDF con un'impronta del contenuto.
 
-    PyMuPDF scrive un /ID nuovo a ogni salvataggio; derivandolo dal contenuto
-    lo stesso disegno dà sempre lo stesso file (stessa lunghezza, offset invariati).
+    PyMuPDF scrive un /ID nuovo a ogni salvataggio, a volte come stringa esadecimale <...>
+    e a volte come stringa letterale (...): si accettano entrambe le forme. L'/ID sta nel
+    trailer, dopo la tabella xref, quindi cambiarne la lunghezza non sposta gli offset.
     """
-    m = re.search(rb'/ID\[<([0-9A-Fa-f]{32})><([0-9A-Fa-f]{32})>\]', data)
-    if not m:
+    k = data.rfind(b'/ID[')
+    if k < 0:
         return data
-    h = hashlib.md5(data[:m.start()] + data[m.end():]).hexdigest().upper().encode()
-    return data[:m.start(1)] + h + data[m.end(1):m.start(2)] + h + data[m.end(2):]
+    s1 = k + 4
+    e1 = _pdf_string_end(data, s1)
+    e2 = _pdf_string_end(data, e1)
+    if data[e2:e2 + 1] != b']':
+        return data
+    h = b'<' + hashlib.md5(data[:k] + data[e2 + 1:]).hexdigest().upper().encode() + b'>'
+    return data[:s1] + h + h + data[e2:]
 
 
 def export_pdf(doc, layout_name, path):
