@@ -275,7 +275,11 @@ def _scenario(model, obj, a, b, ga, gb, d, sc):
                 coll = True
                 notes.append(f"{na} di {a} e {nb} di {b} si sovrappongono")
     used = [u['status'] for side in facing.values() for _, u, _ in side]
-    resid = d - sum(u['value'] for side in facing.values() for _, u, _ in side)
+    # residuo geometrico fra ingombri statici più fasce d'uso (vale anche per coppie in diagonale)
+    from shapely.ops import unary_union
+    ea = unary_union([ga] + [g for _, _, g in facing[a]])
+    eb = unary_union([gb] + [g for _, _, g in facing[b]])
+    resid = 0.0 if coll else ea.distance(eb)
     return {'name': sc['name'], 'missing': [], 'collision': coll, 'resid': resid, 'notes': notes, 'used': used}
 
 
@@ -359,31 +363,48 @@ def requirements(model):
         cs = [c for c in comps if c['owner'] == req['b']]
         ub = union_bounds(cs)
         gb = sbox(ub[0], ub[1], ub[3], ub[4])   # ingombro completo della cassa (top compreso)
-        d = ga.distance(gb)
+        d_hole = ga.distance(gb)
         f = furn[req['b']]
         st = weakest(stair['status'], placement_status(f), f['status'])
-        known = rail is not None and rail.get('thickness') is not None
+        th = None
+        if rail is not None:
+            th = rail.get('thickness')
+            if th is None:
+                th = model.get('use_assumptions', {}).get('railing_thickness', {}).get('value')
         target = req['target']
-        info = (f"luce netta {d:.0f} mm fra {req['a']} (bordo del foro) e ingombro completo di {req['b']}; "
+        info = (f"luce netta {d_hole:.0f} mm fra {req['a']} (bordo del foro) e ingombro completo di {req['b']}; "
                 f"richiesta committenza ≥ {req['min']} mm, obiettivo {target[0]}–{target[1]} mm")
-        if d < req['min']:
+        if d_hole < req['min']:
             extra = ''
             if gb.bounds[1] >= ga.bounds[3]:
                 avail = envelope_poly(model).bounds[3] - ga.bounds[3]
                 P = gb.bounds[3] - gb.bounds[1]
                 extra = (f". Fascia fra fine scala e fondo {avail:.0f} mm; servono {P + req['min']:.0f}–{P + target[1]:.0f} mm "
                          f"con questo banco: mancano {P + req['min'] - avail:.0f}–{P + target[1] - avail:.0f} mm")
-            out.append(_r('REQ-' + req['id'], 'requisiti', 'CONFLITTO', f"{info}: insufficiente{extra}.", d, st, [req['a'], req['b']]))
-        elif not known:
+            out.append(_r('REQ-' + req['id'], 'requisiti', 'CONFLITTO', f"{info}: insufficiente{extra}.", d_hole, st,
+                          [req['a'], req['b']]))
+            continue
+        if rail is None or th is None:
             out.append(_r('REQ-' + req['id'], 'requisiti', 'NON_VERIFICABILE',
-                          f"{info}: criterio numerico soddisfatto sul foro, ma parapetto/corrimano in testa alla scala non rilevati"
-                          + (f"; oltre {target[1]} mm: da motivare nel layout" if d > target[1] else '') + '.', d, st, [req['a'], req['b']]))
+                          f"{info}: criterio numerico soddisfatto sul solo foro, ma sagoma, estremità e spessore di "
+                          "parapetto/corrimano non rilevati: la luce reale può essere minore. È una distanza minima fra "
+                          "ingombri, non la larghezza di un percorso.", d_hole, st, [req['a'], req['b']]))
+            continue
+        # ingombro fisico: foro scala + ringhiera lungo la sua linea reale, estremità comprese
+        rl = LineString([tuple(rail['start']), tuple(rail['end'])]).buffer(th / 2, cap_style='square')
+        phys = ga.union(rl)
+        d = phys.distance(gb)
+        st = weakest(st, rail['status'])
+        if d < req['min']:
+            out.append(_r('REQ-' + req['id'], 'requisiti', 'CONFLITTO',
+                          f"{info}; dall'ingombro fisico di scala e ringhiera (estremità comprese) {d:.0f} mm: insufficiente.",
+                          d, st, [req['a'], req['b'], rail['id']]))
         else:
-            d2 = d - rail['thickness'] / 2
-            outcome = _ok_or_ipotesi(st) if d2 >= req['min'] else 'CONFLITTO'
-            out.append(_r('REQ-' + req['id'], 'requisiti', outcome,
-                          f"{info}; al netto del corrimano {d2:.0f} mm" + (f"; oltre {target[1]} mm: da motivare nel layout" if d2 > target[1] else '')
-                          + '. Solo criterio numerico a banco chiuso: posto operatore e uso a parte.', d2, st, [req['a'], req['b']]))
+            out.append(_r('REQ-' + req['id'], 'requisiti', _ok_or_ipotesi(st),
+                          f"{info}; dall'ingombro fisico di scala e ringhiera {d:.0f} mm"
+                          + (f"; oltre {target[1]} mm: da motivare nel layout" if d > target[1] else '')
+                          + '. Solo distanza minima a banco chiuso: percorso, operatore e usi adiacenti a parte.',
+                          d, st, [req['a'], req['b'], rail['id']]))
     return out
 
 
@@ -459,7 +480,9 @@ def doors(model):
                           f"{op['id']}: collocazione incoerente: {'; '.join(why)}. Apertura non valutata.", status=weakest(*deps),
                           items=[op['id']], deps=deps))
             continue
-        out.append(_r('HOST-' + op['id'], 'porte', 'OK', f"{op['id']}: vano, muro ospite, cerniera e verso coerenti.",
+        checked = 'vano e muro ospite coerenti' + ('' if missing else '; cerniera, anta e verso coerenti')
+        out.append(_r('HOST-' + op['id'], 'porte', 'OK',
+                      f"{op['id']}: {checked}" + ('; cerniera/anta/verso non documentati, non valutati.' if missing else '.'),
                       status=weakest(*deps), items=[op['id']], deps=deps))
         if missing:
             out.append(_r('SWING-' + op['id'], 'porte', 'NON_VERIFICABILE', f"{op['id']}: anta o cerniera non documentate.",
@@ -496,7 +519,9 @@ def doors(model):
                 y0, y1 = sorted((base, base + sy * depth))
                 appr = sbox(op['x0'], y0, op['x1'], y1)
                 blocked = [k for k, o in obj.items() if o['kind'] == 'mobile' and appr.intersection(o['geom']).area > 1]
-                adeps = list(deps) + [sp['status']] + [obj[k]['status'] for k in blocked]
+                # dipendenze: anche i mobili vicini che determinano l'esito (posa e stato), non solo quelli che interferiscono
+                near = [k for k, o in obj.items() if o['kind'] == 'mobile' and o['geom'].distance(appr) <= 300]
+                adeps = list(deps) + [sp['status']] + [obj[k]['status'] for k in near]
                 if blocked:
                     det = []
                     for k in blocked:
@@ -507,7 +532,8 @@ def doors(model):
                                   status=weakest(*adeps), items=[op['id']] + blocked, deps=adeps))
                 else:
                     out.append(_r('APPR-' + op['id'], 'porte', _ok_or_ipotesi(weakest(*adeps)),
-                                  f"{op['id']}: zona di accesso di {depth} mm davanti al vano libera da mobili.", depth,
+                                  f"{op['id']}: zona di accesso di {depth} mm davanti al vano libera da mobili"
+                                  + (f" (vicini: {', '.join(near)})" if near else '') + '.', depth,
                                   weakest(*adeps), [op['id']], adeps))
         if op.get('clear_width') is None:
             out.append(_r('CLEAR-' + op['id'], 'porte', 'NON_VERIFICABILE', f"{op['id']}: luce netta di passaggio non documentata.",

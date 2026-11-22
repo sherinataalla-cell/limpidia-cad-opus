@@ -262,7 +262,7 @@ def test_T19_fp05_collision_and_path_separate(model):
 def test_T20_description_does_not_change_outcome(model):
     m = copy.deepcopy(model)
     for p in m['functional_pairs']:
-        p['desc'] = p.get('desc', '') + ' accesso passaggio percorso'
+        p['function'] = p['function'] + ' accesso passaggio percorso'   # campo descrittivo effettivo
     a = {k: (v['outcome'], v['mm']) for k, v in by_id(checks.functional_pairs(model)).items()}
     b = {k: (v['outcome'], v['mm']) for k, v in by_id(checks.functional_pairs(m)).items()}
     assert a == b
@@ -292,9 +292,19 @@ def test_T23_render_manifest_detects_missing(model, tmp_path, monkeypatch):
 
 def test_T23_render_set_current_revision(model):
     rows = gen.render_status(model)
-    if not all(ok for _, _, ok, _ in rows):
-        pytest.skip('render non generati in questo ambiente')
-    assert all(rev == model['revision'] for *_, rev in rows)
+    assert rows and all(ok for _, _, ok, _ in rows), 'set di render incompleto'          # consegna: non si salta
+    assert all(rev == model['revision'] for *_, rev in rows), 'render di altra revisione o di modello/codice cambiati'
+
+
+def test_T23_render_fingerprint_detects_change(model, tmp_path, monkeypatch):
+    import json
+    (tmp_path / 'render').mkdir()
+    for name, f, _, _ in gen.render_status(model):
+        (tmp_path / 'render' / f.name).write_bytes(b'png')
+    meta = {f.name: {'revision': model['revision'], 'fingerprint': 'impronta-vecchia'} for _, f, _, _ in gen.render_status(model)}
+    (tmp_path / 'render' / 'render_meta.json').write_text(json.dumps(meta), encoding='utf-8')
+    monkeypatch.setattr(gen, 'OUT', tmp_path)
+    assert not any(rev == model['revision'] for *_, rev in gen.render_status(model))
 
 
 def test_T09_render_uses_components():
@@ -307,9 +317,10 @@ def test_T09_render_uses_components():
         if c['kind'] == 'logo':
             continue
         o = bpy.data.objects[c['id']]
-        x0, y0, z0, x1, y1, z1 = c['box']
-        assert o.dimensions.x * 1000 == pytest.approx(x1 - x0, abs=0.5)
-        assert o.location.z * 1000 == pytest.approx((z0 + z1) / 2, abs=0.5)
+        box = c['box']
+        for i in range(3):                                  # ingombro completo: tre dimensioni e tre centri
+            assert o.dimensions[i] * 1000 == pytest.approx(box[i + 3] - box[i], abs=0.5), (c['id'], i)
+            assert o.location[i] * 1000 == pytest.approx((box[i] + box[i + 3]) / 2, abs=0.5), (c['id'], i)
 
 
 # --- G05 scala–cassa ---------------------------------------------------------------------------------------------
@@ -349,3 +360,76 @@ def test_T26_feasibility_and_provenance(model):
     assert r['mm'] >= 1000 and r['outcome'] != 'CONFLITTO'
     assert by_id(checks.adjacency(m))['ADJ_CASSA_SINISTRA']['outcome'] == 'CONFLITTO'   # deroga visibile
     assert furn(model, 'CASSA')['x'] == 0                             # base invariata
+
+
+
+# --- Audit P02 (22/11/2026): difetti riprodotti -------------------------------------------------
+
+def _v1(model):
+    return gen.apply_overrides(model, next(v for v in model['layout_proposals'] if v['id'] == 'V1'))
+
+
+@pytest.mark.parametrize('end_y,th,exp', [(3900, 50, 'COMPATIBILE_IPOTESI'), (4400, 50, 'CONFLITTO'), (3900, None, 'NON_VERIFICABILE')])
+def test_A1_railing_position_and_extent(model, end_y, th, exp):
+    m = _v1(model)
+    rail = next(z for z in m['room_features'] if z['type'] == 'line')
+    rail['end'] = [rail['end'][0], end_y]          # ringhiera sintetica: estensione verso la cassa
+    rail['thickness'] = th
+    r = by_id(checks.requirements(m))['REQ-REQ_SCALA_CASSA']
+    assert r['outcome'] == exp
+    if end_y == 4400:
+        assert round(r['mm']) == 975                # dall'ingombro fisico, non foro meno mezzo spessore
+
+
+def test_A2_v1_c1_stair_and_diagonal(model):
+    res = by_id(checks.run_all(_v1(model)))
+    assert round(res['FP08']['mm']) == 450
+    assert res['FP08-PERCORSO']['outcome'] == 'CONFLITTO' and round(res['FP08-PERCORSO']['mm']) == 100
+    assert res['REQ-REQ_SCALA_CASSA']['outcome'] == 'NON_VERIFICABILE'
+    assert 'non la larghezza di un percorso' in res['REQ-REQ_SCALA_CASSA']['text']
+    txt = gen.proposals(model)
+    assert 'DIAGONALE' in txt and 'non è una soluzione chiusa' in txt and 'FP08-PERCORSO' in txt
+
+
+def test_A3_access_zone_depends_on_neighbours(model):
+    m = copy.deepcopy(model)
+    op = next(o for o in m['openings'] if o['id'] == 'P_SAL')
+    op['status'] = 'verified'
+    for w in m['walls']:
+        if w['id'].startswith('W_SAL_S'):
+            w['status'] = 'verified'
+    next(r for r in m['rooms'] if r['id'] == 'SALETTA')['status'] = 'verified'
+    m['use_assumptions']['screening_passage']['status'] = 'verified'
+    furn(m, 'C4')['y'] = 280                        # come V2: appena fuori dalla zona, posa ipotizzata
+    r = by_id(checks.doors(m))['APPR-P_SAL']
+    assert r['outcome'] == 'COMPATIBILE_IPOTESI' and 'C4' in r['text']
+
+
+def test_A3_host_text_without_hinge(model):
+    m = copy.deepcopy(model)
+    next(o for o in m['openings'] if o['id'] == 'P_SAL')['hinge'] = None
+    res = by_id(checks.doors(m))
+    assert 'cerniera, anta e verso coerenti' not in res['HOST-P_SAL']['text']
+    assert res['SWING-P_SAL']['outcome'] == 'NON_VERIFICABILE'
+
+
+def test_A4_d01_plinth_from_component(model):
+    doc = gen.build_d01(model)
+    zoc = next(c for c in all_components(model) if c['owner'] == 'C1' and c['kind'] == 'plinth')['box']
+    depth = round(zoc[4] - zoc[1])
+    meas = [round(d.get_measurement()) for d in doc.modelspace().query('DIMENSION')]
+    assert depth in meas                           # 370: stesso zoccolo di abaco e render
+    m = copy.deepcopy(model)
+    m['display_proposal']['shelf_levels'] = [1250, 1530, 1850, 2150]   # livelli sintetici
+    meas2 = [round(d.get_measurement()) for d in gen.build_d01(m).modelspace().query('DIMENSION')]
+    assert 320 in meas2                            # passo dal modello, non +300 fisso
+
+
+def test_A5_electrical_sources(model):
+    q, _ = gen.q01(model)
+    e = gen.e01_register(model)
+    assert 'Fonte X, Y' in e and 'Fonte Z' in e
+    for pid in ('E07', 'E08', 'E09'):
+        row = next(l for l in q.splitlines() if l.startswith(f'| {pid} | posizione'))
+        assert 'S0' not in row and 'da documentare' in row
+    assert 'da documentare' in next(l for l in q.splitlines() if l.startswith('| E01 | quota Z'))

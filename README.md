@@ -47,6 +47,7 @@ I file generati sono in `outputs/`:
 | `MANIFEST.md` | Elenco dei file realmente generati con revisione e scala |
 | `revisione_correzioni.md` | Esito della revisione R01 punto per punto |
 | `revisione_correzioni_R02.md` | Esito della revisione R02 (H01–H09, G01–G05) |
+| `revisione_correzioni_P03.md` | Correzioni dell'audit sulla P02 (rev. P03): software, dati ipotizzati, scelte da approvare |
 | `render/R01_*.png` | Anteprime 3D dai componenti del modello (non fonti metriche); `render_meta.json` = revisione di ogni immagine |
 
 **Orientamento:** in pianta la vetrina è in basso e la parete di fondo in alto; l'origine (0, 0) è l'angolo vetrina sinistro guardando il negozio dalla strada. I render usano lo stesso riferimento, quindi destra e sinistra coincidono con la pianta.

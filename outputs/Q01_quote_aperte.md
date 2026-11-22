@@ -1,6 +1,6 @@
 # Q01 - Registro quote aperte, conflitti e decisioni
 
-Revisione P02, generato il 2026-11-21 da config/geometry.json. Ogni riga resta aperta finché il dato non è inserito con stato `verified` e fonte (rilievo, scheda firmata).
+Revisione P03, generato il 2026-11-22 da config/geometry.json. Ogni riga resta aperta finché il dato non è inserito con stato `verified` e fonte (rilievo, scheda firmata).
 
 | Rif. | Dato | Valore attuale | Stato | Fonte |
 | --- | --- | --- | --- | --- |
@@ -65,28 +65,39 @@ Revisione P02, generato il 2026-11-21 da config/geometry.json. Ogni riga resta a
 | ESPOSIZIONE | livelli mensole (base), cubotti, listelli e specchi | [1250, 1550, 1850, 2150] | ipotesi | PROP da S4 |
 | ESPOSIZIONE | sommità listelli | soffitto - 400 | ipotesi | PROP da S4 |
 | ESPOSIZIONE | linee LED cassettiere (assi, frazione di H) | [0.38, 0.7] | ipotesi | PROP da S4: due linee LED incassate nel frontale |
-| E01 | posizione X/Y (Cassa: POS, rete dati, stampante, monitor) | 0, 4450 | ipotesi | S0 |
-| E01 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E02 | posizione X/Y (C1: due linee LED frontali e luci mensole fondo) | 1800, 4750 | ipotesi | S0 |
-| E02 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E03A | posizione X/Y (C2: LED frontali e luci mensole) | 3550, 2680 | ipotesi | S0 |
-| E03A | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E03B | posizione X/Y (C3: LED frontali e luci mensole) | 6080, 2680 | ipotesi | S0 |
-| E03B | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E03C | posizione X/Y (C4: LED frontali e luci mensole) | 7500, 1900 | ipotesi | S0 |
-| E03C | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E04 | posizione X/Y (Parete smart: quattro telai con immagine e luce prodotto) | 3370, 3715 | ipotesi | S0 |
-| E04 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E05 | posizione X/Y (Isola smart: ricarica e luce espositiva) | 1070, 2450 | ipotesi | S0 |
-| E05 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E06 | posizione X/Y (Scrivania consulenza: presa integrata, PC, rete) | 5300, 750 | ipotesi | S0 |
-| E06 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E07 | posizione X/Y (Scala: illuminazione gradini e corrimano) | None, None | da definire | S0 |
-| E07 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E08 | posizione X/Y (Saletta: strumenti di refrazione, poltrona, rete) | None, None | da definire | S0 |
-| E08 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
-| E09 | posizione X/Y (Illuminazione generale ed esposizione (binari a soffitto)) | None, None | da definire | S0 |
-| E09 | quota Z, quantità, supporto, alimentatore, percorso | - | da definire | elettricista |
+| E01 | posizione X/Y (Cassa: POS, rete dati, stampante, monitor) | 0, 4450 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E01 | quota Z | - | da definire | da documentare |
+| E01 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E02 | posizione X/Y (C1: due linee LED frontali e luci mensole fondo) | 1800, 4750 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E02 | quota Z | - | da definire | da documentare |
+| E02 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E03A | posizione X/Y (C2: LED frontali e luci mensole) | 3550, 2680 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E03A | quota Z | - | da definire | da documentare |
+| E03A | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E03B | posizione X/Y (C3: LED frontali e luci mensole) | 6080, 2680 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E03B | quota Z | - | da definire | da documentare |
+| E03B | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E03C | posizione X/Y (C4: LED frontali e luci mensole) | 7500, 1900 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E03C | quota Z | - | da definire | da documentare |
+| E03C | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E04 | posizione X/Y (Parete smart: quattro telai con immagine e luce prodotto) | 3370, 3715 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E04 | quota Z | - | da definire | da documentare |
+| E04 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E05 | posizione X/Y (Isola smart: ricarica e luce espositiva) | 1070, 2450 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E05 | quota Z | - | da definire | da documentare |
+| E05 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E06 | posizione X/Y (Scrivania consulenza: presa integrata, PC, rete) | 5300, 750 | ipotesi | S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista |
+| E06 | quota Z | - | da definire | da documentare |
+| E06 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E07 | posizione X/Y (Scala: illuminazione gradini e corrimano) | da definire | da definire | da documentare |
+| E07 | quota Z | - | da definire | da documentare |
+| E07 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E08 | posizione X/Y (Saletta: strumenti di refrazione, poltrona, rete) | da definire | da definire | da documentare |
+| E08 | quota Z | - | da definire | da documentare |
+| E08 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
+| E09 | posizione X/Y (Illuminazione generale ed esposizione (binari a soffitto)) | da definire | da definire | da documentare |
+| E09 | quota Z | - | da definire | da documentare |
+| E09 | quantità, supporto, alimentatore, percorso, circuiti e protezioni | - | da definire | elettricista |
 | PT_DICHIARATO | superficie dichiarata: criterio non indicato (lorda, netta o catastale): da riconciliare con il rilievo, non usare per scalare la pianta | 45 | da definire | LOC |
 
 ## Conflitti e verifiche non eseguibili

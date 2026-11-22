@@ -1,6 +1,6 @@
 # AB01 - Abaco arredi
 
-Revisione P02 (2026-11-21). L × P × H = dimensioni del PRODOTTO (L lungo il fronte, P profondità, H altezza totale): ingombri esterni con top e zoccolo compresi. La posa nel locale è data da fronte/rotazione, ingombro X × Y e posizione; la rotazione cambia X × Y, non L × P × H. Le schede della variante scelta vanno archiviate prima di portare una dimensione a `verified`.
+Revisione P03 (2026-11-22). L × P × H = dimensioni del PRODOTTO (L lungo il fronte, P profondità, H altezza totale): ingombri esterni con top e zoccolo compresi. La posa nel locale è data da fronte/rotazione, ingombro X × Y e posizione; la rotazione cambia X × Y, non L × P × H. Le schede della variante scelta vanno archiviate prima di portare una dimensione a `verified`.
 
 ## Arredi di catalogo
 

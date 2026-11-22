@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-3DE
+3F0
   9
 $SURFTAB1
  70
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3589,7 +3589,7 @@ ACAD
   0
 APPID
   5
-3DB
+3ED
 330
 3
 100
@@ -3603,7 +3603,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-3DC
+3EE
 330
 3
 100
@@ -18285,7 +18285,7 @@ AcDbText
  40
 2.0
   1
-Fonte: config/geometry.json, rev. P02. Unità mm.
+Fonte: config/geometry.json, rev. P03. Unità mm.
   7
 OpenSans
  11
@@ -18583,7 +18583,7 @@ AcDbText
  40
 2.6
   1
-P02
+P03
   7
 OpenSans
  11
@@ -18651,7 +18651,7 @@ AcDbText
  40
 2.6
   1
-2026-11-21
+2026-11-22
   7
 OpenSans
  11
@@ -18985,7 +18985,7 @@ AcDbText
  10
 15.0
  20
-103.8
+103.80000000000001
  30
 0.0
  40
@@ -18997,7 +18997,7 @@ OpenSans
  11
 15.0
  21
-103.8
+103.80000000000001
  31
 0.0
 100
@@ -19019,7 +19019,7 @@ AcDbText
  10
 52.0
  20
-103.8
+103.80000000000001
  30
 0.0
  40
@@ -19031,7 +19031,7 @@ OpenSans
  11
 52.0
  21
-103.8
+103.80000000000001
  31
 0.0
 100
@@ -19053,19 +19053,19 @@ AcDbText
  10
 104.0
  20
-103.8
+103.80000000000001
  30
 0.0
  40
 1.7
   1
-luce netta 250 mm fra SCALE (bordo del foro) e ingombro completo di CASSA; richiesta committenza ≥ 1000 mm, obiettivo 1000–1200 mm: ins
+luce netta 250 mm fra SCALE (bordo del foro) e ingombro completo di CASSA; richiesta committenza ≥ 1000 mm, obiettivo 1000–1200 mm: insufficiente.
   7
 OpenSans
  11
 104.0
  21
-103.8
+103.80000000000001
  31
 0.0
 100
@@ -19085,21 +19085,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-100.6
+101.20000000000002
  30
 0.0
  40
 1.7
   1
-FP02-PERCORSO
+Fascia fra fine scala e fondo 850 mm; servono 1600–1800 mm con questo banco: mancano 750–950 mm.
   7
 OpenSans
  11
-15.0
+104.0
  21
-100.6
+101.20000000000002
  31
 0.0
 100
@@ -19119,21 +19119,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-100.6
+98.00000000000003
  30
 0.0
  40
 1.7
   1
-Conflitto
+FP02-PERCORSO
   7
 OpenSans
  11
-52.0
+15.0
  21
-100.6
+98.00000000000003
  31
 0.0
 100
@@ -19153,21 +19153,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-100.6
+98.00000000000003
  30
 0.0
  40
 1.7
   1
-C3–SCRIVANIA: percorso/accesso nello scenario «cassetti C3 aperti»: residuo 230 mm < soglia di screening 900 mm (parametro di progetto,
+Conflitto
   7
 OpenSans
  11
-104.0
+52.0
  21
-100.6
+98.00000000000003
  31
 0.0
 100
@@ -19187,21 +19187,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-97.39999999999999
+98.00000000000003
  30
 0.0
  40
 1.7
   1
-CLEAR-P_ING
+C3–SCRIVANIA: percorso/accesso nello scenario «cassetti C3 aperti»: residuo 230 mm < soglia di screening 900 mm (parametro di progetto, non requisito
   7
 OpenSans
  11
-15.0
+104.0
  21
-97.39999999999999
+98.00000000000003
  31
 0.0
 100
@@ -19221,21 +19221,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-97.39999999999999
+95.40000000000003
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+normativo).
   7
 OpenSans
  11
-52.0
+104.0
  21
-97.39999999999999
+95.40000000000003
  31
 0.0
 100
@@ -19255,21 +19255,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+15.0
  20
-97.39999999999999
+92.20000000000005
  30
 0.0
  40
 1.7
   1
-P_ING: luce netta di passaggio non documentata.
+CLEAR-P_ING
   7
 OpenSans
  11
-104.0
+15.0
  21
-97.39999999999999
+92.20000000000005
  31
 0.0
 100
@@ -19289,21 +19289,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+52.0
  20
-94.19999999999999
+92.20000000000005
  30
 0.0
  40
 1.7
   1
-FP01
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-15.0
+52.0
  21
-94.19999999999999
+92.20000000000005
  31
 0.0
 100
@@ -19323,21 +19323,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-94.19999999999999
+92.20000000000005
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+P_ING: luce netta di passaggio non documentata.
   7
 OpenSans
  11
-52.0
+104.0
  21
-94.19999999999999
+92.20000000000005
  31
 0.0
 100
@@ -19357,21 +19357,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+15.0
  20
-94.19999999999999
+89.00000000000006
  30
 0.0
  40
 1.7
   1
-CASSA–SCALE (lato operatore / accesso cassa): distanza statica 250 mm; posto operatore: manca operator_zone.
+FP01
   7
 OpenSans
  11
-104.0
+15.0
  21
-94.19999999999999
+89.00000000000006
  31
 0.0
 100
@@ -19391,21 +19391,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+52.0
  20
-90.99999999999999
+89.00000000000006
  30
 0.0
  40
 1.7
   1
-FP03
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-15.0
+52.0
  21
-90.99999999999999
+89.00000000000006
  31
 0.0
 100
@@ -19425,21 +19425,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-90.99999999999999
+89.00000000000006
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+CASSA–SCALE (lato operatore / accesso cassa): distanza statica 250 mm; posto operatore: manca operator_zone.
   7
 OpenSans
  11
-52.0
+104.0
  21
-90.99999999999999
+89.00000000000006
  31
 0.0
 100
@@ -19459,21 +19459,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+15.0
  20
-90.99999999999999
+85.80000000000007
  30
 0.0
  40
 1.7
   1
-CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza statica 640 mm; posto operatore: manca operator
+FP03
   7
 OpenSans
  11
-104.0
+15.0
  21
-90.99999999999999
+85.80000000000007
  31
 0.0
 100
@@ -19493,21 +19493,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+52.0
  20
-87.79999999999998
+85.80000000000007
  30
 0.0
  40
 1.7
   1
-FP05-PERCORSO
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-15.0
+52.0
  21
-87.79999999999998
+85.80000000000007
  31
 0.0
 100
@@ -19527,21 +19527,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-87.79999999999998
+85.80000000000007
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza statica 640 mm; posto operatore: manca operator_zone.
   7
 OpenSans
  11
-52.0
+104.0
  21
-87.79999999999998
+85.80000000000007
  31
 0.0
 100
@@ -19561,21 +19561,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+15.0
  20
-87.79999999999998
+82.60000000000008
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criteri
+FP05-PERCORSO
   7
 OpenSans
  11
-104.0
+15.0
  21
-87.79999999999998
+82.60000000000008
  31
 0.0
 100
@@ -19595,21 +19595,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+52.0
  20
-84.59999999999998
+82.60000000000008
  30
 0.0
  40
 1.7
   1
-FP06
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-15.0
+52.0
  21
-84.59999999999998
+82.60000000000008
  31
 0.0
 100
@@ -19629,21 +19629,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-84.59999999999998
+82.60000000000008
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criterio di passaggio
   7
 OpenSans
  11
-52.0
+104.0
  21
-84.59999999999998
+82.60000000000008
  31
 0.0
 100
@@ -19665,19 +19665,19 @@ AcDbText
  10
 104.0
  20
-84.59999999999998
+80.00000000000009
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenz
+e simultaneità degli usi non stabiliti (accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti).
   7
 OpenSans
  11
 104.0
  21
-84.59999999999998
+80.00000000000009
  31
 0.0
 100
@@ -19699,19 +19699,19 @@ AcDbText
  10
 15.0
  20
-81.39999999999998
+76.8000000000001
  30
 0.0
  40
 1.7
   1
-FP07
+FP06
   7
 OpenSans
  11
 15.0
  21
-81.39999999999998
+76.8000000000001
  31
 0.0
 100
@@ -19733,7 +19733,7 @@ AcDbText
  10
 52.0
  20
-81.39999999999998
+76.8000000000001
  30
 0.0
  40
@@ -19745,7 +19745,7 @@ OpenSans
  11
 52.0
  21
-81.39999999999998
+76.8000000000001
  31
 0.0
 100
@@ -19767,19 +19767,19 @@ AcDbText
  10
 104.0
  20
-81.39999999999998
+76.8000000000001
  30
 0.0
  40
 1.7
   1
-ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza statica 50 mm; luce netta: manca railing_thickness.
+SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenze e uso del
   7
 OpenSans
  11
 104.0
  21
-81.39999999999998
+76.8000000000001
  31
 0.0
 100
@@ -19799,21 +19799,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-78.19999999999997
+74.2000000000001
  30
 0.0
  40
 1.7
   1
-USE-door_leaf_island
+bordo da rilevare.
   7
 OpenSans
  11
-15.0
+104.0
  21
-78.19999999999997
+74.2000000000001
  31
 0.0
 100
@@ -19833,21 +19833,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-78.19999999999997
+71.00000000000011
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+FP07
   7
 OpenSans
  11
-52.0
+15.0
  21
-78.19999999999997
+71.00000000000011
  31
 0.0
 100
@@ -19867,21 +19867,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-78.19999999999997
+71.00000000000011
  30
 0.0
  40
 1.7
   1
-door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato.
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-104.0
+52.0
  21
-78.19999999999997
+71.00000000000011
  31
 0.0
 100
@@ -19901,21 +19901,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-74.99999999999997
+71.00000000000011
  30
 0.0
  40
 1.7
   1
-USE-operator_zone
+ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza statica 50 mm; luce netta: manca railing_thickness.
   7
 OpenSans
  11
-15.0
+104.0
  21
-74.99999999999997
+71.00000000000011
  31
 0.0
 100
@@ -19935,21 +19935,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-74.99999999999997
+67.80000000000013
  30
 0.0
  40
 1.7
   1
-Non verificabile (dato mancante)
+USE-door_leaf_island
   7
 OpenSans
  11
-52.0
+15.0
  21
-74.99999999999997
+67.80000000000013
  31
 0.0
 100
@@ -19969,21 +19969,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-74.99999999999997
+67.80000000000013
  30
 0.0
  40
 1.7
   1
-operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato.
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-104.0
+52.0
  21
-74.99999999999997
+67.80000000000013
  31
 0.0
 100
@@ -20003,21 +20003,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-71.79999999999997
+67.80000000000013
  30
 0.0
  40
 1.7
   1
-DEC-ISOLA-P
+door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato.
   7
 OpenSans
  11
-15.0
+104.0
  21
-71.79999999999997
+67.80000000000013
  31
 0.0
 100
@@ -20037,21 +20037,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-71.79999999999997
+64.60000000000014
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+USE-operator_zone
   7
 OpenSans
  11
-52.0
+15.0
  21
-71.79999999999997
+64.60000000000014
  31
 0.0
 100
@@ -20071,21 +20071,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-71.79999999999997
+64.60000000000014
  30
 0.0
  40
 1.7
   1
-Isola: profondità esterna 390 mm (prodotto P 390 mm), limite approvato 400 mm.
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-104.0
+52.0
  21
-71.79999999999997
+64.60000000000014
  31
 0.0
 100
@@ -20105,21 +20105,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-68.59999999999997
+64.60000000000014
  30
 0.0
  40
 1.7
   1
-SWING-P_ING
+operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato.
   7
 OpenSans
  11
-15.0
+104.0
  21
-68.59999999999997
+64.60000000000014
  31
 0.0
 100
@@ -20139,21 +20139,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-68.59999999999997
+61.400000000000134
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+DEC-ISOLA-P
   7
 OpenSans
  11
-52.0
+15.0
  21
-68.59999999999997
+61.400000000000134
  31
 0.0
 100
@@ -20173,21 +20173,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-68.59999999999997
+61.400000000000134
  30
 0.0
  40
 1.7
   1
-P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, osta
+Compatibile nelle ipotesi attuali
   7
 OpenSans
  11
-104.0
+52.0
  21
-68.59999999999997
+61.400000000000134
  31
 0.0
 100
@@ -20207,21 +20207,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-65.39999999999996
+61.400000000000134
  30
 0.0
  40
 1.7
   1
-SWING-P_SAL
+Isola: profondità esterna 390 mm (prodotto P 390 mm), limite approvato 400 mm.
   7
 OpenSans
  11
-15.0
+104.0
  21
-65.39999999999996
+61.400000000000134
  31
 0.0
 100
@@ -20241,21 +20241,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-65.39999999999996
+58.20000000000013
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+SWING-P_ING
   7
 OpenSans
  11
-52.0
+15.0
  21
-65.39999999999996
+58.20000000000013
  31
 0.0
 100
@@ -20275,21 +20275,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-65.39999999999996
+58.20000000000013
  30
 0.0
  40
 1.7
   1
-P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta
+Compatibile nelle ipotesi attuali
   7
 OpenSans
  11
-104.0
+52.0
  21
-65.39999999999996
+58.20000000000013
  31
 0.0
 100
@@ -20309,21 +20309,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-62.19999999999996
+58.20000000000013
  30
 0.0
  40
 1.7
   1
-FP02
+P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini):
   7
 OpenSans
  11
-15.0
+104.0
  21
-62.19999999999996
+58.20000000000013
  31
 0.0
 100
@@ -20343,21 +20343,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-62.19999999999996
+55.60000000000013
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+ipotesi.
   7
 OpenSans
  11
-52.0
+104.0
  21
-62.19999999999996
+55.60000000000013
  31
 0.0
 100
@@ -20377,21 +20377,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+15.0
  20
-62.19999999999996
+52.40000000000013
  30
 0.0
  40
 1.7
   1
-C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3
+SWING-P_SAL
   7
 OpenSans
  11
-104.0
+15.0
  21
-62.19999999999996
+52.40000000000013
  31
 0.0
 100
@@ -20411,21 +20411,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+52.0
  20
-58.99999999999996
+52.40000000000013
  30
 0.0
  40
 1.7
   1
-FP04
+Compatibile nelle ipotesi attuali
   7
 OpenSans
  11
-15.0
+52.0
  21
-58.99999999999996
+52.40000000000013
  31
 0.0
 100
@@ -20445,21 +20445,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+104.0
  20
-58.99999999999996
+52.40000000000013
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta, muro,
   7
 OpenSans
  11
-52.0
+104.0
  21
-58.99999999999996
+52.40000000000013
  31
 0.0
 100
@@ -20481,19 +20481,19 @@ AcDbText
  10
 104.0
  20
-58.99999999999996
+49.800000000000125
  30
 0.0
  40
 1.7
   1
-C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limit
+ostacoli vicini): ipotesi.
   7
 OpenSans
  11
 104.0
  21
-58.99999999999996
+49.800000000000125
  31
 0.0
 100
@@ -20515,19 +20515,19 @@ AcDbText
  10
 15.0
  20
-55.799999999999955
+46.60000000000012
  30
 0.0
  40
 1.7
   1
-FP05
+FP02
   7
 OpenSans
  11
 15.0
  21
-55.799999999999955
+46.60000000000012
  31
 0.0
 100
@@ -20549,7 +20549,7 @@ AcDbText
  10
 52.0
  20
-55.799999999999955
+46.60000000000012
  30
 0.0
  40
@@ -20561,7 +20561,7 @@ OpenSans
  11
 52.0
  21
-55.799999999999955
+46.60000000000012
  31
 0.0
 100
@@ -20583,19 +20583,631 @@ AcDbText
  10
 104.0
  20
-55.799999999999955
+46.60000000000012
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo
+C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti:
   7
 OpenSans
  11
 104.0
  21
-55.799999999999955
+46.60000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DB
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+44.00000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+residuo 230 mm; seduta occupata: residuo 580 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+44.00000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DC
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+40.80000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+FP04
+  7
+OpenSans
+ 11
+15.0
+ 21
+40.80000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DD
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+52.0
+ 20
+40.80000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+Compatibile nelle ipotesi attuali
+  7
+OpenSans
+ 11
+52.0
+ 21
+40.80000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DE
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+40.80000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non
+  7
+OpenSans
+ 11
+104.0
+ 21
+40.80000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DF
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+38.20000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+38.20000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E0
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+35.000000000000114
+ 30
+0.0
+ 40
+1.7
+  1
+FP05
+  7
+OpenSans
+ 11
+15.0
+ 21
+35.000000000000114
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E1
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+52.0
+ 20
+35.000000000000114
+ 30
+0.0
+ 40
+1.7
+  1
+Compatibile nelle ipotesi attuali
+  7
+OpenSans
+ 11
+52.0
+ 21
+35.000000000000114
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E2
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+35.000000000000114
+ 30
+0.0
+ 40
+1.7
+  1
+SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo 700 mm;
+  7
+OpenSans
+ 11
+104.0
+ 21
+35.000000000000114
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E3
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+32.40000000000011
+ 30
+0.0
+ 40
+1.7
+  1
+cassetti C4 aperti: residuo 1100 mm; seduta occupata e cassetti aperti (simultaneità da confermare): residuo 350 mm. Esito limitato alla non
+  7
+OpenSans
+ 11
+104.0
+ 21
+32.40000000000011
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E4
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+29.80000000000011
+ 30
+0.0
+ 40
+1.7
+  1
+sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+29.80000000000011
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E5
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+26.600000000000108
+ 30
+0.0
+ 40
+1.7
+  1
+FP08
+  7
+OpenSans
+ 11
+15.0
+ 21
+26.600000000000108
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E6
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+52.0
+ 20
+26.600000000000108
+ 30
+0.0
+ 40
+1.7
+  1
+Compatibile nelle ipotesi attuali
+  7
+OpenSans
+ 11
+52.0
+ 21
+26.600000000000108
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E7
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+26.600000000000108
+ 30
+0.0
+ 40
+1.7
+  1
+C1–SCALE (uso dei cassetti C1 e passaggio fra C1 e il foro scala): distanza statica 1087 mm; mobili chiusi: residuo 1087 mm; cassetti C1 aperti:
+  7
+OpenSans
+ 11
+104.0
+ 21
+26.600000000000108
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E8
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+24.000000000000107
+ 30
+0.0
+ 40
+1.7
+  1
+residuo 995 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+24.000000000000107
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3E9
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+20.800000000000104
+ 30
+0.0
+ 40
+1.7
+  1
+FP08-PERCORSO
+  7
+OpenSans
+ 11
+15.0
+ 21
+20.800000000000104
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3EA
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+52.0
+ 20
+20.800000000000104
+ 30
+0.0
+ 40
+1.7
+  1
+Compatibile nelle ipotesi attuali
+  7
+OpenSans
+ 11
+52.0
+ 21
+20.800000000000104
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3EB
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+20.800000000000104
+ 30
+0.0
+ 40
+1.7
+  1
+C1–SCALE: percorso/accesso nello scenario «cassetti C1 aperti»: residuo 995 mm ≥ soglia di screening 900 mm (parametro di progetto, non requisito
+  7
+OpenSans
+ 11
+104.0
+ 21
+20.800000000000104
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3EC
+330
+377
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+18.200000000000102
+ 30
+0.0
+ 40
+1.7
+  1
+normativo).
+  7
+OpenSans
+ 11
+104.0
+ 21
+18.200000000000102
  31
 0.0
 100
@@ -26731,7 +27343,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-3DD
+3EF
   0
 DICTIONARYVAR
   5
@@ -27575,7 +28187,7 @@ A01
   0
 DICTIONARYVAR
   5
-3DD
+3EF
 330
 2D
 100

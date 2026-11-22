@@ -348,3 +348,17 @@ def rect_cells(poly):
 
 def _geoms(poly):
     return list(poly.geoms) if hasattr(poly, 'geoms') else [poly]
+
+
+def model_fingerprint():
+    """Impronta di modello e codice geometrico: lega i render alla geometria che li ha prodotti.
+
+    Cambia se cambiano geometry.json, render.json o il codice dei componenti e della scena,
+    anche senza cambiare la revisione.
+    """
+    import hashlib
+    h = hashlib.sha256()
+    for rel in ('config/geometry.json', 'config/render.json', 'src/components.py', 'src/model.py', 'src/render.py'):
+        h.update(rel.encode())
+        h.update((ROOT / rel).read_bytes().replace(b'\r\n', b'\n'))
+    return h.hexdigest()[:16]

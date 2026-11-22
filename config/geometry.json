@@ -1,7 +1,7 @@
 {
   "project": "Limpidia - Via Andrea Solari 3 Milano",
-  "revision": "P02",
-  "revision_date": "2026-11-21",
+  "revision": "P03",
+  "revision_date": "2026-11-22",
   "units": "mm",
   "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla strada); X verso destra; Y verso la parete di fondo; Z verso l'alto dal pavimento finito",
   "coordinate_system_note": "Orientamento della planimetria S1: strada e vetrina in basso, ingresso e scala a sinistra, saletta sul fondo a destra. Introdotto il 21/11/2026 (commit bd07984) con una sola trasformazione Y' = 4750 - Y rispetto a P00; distanze e superfici invariate.",
@@ -650,6 +650,30 @@
       "path": {
         "required": false
       }
+    },
+    {
+      "id": "FP08",
+      "a": "C1",
+      "b": "SCALE",
+      "function": "uso dei cassetti C1 e passaggio fra C1 e il foro scala",
+      "scenarios": [
+        {
+          "name": "mobili chiusi",
+          "uses": []
+        },
+        {
+          "name": "cassetti C1 aperti",
+          "uses": [
+            "drawer_extension"
+          ]
+        }
+      ],
+      "path": {
+        "required": true,
+        "criterion": "screening_passage",
+        "scenario": "cassetti C1 aperti",
+        "note": "R02-audit: restringimento da verificare quando C1 si avvicina alla scala (V1); persona e uso della cassettiera"
+      }
     }
   ],
   "smart_wall": {
@@ -833,7 +857,9 @@
       "quantity": "da definire con l'elettricista",
       "access": "da definire: dal retro cassa o con passacavi nel piano",
       "driver": "non pertinente",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E02",
@@ -852,7 +878,9 @@
       "quantity": "da definire",
       "access": "vano driver ispezionabile nel mobile (dettaglio D01 da sviluppare)",
       "driver": "da scheda prodotto / falegname",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E03A",
@@ -871,7 +899,9 @@
       "quantity": "da definire",
       "access": "vano driver ispezionabile (D01)",
       "driver": "da scheda prodotto / falegname",
-      "route": "nel tramezzo in cartongesso, da progettare"
+      "route": "nel tramezzo in cartongesso, da progettare",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E03B",
@@ -890,7 +920,9 @@
       "quantity": "da definire",
       "access": "vano driver ispezionabile (D01)",
       "driver": "da scheda prodotto / falegname",
-      "route": "nel tramezzo in cartongesso, da progettare"
+      "route": "nel tramezzo in cartongesso, da progettare",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E03C",
@@ -909,7 +941,9 @@
       "quantity": "da definire",
       "access": "vano driver ispezionabile (D01)",
       "driver": "da scheda prodotto / falegname",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E04",
@@ -928,7 +962,9 @@
       "quantity": "4 utenze telaio (numero prese da definire)",
       "access": "da definire: dietro i telai o da vano ispezionabile",
       "driver": "da scheda dei telai",
-      "route": "nel tramezzo, da progettare"
+      "route": "nel tramezzo, da progettare",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E05",
@@ -952,7 +988,9 @@
         "B: canalina dalla parete di fondo lungo la ringhiera (visibile: da valutare con l'estetica)",
         "C: isola solo espositiva senza alimentazione (luce prodotto a batteria)"
       ],
-      "decision": "scegliere A/B/C; la posa sotto arredo non è disegnata come definitiva"
+      "decision": "scegliere A/B/C; la posa sotto arredo non è disegnata come definitiva",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E06",
@@ -976,7 +1014,9 @@
         "A: torretta o scatola a pavimento sotto la scrivania con passacavi nel piano",
         "B: dalla parete laterale (zona C4) con canalina a pavimento fino alla scrivania (attraversa la zona sedia)"
       ],
-      "decision": "scegliere A/B; la posa sotto arredo non è disegnata come definitiva"
+      "decision": "scegliere A/B; la posa sotto arredo non è disegnata come definitiva",
+      "xy_source": "S0 (modello P00, punto senza fonte propria), riportato sul supporto attuale in P01/P02: da documentare con l'elettricista",
+      "z_source": null
     },
     {
       "id": "E07",
@@ -995,7 +1035,9 @@
       "quantity": "da definire",
       "access": "da definire",
       "driver": "da definire",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": null,
+      "z_source": null
     },
     {
       "id": "E08",
@@ -1014,7 +1056,9 @@
       "quantity": "da definire con l'optometrista",
       "access": "da definire",
       "driver": "non pertinente",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": null,
+      "z_source": null
     },
     {
       "id": "E09",
@@ -1032,7 +1076,9 @@
       "quantity": "da progetto illuminotecnico",
       "access": "da definire",
       "driver": "da definire",
-      "route": "da definire"
+      "route": "da definire",
+      "xy_source": null,
+      "z_source": null
     }
   ],
   "elevations": [
@@ -1124,8 +1170,8 @@
       "id": "V1",
       "sheet": true,
       "title": "Cassa sulla parete di fondo",
-      "why": "G05: con la cassa sul muro sinistro la fascia fra fine scala e fondo e' 850 mm contro 1600-1800 necessari; la variante sposta il banco sulla parete di fondo (x 1850-3050) e C1 nell'angolo sinistro (x 0-1500) per ottenere >= 1000 mm netti dalla scala.",
-      "impact": "Deroga: cassa non piu' sul muro sinistro (decisione bloccata in docs/decisioni.md). Richiede approvazione esplicita.",
+      "why": "G05: con la cassa sul muro sinistro la fascia fra fine scala e fondo e' 850 mm contro 1600-1800 necessari. La variante sposta il banco sulla parete di fondo (x 1850-3050) e C1 nell'angolo sinistro (x 0-1500). La distanza minima fra foro scala e cassa diventa circa 1031 mm, ma e' una distanza DIAGONALE fra due ingombri schematici (angolo scala 850,3900 - angolo cassa 1850,4150): non dimostra un percorso utilizzabile e non tiene conto di parapetto, corrimano, persona e cassetti. Introduce inoltre un restringimento fra C1 e la scala (FP08).",
+      "impact": "Deroga: cassa non piu' sul muro sinistro (vincolo bloccato in docs/decisioni.md). Studio, non soluzione: richiede rilievo e approvazione.",
       "focus": [
         "REQ-REQ_SCALA_CASSA",
         "ADJ_CASSA_SINISTRA"

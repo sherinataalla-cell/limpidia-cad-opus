@@ -15,7 +15,7 @@ import json
 import math
 import sys
 
-from .model import (load, bounds, rect_cells, floor_poly, envelope_edges, outward, faces, ROOT, OUT)
+from .model import (load, bounds, rect_cells, floor_poly, envelope_edges, outward, faces, model_fingerprint, ROOT, OUT)
 from .components import all_components
 
 RENDER_CFG = ROOT / 'config' / 'render.json'
@@ -418,7 +418,7 @@ def render(fast=False, only=None):
             meta = json.loads(meta_path.read_text(encoding='utf-8'))
         except (OSError, ValueError):
             meta = {}
-        meta[path.name] = model['revision']
+        meta[path.name] = {'revision': model['revision'], 'fingerprint': model_fingerprint()}
         meta_path.write_text(json.dumps(meta, indent=2, ensure_ascii=False) + '\n', encoding='utf-8')
     return done
 

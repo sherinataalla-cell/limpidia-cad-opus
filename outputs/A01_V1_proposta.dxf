@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-3E0
+400
   9
 $SURFTAB1
  70
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3589,7 +3589,7 @@ ACAD
   0
 APPID
   5
-3DD
+3FD
 330
 3
 100
@@ -3603,7 +3603,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-3DE
+3FE
 330
 3
 100
@@ -5445,7 +5445,7 @@ BLOCK_RECORD
 100
 AcDbSymbolTable
  70
-49
+50
   0
 BLOCK_RECORD
   5
@@ -6409,7 +6409,27 @@ AcDbBlockTableRecord
   0
 BLOCK_RECORD
   5
-377
+376
+330
+9
+100
+AcDbSymbolTableRecord
+100
+AcDbBlockTableRecord
+  2
+*D44
+340
+0
+ 70
+0
+280
+1
+281
+0
+  0
+BLOCK_RECORD
+  5
+387
 330
 9
 100
@@ -6419,7 +6439,7 @@ AcDbBlockTableRecord
   2
 *Paper_Space0
 340
-37A
+38A
  70
 0
 280
@@ -17005,6 +17025,252 @@ AcDbEntity
 100
 AcDbLine
  10
+385.0
+ 20
+3900.0
+ 30
+0.0
+ 11
+385.0
+ 21
+3900.0
+ 31
+0.0
+  0
+LINE
+  5
+36B
+330
+367
+100
+AcDbEntity
+  8
+0
+100
+AcDbLine
+ 10
+385.0
+ 20
+4350.0
+ 30
+0.0
+ 11
+385.0
+ 21
+4350.0
+ 31
+0.0
+  0
+INSERT
+  5
+36C
+330
+367
+100
+AcDbEntity
+  8
+DIM_CLEARANCE
+100
+AcDbBlockReference
+  2
+_ARCHTICK
+ 10
+425.0
+ 20
+3900.0
+ 30
+0.0
+ 41
+70.0
+ 42
+70.0
+ 50
+270.0
+  0
+INSERT
+  5
+36E
+330
+367
+100
+AcDbEntity
+  8
+DIM_CLEARANCE
+100
+AcDbBlockReference
+  2
+_ARCHTICK
+ 10
+425.0
+ 20
+4350.0
+ 30
+0.0
+ 41
+70.0
+ 42
+70.0
+ 50
+90.0
+  0
+LINE
+  5
+370
+330
+367
+100
+AcDbEntity
+  8
+0
+100
+AcDbLine
+ 10
+425.0
+ 20
+3900.0
+ 30
+0.0
+ 11
+425.0
+ 21
+4350.0
+ 31
+0.0
+  0
+MTEXT
+  5
+371
+330
+367
+100
+AcDbEntity
+  8
+DIM_CLEARANCE
+ 62
+0
+100
+AcDbMText
+ 10
+310.0
+ 20
+4125.0
+ 30
+0.0
+ 40
+100.0
+ 71
+5
+  1
+450 FP08 *
+  7
+OpenSansCondensed-Light
+ 50
+90.0
+  0
+POINT
+  5
+372
+330
+367
+100
+AcDbEntity
+  8
+Defpoints
+100
+AcDbPoint
+ 10
+425.0
+ 20
+3900.0
+ 30
+0.0
+  0
+POINT
+  5
+373
+330
+367
+100
+AcDbEntity
+  8
+Defpoints
+100
+AcDbPoint
+ 10
+425.0
+ 20
+3900.0
+ 30
+0.0
+  0
+POINT
+  5
+374
+330
+367
+100
+AcDbEntity
+  8
+Defpoints
+100
+AcDbPoint
+ 10
+425.0
+ 20
+4350.0
+ 30
+0.0
+  0
+ENDBLK
+  5
+369
+330
+367
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockEnd
+  0
+BLOCK
+  5
+377
+330
+376
+100
+AcDbEntity
+  8
+0
+100
+AcDbBlockBegin
+  2
+*D44
+ 70
+1
+ 10
+0.0
+ 20
+0.0
+ 30
+0.0
+  3
+*D44
+  1
+
+  0
+LINE
+  5
+379
+330
+376
+100
+AcDbEntity
+  8
+0
+100
+AcDbLine
+ 10
 859.7014250014533
  20
 3861.1942999941866
@@ -17019,9 +17285,9 @@ AcDbLine
   0
 LINE
   5
-36B
+37A
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17043,9 +17309,9 @@ AcDbLine
   0
 INSERT
   5
-36C
+37B
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17069,9 +17335,9 @@ _ARCHTICK
   0
 INSERT
   5
-36E
+37D
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17095,9 +17361,9 @@ _ARCHTICK
   0
 LINE
   5
-370
+37F
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17119,9 +17385,9 @@ AcDbLine
   0
 MTEXT
   5
-371
+380
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17149,9 +17415,9 @@ OpenSansCondensed-Light
   0
 POINT
   5
-372
+381
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17167,9 +17433,9 @@ AcDbPoint
   0
 POINT
   5
-373
+382
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17185,9 +17451,9 @@ AcDbPoint
   0
 POINT
   5
-374
+383
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17203,9 +17469,9 @@ AcDbPoint
   0
 ENDBLK
   5
-369
+378
 330
-367
+376
 100
 AcDbEntity
   8
@@ -17215,9 +17481,9 @@ AcDbBlockEnd
   0
 BLOCK
   5
-378
+388
 330
-377
+387
 100
 AcDbEntity
   8
@@ -17241,9 +17507,9 @@ AcDbBlockBegin
   0
 VIEWPORT
   5
-37B
+38B
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17345,9 +17611,9 @@ AcDbViewport
   0
 LWPOLYLINE
   5
-37C
+38C
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17381,9 +17647,9 @@ AcDbPolyline
   0
 LINE
   5
-37D
+38D
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17407,9 +17673,9 @@ AcDbLine
   0
 VIEWPORT
   5
-37E
+38E
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17511,9 +17777,9 @@ AcDbViewport
   0
 TEXT
   5
-37F
+38F
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17545,9 +17811,9 @@ AcDbText
   0
 TEXT
   5
-380
+390
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17579,9 +17845,9 @@ AcDbText
   0
 TEXT
   5
-381
+391
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17613,9 +17879,9 @@ AcDbText
   0
 TEXT
   5
-382
+392
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17647,9 +17913,9 @@ AcDbText
   0
 TEXT
   5
-383
+393
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17681,9 +17947,9 @@ AcDbText
   0
 TEXT
   5
-384
+394
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17715,9 +17981,9 @@ AcDbText
   0
 TEXT
   5
-385
+395
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17749,9 +18015,9 @@ AcDbText
   0
 LINE
   5
-386
+396
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17779,9 +18045,9 @@ AcDbLine
   0
 TEXT
   5
-387
+397
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17813,9 +18079,9 @@ AcDbText
   0
 LINE
   5
-388
+398
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17843,9 +18109,9 @@ AcDbLine
   0
 TEXT
   5
-389
+399
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17877,9 +18143,9 @@ AcDbText
   0
 LINE
   5
-38A
+39A
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17907,9 +18173,9 @@ AcDbLine
   0
 TEXT
   5
-38B
+39B
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17941,9 +18207,9 @@ AcDbText
   0
 LINE
   5
-38C
+39C
 330
-377
+387
 100
 AcDbEntity
  67
@@ -17971,9 +18237,9 @@ AcDbLine
   0
 TEXT
   5
-38D
+39D
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18005,9 +18271,9 @@ AcDbText
   0
 LINE
   5
-38E
+39E
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18035,9 +18301,9 @@ AcDbLine
   0
 TEXT
   5
-38F
+39F
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18069,9 +18335,9 @@ AcDbText
   0
 LINE
   5
-390
+3A0
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18099,9 +18365,9 @@ AcDbLine
   0
 TEXT
   5
-391
+3A1
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18133,9 +18399,9 @@ AcDbText
   0
 LINE
   5
-392
+3A2
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18163,9 +18429,9 @@ AcDbLine
   0
 TEXT
   5
-393
+3A3
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18197,9 +18463,9 @@ AcDbText
   0
 TEXT
   5
-394
+3A4
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18231,9 +18497,9 @@ AcDbText
   0
 TEXT
   5
-395
+3A5
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18265,9 +18531,9 @@ AcDbText
   0
 TEXT
   5
-396
+3A6
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18285,7 +18551,7 @@ AcDbText
  40
 2.0
   1
-Fonte: config/geometry.json, rev. P02-V1. Unità mm.
+Fonte: config/geometry.json, rev. P03-V1. Unità mm.
   7
 OpenSans
  11
@@ -18299,9 +18565,9 @@ AcDbText
   0
 TEXT
   5
-397
+3A7
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18333,9 +18599,9 @@ AcDbText
   0
 TEXT
   5
-398
+3A8
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18367,9 +18633,9 @@ AcDbText
   0
 TEXT
   5
-399
+3A9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18401,9 +18667,9 @@ AcDbText
   0
 LINE
   5
-39A
+3AA
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18427,9 +18693,9 @@ AcDbLine
   0
 TEXT
   5
-39B
+3AB
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18461,9 +18727,9 @@ AcDbText
   0
 TEXT
   5
-39C
+3AC
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18495,9 +18761,9 @@ AcDbText
   0
 TEXT
   5
-39D
+3AD
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18529,9 +18795,9 @@ AcDbText
   0
 TEXT
   5
-39E
+3AE
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18549,7 +18815,7 @@ AcDbText
  40
 2.6
   1
-P02-V1
+P03-V1
   7
 OpenSans
  11
@@ -18563,9 +18829,9 @@ AcDbText
   0
 TEXT
   5
-39F
+3AF
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18597,9 +18863,9 @@ AcDbText
   0
 TEXT
   5
-3A0
+3B0
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18617,7 +18883,7 @@ AcDbText
  40
 2.6
   1
-2026-11-21
+2026-11-22
   7
 OpenSans
  11
@@ -18631,9 +18897,9 @@ AcDbText
   0
 TEXT
   5
-3A1
+3B1
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18665,9 +18931,9 @@ AcDbText
   0
 TEXT
   5
-3A2
+3B2
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18699,9 +18965,9 @@ AcDbText
   0
 TEXT
   5
-3A3
+3B3
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18733,9 +18999,9 @@ AcDbText
   0
 TEXT
   5
-3A4
+3B4
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18767,9 +19033,9 @@ AcDbText
   0
 TEXT
   5
-3A5
+3B5
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18801,9 +19067,9 @@ AcDbText
   0
 TEXT
   5
-3A6
+3B6
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18835,9 +19101,9 @@ AcDbText
   0
 TEXT
   5
-3A7
+3B7
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18869,9 +19135,9 @@ AcDbText
   0
 TEXT
   5
-3A8
+3B8
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18903,9 +19169,9 @@ AcDbText
   0
 TEXT
   5
-3A9
+3B9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18923,7 +19189,7 @@ AcDbText
  40
 1.7
   1
-CASSA lato x0 → PARETE_SINISTRA (fianco a contatto con il muro sinistro): distanza 1850 mm, tratto di affaccio 600 mm; distanza 1850 mm
+CASSA lato x0 → PARETE_SINISTRA (fianco a contatto con il muro sinistro): distanza 1850 mm, tratto di affaccio 600 mm; distanza 1850 mm oltre la
   7
 OpenSans
  11
@@ -18937,9 +19203,43 @@ AcDbText
   0
 TEXT
   5
-3AA
+3BA
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+104.4
+ 30
+0.0
+ 40
+1.7
+  1
+tolleranza della relazione (10 mm).
+  7
+OpenSans
+ 11
+104.0
+ 21
+104.4
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3BB
+330
+387
 100
 AcDbEntity
  67
@@ -18951,7 +19251,7 @@ AcDbText
  10
 15.0
  20
-103.8
+101.20000000000002
  30
 0.0
  40
@@ -18963,7 +19263,7 @@ OpenSans
  11
 15.0
  21
-103.8
+101.20000000000002
  31
 0.0
 100
@@ -18971,9 +19271,9 @@ AcDbText
   0
 TEXT
   5
-3AB
+3BC
 330
-377
+387
 100
 AcDbEntity
  67
@@ -18985,7 +19285,7 @@ AcDbText
  10
 52.0
  20
-103.8
+101.20000000000002
  30
 0.0
  40
@@ -18997,7 +19297,7 @@ OpenSans
  11
 52.0
  21
-103.8
+101.20000000000002
  31
 0.0
 100
@@ -19005,9 +19305,9 @@ AcDbText
   0
 TEXT
   5
-3AC
+3BD
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19019,7 +19319,7 @@ AcDbText
  10
 104.0
  20
-103.8
+101.20000000000002
  30
 0.0
  40
@@ -19031,7 +19331,7 @@ OpenSans
  11
 104.0
  21
-103.8
+101.20000000000002
  31
 0.0
 100
@@ -19039,9 +19339,9 @@ AcDbText
   0
 TEXT
   5
-3AD
+3BE
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19053,7 +19353,7 @@ AcDbText
  10
 15.0
  20
-100.6
+98.00000000000003
  30
 0.0
  40
@@ -19065,7 +19365,7 @@ OpenSans
  11
 15.0
  21
-100.6
+98.00000000000003
  31
 0.0
 100
@@ -19073,9 +19373,9 @@ AcDbText
   0
 TEXT
   5
-3AE
+3BF
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19087,7 +19387,7 @@ AcDbText
  10
 52.0
  20
-100.6
+98.00000000000003
  30
 0.0
  40
@@ -19099,7 +19399,7 @@ OpenSans
  11
 52.0
  21
-100.6
+98.00000000000003
  31
 0.0
 100
@@ -19107,9 +19407,9 @@ AcDbText
   0
 TEXT
   5
-3AF
+3C0
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19121,19 +19421,19 @@ AcDbText
  10
 104.0
  20
-100.6
+98.00000000000003
  30
 0.0
  40
 1.7
   1
-C3–SCRIVANIA: percorso/accesso nello scenario «cassetti C3 aperti»: residuo 230 mm < soglia di screening 900 mm (parametro di progetto,
+C3–SCRIVANIA: percorso/accesso nello scenario «cassetti C3 aperti»: residuo 230 mm < soglia di screening 900 mm (parametro di progetto, non requisito
   7
 OpenSans
  11
 104.0
  21
-100.6
+98.00000000000003
  31
 0.0
 100
@@ -19141,9 +19441,43 @@ AcDbText
   0
 TEXT
   5
-3B0
+3C1
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+95.40000000000003
+ 30
+0.0
+ 40
+1.7
+  1
+normativo).
+  7
+OpenSans
+ 11
+104.0
+ 21
+95.40000000000003
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C2
+330
+387
 100
 AcDbEntity
  67
@@ -19155,7 +19489,143 @@ AcDbText
  10
 15.0
  20
-97.39999999999999
+92.20000000000005
+ 30
+0.0
+ 40
+1.7
+  1
+FP08-PERCORSO
+  7
+OpenSans
+ 11
+15.0
+ 21
+92.20000000000005
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C3
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+52.0
+ 20
+92.20000000000005
+ 30
+0.0
+ 40
+1.7
+  1
+Conflitto
+  7
+OpenSans
+ 11
+52.0
+ 21
+92.20000000000005
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C4
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+92.20000000000005
+ 30
+0.0
+ 40
+1.7
+  1
+C1–SCALE: percorso/accesso nello scenario «cassetti C1 aperti»: residuo 100 mm < soglia di screening 900 mm (parametro di progetto, non requisito
+  7
+OpenSans
+ 11
+104.0
+ 21
+92.20000000000005
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C5
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+89.60000000000005
+ 30
+0.0
+ 40
+1.7
+  1
+normativo).
+  7
+OpenSans
+ 11
+104.0
+ 21
+89.60000000000005
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3C6
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+86.40000000000006
  30
 0.0
  40
@@ -19167,7 +19637,7 @@ OpenSans
  11
 15.0
  21
-97.39999999999999
+86.40000000000006
  31
 0.0
 100
@@ -19175,9 +19645,9 @@ AcDbText
   0
 TEXT
   5
-3B1
+3C7
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19189,7 +19659,7 @@ AcDbText
  10
 52.0
  20
-97.39999999999999
+86.40000000000006
  30
 0.0
  40
@@ -19201,7 +19671,7 @@ OpenSans
  11
 52.0
  21
-97.39999999999999
+86.40000000000006
  31
 0.0
 100
@@ -19209,9 +19679,9 @@ AcDbText
   0
 TEXT
   5
-3B2
+3C8
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19223,7 +19693,7 @@ AcDbText
  10
 104.0
  20
-97.39999999999999
+86.40000000000006
  30
 0.0
  40
@@ -19235,7 +19705,7 @@ OpenSans
  11
 104.0
  21
-97.39999999999999
+86.40000000000006
  31
 0.0
 100
@@ -19243,9 +19713,9 @@ AcDbText
   0
 TEXT
   5
-3B3
+3C9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19257,7 +19727,7 @@ AcDbText
  10
 15.0
  20
-94.19999999999999
+83.20000000000007
  30
 0.0
  40
@@ -19269,7 +19739,7 @@ OpenSans
  11
 15.0
  21
-94.19999999999999
+83.20000000000007
  31
 0.0
 100
@@ -19277,9 +19747,9 @@ AcDbText
   0
 TEXT
   5
-3B4
+3CA
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19291,7 +19761,7 @@ AcDbText
  10
 52.0
  20
-94.19999999999999
+83.20000000000007
  30
 0.0
  40
@@ -19303,7 +19773,7 @@ OpenSans
  11
 52.0
  21
-94.19999999999999
+83.20000000000007
  31
 0.0
 100
@@ -19311,9 +19781,9 @@ AcDbText
   0
 TEXT
   5
-3B5
+3CB
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19325,19 +19795,19 @@ AcDbText
  10
 104.0
  20
-94.19999999999999
+83.20000000000007
  30
 0.0
  40
 1.7
   1
-luce netta 1031 mm fra SCALE (bordo del foro) e ingombro completo di CASSA; richiesta committenza ≥ 1000 mm, obiettivo 1000–1200 mm: cr
+luce netta 1031 mm fra SCALE (bordo del foro) e ingombro completo di CASSA; richiesta committenza ≥ 1000 mm, obiettivo 1000–1200 mm: criterio numerico
   7
 OpenSans
  11
 104.0
  21
-94.19999999999999
+83.20000000000007
  31
 0.0
 100
@@ -19345,9 +19815,77 @@ AcDbText
   0
 TEXT
   5
-3B6
+3CC
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+80.60000000000008
+ 30
+0.0
+ 40
+1.7
+  1
+soddisfatto sul solo foro, ma sagoma, estremità e spessore di parapetto/corrimano non rilevati: la luce reale può essere minore. È una distanza minima
+  7
+OpenSans
+ 11
+104.0
+ 21
+80.60000000000008
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3CD
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+78.00000000000009
+ 30
+0.0
+ 40
+1.7
+  1
+fra ingombri, non la larghezza di un percorso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+78.00000000000009
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3CE
+330
+387
 100
 AcDbEntity
  67
@@ -19359,7 +19897,7 @@ AcDbText
  10
 15.0
  20
-90.99999999999999
+74.8000000000001
  30
 0.0
  40
@@ -19371,7 +19909,7 @@ OpenSans
  11
 15.0
  21
-90.99999999999999
+74.8000000000001
  31
 0.0
 100
@@ -19379,9 +19917,9 @@ AcDbText
   0
 TEXT
   5
-3B7
+3CF
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19393,7 +19931,7 @@ AcDbText
  10
 52.0
  20
-90.99999999999999
+74.8000000000001
  30
 0.0
  40
@@ -19405,7 +19943,7 @@ OpenSans
  11
 52.0
  21
-90.99999999999999
+74.8000000000001
  31
 0.0
 100
@@ -19413,9 +19951,9 @@ AcDbText
   0
 TEXT
   5
-3B8
+3D0
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19427,7 +19965,7 @@ AcDbText
  10
 104.0
  20
-90.99999999999999
+74.8000000000001
  30
 0.0
  40
@@ -19439,7 +19977,7 @@ OpenSans
  11
 104.0
  21
-90.99999999999999
+74.8000000000001
  31
 0.0
 100
@@ -19447,9 +19985,9 @@ AcDbText
   0
 TEXT
   5
-3B9
+3D1
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19461,7 +19999,7 @@ AcDbText
  10
 15.0
  20
-87.79999999999998
+71.60000000000011
  30
 0.0
  40
@@ -19473,7 +20011,7 @@ OpenSans
  11
 15.0
  21
-87.79999999999998
+71.60000000000011
  31
 0.0
 100
@@ -19481,9 +20019,9 @@ AcDbText
   0
 TEXT
   5
-3BA
+3D2
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19495,7 +20033,7 @@ AcDbText
  10
 52.0
  20
-87.79999999999998
+71.60000000000011
  30
 0.0
  40
@@ -19507,7 +20045,7 @@ OpenSans
  11
 52.0
  21
-87.79999999999998
+71.60000000000011
  31
 0.0
 100
@@ -19515,9 +20053,9 @@ AcDbText
   0
 TEXT
   5
-3BB
+3D3
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19529,19 +20067,19 @@ AcDbText
  10
 104.0
  20
-87.79999999999998
+71.60000000000011
  30
 0.0
  40
 1.7
   1
-CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza statica 350 mm; posto operatore: manca operator
+CASSA–C1 (intervallo laterale cassa-fondo: servizio o passaggio da stabilire): distanza statica 350 mm; posto operatore: manca operator_zone.
   7
 OpenSans
  11
 104.0
  21
-87.79999999999998
+71.60000000000011
  31
 0.0
 100
@@ -19549,9 +20087,9 @@ AcDbText
   0
 TEXT
   5
-3BC
+3D4
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19563,7 +20101,7 @@ AcDbText
  10
 15.0
  20
-84.59999999999998
+68.40000000000012
  30
 0.0
  40
@@ -19575,7 +20113,7 @@ OpenSans
  11
 15.0
  21
-84.59999999999998
+68.40000000000012
  31
 0.0
 100
@@ -19583,9 +20121,9 @@ AcDbText
   0
 TEXT
   5
-3BD
+3D5
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19597,7 +20135,7 @@ AcDbText
  10
 52.0
  20
-84.59999999999998
+68.40000000000012
  30
 0.0
  40
@@ -19609,7 +20147,7 @@ OpenSans
  11
 52.0
  21
-84.59999999999998
+68.40000000000012
  31
 0.0
 100
@@ -19617,9 +20155,9 @@ AcDbText
   0
 TEXT
   5
-3BE
+3D6
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19631,19 +20169,19 @@ AcDbText
  10
 104.0
  20
-84.59999999999998
+68.40000000000012
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criteri
+SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criterio di passaggio
   7
 OpenSans
  11
 104.0
  21
-84.59999999999998
+68.40000000000012
  31
 0.0
 100
@@ -19651,9 +20189,43 @@ AcDbText
   0
 TEXT
   5
-3BF
+3D7
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+65.80000000000013
+ 30
+0.0
+ 40
+1.7
+  1
+e simultaneità degli usi non stabiliti (accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti).
+  7
+OpenSans
+ 11
+104.0
+ 21
+65.80000000000013
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3D8
+330
+387
 100
 AcDbEntity
  67
@@ -19665,7 +20237,7 @@ AcDbText
  10
 15.0
  20
-81.39999999999998
+62.60000000000012
  30
 0.0
  40
@@ -19677,7 +20249,7 @@ OpenSans
  11
 15.0
  21
-81.39999999999998
+62.60000000000012
  31
 0.0
 100
@@ -19685,9 +20257,9 @@ AcDbText
   0
 TEXT
   5
-3C0
+3D9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19699,7 +20271,7 @@ AcDbText
  10
 52.0
  20
-81.39999999999998
+62.60000000000012
  30
 0.0
  40
@@ -19711,7 +20283,7 @@ OpenSans
  11
 52.0
  21
-81.39999999999998
+62.60000000000012
  31
 0.0
 100
@@ -19719,9 +20291,9 @@ AcDbText
   0
 TEXT
   5
-3C1
+3DA
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19733,19 +20305,19 @@ AcDbText
  10
 104.0
  20
-81.39999999999998
+62.60000000000012
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenz
+SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenze e uso del
   7
 OpenSans
  11
 104.0
  21
-81.39999999999998
+62.60000000000012
  31
 0.0
 100
@@ -19753,9 +20325,43 @@ AcDbText
   0
 TEXT
   5
-3C2
+3DB
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+60.00000000000012
+ 30
+0.0
+ 40
+1.7
+  1
+bordo da rilevare.
+  7
+OpenSans
+ 11
+104.0
+ 21
+60.00000000000012
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3DC
+330
+387
 100
 AcDbEntity
  67
@@ -19767,7 +20373,7 @@ AcDbText
  10
 15.0
  20
-78.19999999999997
+56.80000000000012
  30
 0.0
  40
@@ -19779,7 +20385,7 @@ OpenSans
  11
 15.0
  21
-78.19999999999997
+56.80000000000012
  31
 0.0
 100
@@ -19787,9 +20393,9 @@ AcDbText
   0
 TEXT
   5
-3C3
+3DD
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19801,7 +20407,7 @@ AcDbText
  10
 52.0
  20
-78.19999999999997
+56.80000000000012
  30
 0.0
  40
@@ -19813,7 +20419,7 @@ OpenSans
  11
 52.0
  21
-78.19999999999997
+56.80000000000012
  31
 0.0
 100
@@ -19821,9 +20427,9 @@ AcDbText
   0
 TEXT
   5
-3C4
+3DE
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19835,7 +20441,7 @@ AcDbText
  10
 104.0
  20
-78.19999999999997
+56.80000000000012
  30
 0.0
  40
@@ -19847,7 +20453,7 @@ OpenSans
  11
 104.0
  21
-78.19999999999997
+56.80000000000012
  31
 0.0
 100
@@ -19855,9 +20461,9 @@ AcDbText
   0
 TEXT
   5
-3C5
+3DF
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19869,7 +20475,7 @@ AcDbText
  10
 15.0
  20
-74.99999999999997
+53.600000000000115
  30
 0.0
  40
@@ -19881,7 +20487,7 @@ OpenSans
  11
 15.0
  21
-74.99999999999997
+53.600000000000115
  31
 0.0
 100
@@ -19889,9 +20495,9 @@ AcDbText
   0
 TEXT
   5
-3C6
+3E0
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19903,7 +20509,7 @@ AcDbText
  10
 52.0
  20
-74.99999999999997
+53.600000000000115
  30
 0.0
  40
@@ -19915,7 +20521,7 @@ OpenSans
  11
 52.0
  21
-74.99999999999997
+53.600000000000115
  31
 0.0
 100
@@ -19923,9 +20529,9 @@ AcDbText
   0
 TEXT
   5
-3C7
+3E1
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19937,7 +20543,7 @@ AcDbText
  10
 104.0
  20
-74.99999999999997
+53.600000000000115
  30
 0.0
  40
@@ -19949,7 +20555,7 @@ OpenSans
  11
 104.0
  21
-74.99999999999997
+53.600000000000115
  31
 0.0
 100
@@ -19957,9 +20563,9 @@ AcDbText
   0
 TEXT
   5
-3C8
+3E2
 330
-377
+387
 100
 AcDbEntity
  67
@@ -19971,7 +20577,7 @@ AcDbText
  10
 15.0
  20
-71.79999999999997
+50.40000000000011
  30
 0.0
  40
@@ -19983,7 +20589,7 @@ OpenSans
  11
 15.0
  21
-71.79999999999997
+50.40000000000011
  31
 0.0
 100
@@ -19991,9 +20597,9 @@ AcDbText
   0
 TEXT
   5
-3C9
+3E3
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20005,7 +20611,7 @@ AcDbText
  10
 52.0
  20
-71.79999999999997
+50.40000000000011
  30
 0.0
  40
@@ -20017,7 +20623,7 @@ OpenSans
  11
 52.0
  21
-71.79999999999997
+50.40000000000011
  31
 0.0
 100
@@ -20025,9 +20631,9 @@ AcDbText
   0
 TEXT
   5
-3CA
+3E4
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20039,7 +20645,7 @@ AcDbText
  10
 104.0
  20
-71.79999999999997
+50.40000000000011
  30
 0.0
  40
@@ -20051,7 +20657,7 @@ OpenSans
  11
 104.0
  21
-71.79999999999997
+50.40000000000011
  31
 0.0
 100
@@ -20059,9 +20665,9 @@ AcDbText
   0
 TEXT
   5
-3CB
+3E5
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20073,7 +20679,7 @@ AcDbText
  10
 15.0
  20
-68.59999999999997
+47.20000000000011
  30
 0.0
  40
@@ -20085,7 +20691,7 @@ OpenSans
  11
 15.0
  21
-68.59999999999997
+47.20000000000011
  31
 0.0
 100
@@ -20093,9 +20699,9 @@ AcDbText
   0
 TEXT
   5
-3CC
+3E6
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20107,7 +20713,7 @@ AcDbText
  10
 52.0
  20
-68.59999999999997
+47.20000000000011
  30
 0.0
  40
@@ -20119,7 +20725,7 @@ OpenSans
  11
 52.0
  21
-68.59999999999997
+47.20000000000011
  31
 0.0
 100
@@ -20127,9 +20733,9 @@ AcDbText
   0
 TEXT
   5
-3CD
+3E7
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20141,7 +20747,7 @@ AcDbText
  10
 104.0
  20
-68.59999999999997
+47.20000000000011
  30
 0.0
  40
@@ -20153,7 +20759,7 @@ OpenSans
  11
 104.0
  21
-68.59999999999997
+47.20000000000011
  31
 0.0
 100
@@ -20161,9 +20767,9 @@ AcDbText
   0
 TEXT
   5
-3CE
+3E8
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20175,7 +20781,7 @@ AcDbText
  10
 15.0
  20
-65.39999999999996
+44.00000000000011
  30
 0.0
  40
@@ -20187,7 +20793,7 @@ OpenSans
  11
 15.0
  21
-65.39999999999996
+44.00000000000011
  31
 0.0
 100
@@ -20195,9 +20801,9 @@ AcDbText
   0
 TEXT
   5
-3CF
+3E9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20209,7 +20815,7 @@ AcDbText
  10
 52.0
  20
-65.39999999999996
+44.00000000000011
  30
 0.0
  40
@@ -20221,7 +20827,7 @@ OpenSans
  11
 52.0
  21
-65.39999999999996
+44.00000000000011
  31
 0.0
 100
@@ -20229,9 +20835,9 @@ AcDbText
   0
 TEXT
   5
-3D0
+3EA
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20243,19 +20849,19 @@ AcDbText
  10
 104.0
  20
-65.39999999999996
+44.00000000000011
  30
 0.0
  40
 1.7
   1
-P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, osta
+P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini):
   7
 OpenSans
  11
 104.0
  21
-65.39999999999996
+44.00000000000011
  31
 0.0
 100
@@ -20263,9 +20869,43 @@ AcDbText
   0
 TEXT
   5
-3D1
+3EB
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+41.400000000000105
+ 30
+0.0
+ 40
+1.7
+  1
+ipotesi.
+  7
+OpenSans
+ 11
+104.0
+ 21
+41.400000000000105
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3EC
+330
+387
 100
 AcDbEntity
  67
@@ -20277,7 +20917,7 @@ AcDbText
  10
 15.0
  20
-62.19999999999996
+38.2000000000001
  30
 0.0
  40
@@ -20289,7 +20929,7 @@ OpenSans
  11
 15.0
  21
-62.19999999999996
+38.2000000000001
  31
 0.0
 100
@@ -20297,9 +20937,9 @@ AcDbText
   0
 TEXT
   5
-3D2
+3ED
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20311,7 +20951,7 @@ AcDbText
  10
 52.0
  20
-62.19999999999996
+38.2000000000001
  30
 0.0
  40
@@ -20323,7 +20963,7 @@ OpenSans
  11
 52.0
  21
-62.19999999999996
+38.2000000000001
  31
 0.0
 100
@@ -20331,9 +20971,9 @@ AcDbText
   0
 TEXT
   5
-3D3
+3EE
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20345,19 +20985,19 @@ AcDbText
  10
 104.0
  20
-62.19999999999996
+38.2000000000001
  30
 0.0
  40
 1.7
   1
-P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta
+P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta, muro,
   7
 OpenSans
  11
 104.0
  21
-62.19999999999996
+38.2000000000001
  31
 0.0
 100
@@ -20365,9 +21005,43 @@ AcDbText
   0
 TEXT
   5
-3D4
+3EF
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+35.6000000000001
+ 30
+0.0
+ 40
+1.7
+  1
+ostacoli vicini): ipotesi.
+  7
+OpenSans
+ 11
+104.0
+ 21
+35.6000000000001
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3F0
+330
+387
 100
 AcDbEntity
  67
@@ -20379,7 +21053,7 @@ AcDbText
  10
 15.0
  20
-58.99999999999996
+32.4000000000001
  30
 0.0
  40
@@ -20391,7 +21065,7 @@ OpenSans
  11
 15.0
  21
-58.99999999999996
+32.4000000000001
  31
 0.0
 100
@@ -20399,9 +21073,9 @@ AcDbText
   0
 TEXT
   5
-3D5
+3F1
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20413,7 +21087,7 @@ AcDbText
  10
 52.0
  20
-58.99999999999996
+32.4000000000001
  30
 0.0
  40
@@ -20425,7 +21099,7 @@ OpenSans
  11
 52.0
  21
-58.99999999999996
+32.4000000000001
  31
 0.0
 100
@@ -20433,9 +21107,9 @@ AcDbText
   0
 TEXT
   5
-3D6
+3F2
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20447,19 +21121,19 @@ AcDbText
  10
 104.0
  20
-58.99999999999996
+32.4000000000001
  30
 0.0
  40
 1.7
   1
-C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3
+C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti:
   7
 OpenSans
  11
 104.0
  21
-58.99999999999996
+32.4000000000001
  31
 0.0
 100
@@ -20467,9 +21141,43 @@ AcDbText
   0
 TEXT
   5
-3D7
+3F3
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+29.800000000000097
+ 30
+0.0
+ 40
+1.7
+  1
+residuo 230 mm; seduta occupata: residuo 580 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+29.800000000000097
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3F4
+330
+387
 100
 AcDbEntity
  67
@@ -20481,7 +21189,7 @@ AcDbText
  10
 15.0
  20
-55.799999999999955
+26.600000000000094
  30
 0.0
  40
@@ -20493,7 +21201,7 @@ OpenSans
  11
 15.0
  21
-55.799999999999955
+26.600000000000094
  31
 0.0
 100
@@ -20501,9 +21209,9 @@ AcDbText
   0
 TEXT
   5
-3D8
+3F5
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20515,7 +21223,7 @@ AcDbText
  10
 52.0
  20
-55.799999999999955
+26.600000000000094
  30
 0.0
  40
@@ -20527,7 +21235,7 @@ OpenSans
  11
 52.0
  21
-55.799999999999955
+26.600000000000094
  31
 0.0
 100
@@ -20535,9 +21243,9 @@ AcDbText
   0
 TEXT
   5
-3D9
+3F6
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20549,19 +21257,19 @@ AcDbText
  10
 104.0
  20
-55.799999999999955
+26.600000000000094
  30
 0.0
  40
 1.7
   1
-C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limit
+C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non
   7
 OpenSans
  11
 104.0
  21
-55.799999999999955
+26.600000000000094
  31
 0.0
 100
@@ -20569,9 +21277,43 @@ AcDbText
   0
 TEXT
   5
-3DA
+3F7
 330
-377
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+24.000000000000092
+ 30
+0.0
+ 40
+1.7
+  1
+sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+24.000000000000092
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3F8
+330
+387
 100
 AcDbEntity
  67
@@ -20583,7 +21325,7 @@ AcDbText
  10
 15.0
  20
-52.59999999999995
+20.80000000000009
  30
 0.0
  40
@@ -20595,7 +21337,7 @@ OpenSans
  11
 15.0
  21
-52.59999999999995
+20.80000000000009
  31
 0.0
 100
@@ -20603,9 +21345,9 @@ AcDbText
   0
 TEXT
   5
-3DB
+3F9
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20617,7 +21359,7 @@ AcDbText
  10
 52.0
  20
-52.59999999999995
+20.80000000000009
  30
 0.0
  40
@@ -20629,7 +21371,7 @@ OpenSans
  11
 52.0
  21
-52.59999999999995
+20.80000000000009
  31
 0.0
 100
@@ -20637,9 +21379,9 @@ AcDbText
   0
 TEXT
   5
-3DC
+3FA
 330
-377
+387
 100
 AcDbEntity
  67
@@ -20651,19 +21393,87 @@ AcDbText
  10
 104.0
  20
-52.59999999999995
+20.80000000000009
  30
 0.0
  40
 1.7
   1
-SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo
+SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo 700 mm;
   7
 OpenSans
  11
 104.0
  21
-52.59999999999995
+20.80000000000009
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3FB
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+18.200000000000088
+ 30
+0.0
+ 40
+1.7
+  1
+cassetti C4 aperti: residuo 1100 mm; seduta occupata e cassetti aperti (simultaneità da confermare): residuo 350 mm. Esito limitato alla non
+  7
+OpenSans
+ 11
+104.0
+ 21
+18.200000000000088
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+3FC
+330
+387
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+104.0
+ 20
+15.600000000000088
+ 30
+0.0
+ 40
+1.7
+  1
+sovrapposizione degli ingombri d'uso.
+  7
+OpenSans
+ 11
+104.0
+ 21
+15.600000000000088
  31
 0.0
 100
@@ -20671,9 +21481,9 @@ AcDbText
   0
 ENDBLK
   5
-379
+389
 330
-377
+387
 100
 AcDbEntity
   8
@@ -25605,6 +26415,60 @@ AcDbDimension
   3
 LIM
  10
+425.0
+ 20
+3900.0
+ 30
+0.0
+ 11
+310.0
+ 21
+4125.0
+ 31
+0.0
+ 70
+32
+ 71
+5
+  1
+<> FP08 *
+100
+AcDbAlignedDimension
+ 13
+425.0
+ 23
+3900.0
+ 33
+0.0
+ 14
+425.0
+ 24
+4350.0
+ 34
+0.0
+ 50
+90.0
+100
+AcDbRotatedDimension
+  0
+DIMENSION
+  5
+375
+330
+17
+100
+AcDbEntity
+  8
+DIM_CLEARANCE
+100
+AcDbDimension
+280
+0
+  2
+*D44
+  3
+LIM
+ 10
 874.2535625036332
  20
 3802.985749985467
@@ -25643,7 +26507,7 @@ AcDbRotatedDimension
   0
 TEXT
   5
-375
+384
 330
 17
 100
@@ -25675,7 +26539,7 @@ AcDbText
   0
 TEXT
   5
-376
+385
 330
 17
 100
@@ -25700,6 +26564,38 @@ OpenSans
 1000.0
  21
 3340.0
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+386
+330
+17
+100
+AcDbEntity
+  8
+DIM_CLEARANCE
+100
+AcDbText
+ 10
+1000.0
+ 20
+3230.0
+ 30
+0.0
+ 40
+80.0
+  1
+quota DIAGONALE minima fra ingombri: non è un percorso
+  7
+OpenSans
+ 11
+1000.0
+ 21
+3230.0
  31
 0.0
 100
@@ -25809,7 +26705,7 @@ Layout1
   3
 A01-V1
 350
-37A
+38A
   0
 DICTIONARY
   5
@@ -26799,7 +27695,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-3DF
+3FF
   0
 DICTIONARYVAR
   5
@@ -27515,7 +28411,7 @@ X-Ray
   0
 LAYOUT
   5
-37A
+38A
 330
 D
 100
@@ -27637,13 +28533,13 @@ A01-V1
  76
 1
 330
-377
+387
 331
-37B
+38B
   0
 DICTIONARYVAR
   5
-3DF
+3FF
 330
 2D
 100

@@ -414,6 +414,7 @@ def dims_requirements(sh, model):
                                      text='<>' + lab, dxfattribs={'layer': 'DIM_CLEARANCE'})
             d.render()
             pos = (min(p1.x, p2.x) + 150, min(p1.y, p2.y) - 450)
+            note.append('quota DIAGONALE minima fra ingombri: non è un percorso')
         for i, line in enumerate(note):
             sh.text(line, pos[0], pos[1] - i * 2.2 * sh.S, 'DIM_CLEARANCE', 1.6 * sh.S)
 
@@ -448,10 +449,13 @@ def build_a01(model, code='A01', title=None, notes=None):
         t("REQUISITI, INGOMBRI D'USO E VERIFICHE (dettaglio in outputs/criticita.md)", 15, y, 2.6)
         y -= 5
         for r in res:
+            import textwrap
             t(r['id'], 15, y, 1.7)
             t(OUTCOME_LABEL[r['outcome']], 52, y, 1.7)
-            t(r['text'][:135], 104, y, 1.7)
-            y -= 3.2
+            for k_, ln in enumerate(textwrap.wrap(r['text'], 150)[:3]):   # testo a capo, niente troncamenti a destra
+                t(ln, 104, y, 1.7)
+                y -= 2.6
+            y -= 0.6
             if y < 14:
                 break
     sh.layout(code, title or ['Pianta arredi quotata', "con ingombri d'uso", 'Piano terra'], LEGEND_A01, model,
@@ -716,24 +720,35 @@ def build_d01(model):
         sh.line((ox + wx0, oy + wz0), (ox + wx0, oy + wz1), 'TEXT', linetype='DASHED', ltscale=2)
         sh.dim((ox + cx0, oy + cz1), (ox + cx1, oy + cz1), (0, oy + cz1 + 80), 'DIM_FURNITURE', 0, st)
         sh.dim((ox + cx1, oy + cz0), (ox + cx1, oy + cz1), (ox + cx1 + 80, 0), 'DIM_FURNITURE', 90, st)
-        sup = [c for c in near if c['kind'] == 'shelf' and c['box'][2] < cz0 + 1 and c['box'][5] >= cz0 - 1]
-        if sup:
-            sh.dim((ox + cx0 - 200, oy + sup[0]['box'][2]), (ox + cx0 - 200, oy + sup[0]['box'][2] + 300),
+        lv = sorted(dp['shelf_levels'])
+        z_sup = max((z for z in lv if z <= cz0 + 1), default=None)
+        z_next = min((z for z in lv if z > cz0 + 1), default=None)
+        if z_sup is not None and z_next is not None:   # passo dai livelli del modello
+            sh.dim((ox + cx0 - 200, oy + z_sup), (ox + cx0 - 200, oy + z_next),
                    (ox + cx0 - 260, 0), 'DIM_FURNITURE', 90, ' passo mensole' + st)
         note(150, 1650 - 120, f"cubotto aperto rovere {cb['size']} x {cb['size']}, prof. {cb['depth']}, pannelli {cb['board']}: "
              'appoggiato sulla mensola inferiore,')
         note(150, 1650 - 170, 'mensola superiore interrotta sul fianco del cubotto (giunto proposto, da validare)')
         note(150, 1650 - 220, 'passaggio cavi LED dal retro: da definire. Geometria = componenti ESP_C1 del modello')
         title(150, 1650 - 330, 'D01.2 Nodo mensola / cubotto C1 (vista frontale, dai componenti)')
-    # D01.3 (in basso a sinistra) sezione cassettiera con LED in fresata e vano driver
+    # D01.3 (in basso a sinistra) sezione cassettiera C1: proiezione dei componenti comuni (zoccolo, corpo, LED)
     ox, oy = 250, 300
-    h = next(f['height'] for f in model['furniture'] if f['id'] == 'C1')
-    d = next(f['depth'] for f in model['furniture'] if f['id'] == 'C1')
-    sh.rect((ox, oy + P['plinth_height'], ox + d, oy + h), 'FURNITURE_ASSUMED')
-    sh.rect((ox + P['plinth_inset'], oy, ox + d - P['plinth_inset'], oy + P['plinth_height']), 'FURNITURE_ASSUMED')
+    f1 = next(f for f in model['furniture'] if f['id'] == 'C1')
+    h, d = f1['height'], f1['depth']
+    yw = f1['y'] + f1['depth']                    # retro contro la parete di fondo (fronte -y)
+    for c in comps:
+        if c['owner'] != 'C1':
+            continue
+        _, y0, z0, _, y1, z1 = c['box']
+        r = (ox + yw - y1, oy + z0, ox + yw - y0, oy + z1)
+        if c['kind'] == 'led':
+            sh.rect(r, 'DISPLAY', color=2)
+        else:
+            sh.rect(r, 'FURNITURE_ASSUMED')
+    zoc = next(c for c in comps if c['owner'] == 'C1' and c['kind'] == 'plinth')['box']
+    sh.dim((ox + yw - zoc[4], oy), (ox + yw - zoc[1], oy), (0, oy - 60), 'DIM_FURNITURE', 0, ' zoccolo' + mark('assumed'))
     for i, fr_ in enumerate(led['axes_fraction']):
         zz = oy + h * fr_
-        sh.rect((ox + d - led['groove_depth'], zz - led['height'] / 2, ox + d, zz + led['height'] / 2), 'DISPLAY', color=2)
         sh.dim((ox + d, oy), (ox + d, zz), (ox + d + 80 + 120 * i, 0), 'DIM_FURNITURE', 90, ' asse' + mark(led['status']))
     sh.rect((ox + 40, oy + P['plinth_height'] + 20, ox + 220, oy + P['plinth_height'] + 140), 'DISPLAY', linetype='DASHED', ltscale=1)
     sh.line((ox, oy - 40), (ox, oy + h + 40), 'WALLS', lineweight=70)
@@ -743,6 +758,7 @@ def build_d01(model):
     note(ox + d + 400, oy + h - 140, 'vano driver ispezionabile: posizione indicativa,')
     note(ox + d + 400, oy + h - 190, 'dimensioni e aerazione da scheda (pending)')
     note(ox + d + 400, oy + h - 240, 'passaggio cavi dal retro: da definire')
+    note(ox + d + 400, oy + h - 290, 'sezione = componenti C1 del modello (zoccolo, corpo, LED)')
     title(ox - 150, oy - 230, f"D01.3 Sezione cassettiera C1 H {h} (ipotesi): LED in fresata")
     # D01.4 (in alto a destra) sezione orizzontale colonna listelli + specchio, dai componenti LS1
     lsc = [c for c in comps if c['owner'] == 'LS1']
@@ -895,8 +911,10 @@ def q01(model):
         add('ESPOSIZIONE', 'linee LED cassettiere (assi, frazione di H)', str(dp['drawer_led']['axes_fraction']), dp['drawer_led']['status'],
             dp['drawer_led']['source'])
     for p in model['electrical_points']:
-        add(p['id'], f"posizione X/Y ({p['service']})", f"{p['x']}, {p['y']}", p['xy_status'], 'S0')
-        add(p['id'], 'quota Z, quantità, supporto, alimentatore, percorso', p['z'] if p['z'] is not None else '-', p['z_status'], 'elettricista')
+        xy = 'da definire' if p['x'] is None else f"{p['x']}, {p['y']}"
+        add(p['id'], f"posizione X/Y ({p['service']})", xy, p['xy_status'], p.get('xy_source') or 'da documentare')
+        add(p['id'], 'quota Z', p['z'] if p['z'] is not None else '-', p['z_status'], p.get('z_source') or 'da documentare')
+        add(p['id'], 'quantità, supporto, alimentatore, percorso, circuiti e protezioni', '-', 'pending', 'elettricista')
     for d in model.get('declared_areas', []):
         add(d['id'], f"superficie dichiarata: {d['definition']}", d['value_m2'], d['status'], d['source'])
     conflicts = [r for r in run_all(model) if r['outcome'] in ('CONFLITTO', 'NON_VERIFICABILE')]
@@ -986,8 +1004,8 @@ def e01_register(model):
     lines = ['# E01 - Registro utenze', '', f"Revisione {model['revision']} ({TODAY}). Stessi ID della tavola E01 e dei prospetti. "
              'Le utenze indicano predisposizioni, non circuiti: sezioni, protezioni, potenze e fissaggi sono del tecnico incaricato. '
              'Le luci dei render non sono potenze di progetto.', '',
-             '| ID | Servizio / mobile | Tipo | Quantità | X, Y (stato) | Z (stato) | Supporto | Accesso manutenzione | Alimentatore | Percorso | Dati necessari |',
-             '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
+             '| ID | Servizio / mobile | Tipo | Quantità | X, Y (stato) | Fonte X, Y | Z (stato) | Fonte Z | Supporto | Accesso manutenzione | Alimentatore | Percorso | Dati necessari |',
+             '| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |']
     for p in model['electrical_points']:
         need = []
         if p['x'] is None:
@@ -1000,7 +1018,7 @@ def e01_register(model):
         xy = 'da definire' if p['x'] is None else f"{p['x']}, {p['y']}"
         z = 'da rilevare' if p['z'] is None else str(p['z'])
         lines.append(f"| {p['id']} | {p['service']} ({p['owner']}) | {'/'.join(p['kinds'])} | {p['quantity']} | {xy} ({STATUS_LABEL[p['xy_status']]}) | "
-                     f"{z} ({STATUS_LABEL[p['z_status']]}) | {p['support']} | {p['access']} | {p['driver']} | {p['route']} | {', '.join(need) or '-'} |")
+                     f"{p.get('xy_source') or 'da documentare'} | {z} ({STATUS_LABEL[p['z_status']]}) | {p.get('z_source') or 'da documentare'} | {p['support']} | {p['access']} | {p['driver']} | {p['route']} | {', '.join(need) or '-'} |")
     lines += ['', '## Collegamenti sotto arredo da decidere', '']
     for p in model['electrical_points']:
         if p.get('connection_options'):
@@ -1026,8 +1044,8 @@ def apply_overrides(model, ov):
     return m
 
 
-KEY_CHECKS = ['REQ-REQ_SCALA_CASSA', 'ADJ_CASSA_SINISTRA', 'FP01', 'FP02', 'FP02-PERCORSO', 'FP03', 'FP05', 'FP05-PERCORSO',
-              'APPR-P_SAL', 'FP04']
+KEY_CHECKS = ['REQ-REQ_SCALA_CASSA', 'ADJ_CASSA_SINISTRA', 'FP01', 'FP03', 'FP07', 'FP08', 'FP08-PERCORSO', 'FP02',
+              'FP02-PERCORSO', 'FP05', 'FP05-PERCORSO', 'APPR-P_SAL', 'FP04']
 
 
 def proposals(model):
@@ -1036,7 +1054,7 @@ def proposals(model):
     sy1 = stair['y'] + stair['depth']
     yb = max(v[1] for v in model['envelope']['vertices'])
     req = model['requirements'][0]
-    lines = ['# Proposte di layout quotate (R02)', '',
+    lines = ['# Proposte di layout quotate', '',
              f"Revisione base {model['revision']} ({TODAY}). Le varianti sono **proposte da approvare**: il modello di base resta invariato. "
              'Ogni variante è valutata con gli stessi controlli della base. Misure in mm, tutte preliminari.', '',
              '## Luce scala–cassa con la cassa sul muro sinistro', '',
@@ -1048,8 +1066,8 @@ def proposals(model):
                      f"{'possibile' if sy1 <= yb - P - req['min'] else f'manca {P + req['min'] - (yb - sy1)} mm'} |")
     lines += ['', f"Verso la vetrina: la cassa dovrebbe finire entro y {stair['y'] - req['min']}, cioè una profondità massima di "
               f"{stair['y'] - req['min']} mm nella fascia y 0–{stair['y'] - req['min']}, dentro l'apertura della porta d'ingresso: non praticabile.", '',
-              '**Conclusione nelle ipotesi P02:** con la cassa sul muro sinistro il requisito non si ottiene finché il rilievo conferma la scala fino a '
-              f"y {sy1}. Servono: rilievo della fine scala e del parapetto, profondità reale del banco, oppure una deroga al vincolo «cassa sul muro sinistro» (V1).", '']
+              f'**Conclusione nelle ipotesi {model["revision"]}:** con la cassa sul muro sinistro il requisito non si ottiene finché il rilievo conferma la scala fino a '
+              f"y {sy1}. Servono: rilievo della fine scala e del parapetto, profondità reale del banco, oppure, solo come studio da approvare, una deroga al vincolo «cassa sul muro sinistro» (V1).", '']
     for v in model.get('layout_proposals', []):
         m = apply_overrides(model, v)
         res = {r['id']: r for r in run_all(m)}
@@ -1070,8 +1088,16 @@ def proposals(model):
                 b = res.get(k)
                 fa = f"{OUTCOME_LABEL[a['outcome']]}" + (f", {a['mm']:.0f} mm" if a and a['mm'] is not None else '') if a else '-'
                 fb = f"{OUTCOME_LABEL[b['outcome']]}" + (f", {b['mm']:.0f} mm" if b and b['mm'] is not None else '') if b else '-'
-                if fa != fb or k in v.get('focus', []):
-                    lines.append(f"| {k} | {fa} | {fb} |")
+                lines.append(f"| {k} | {fa} | {fb} |")   # verifica completa dei percorsi, non solo le differenze
+        conf = [k for k, r in res.items() if r['outcome'] == 'CONFLITTO']
+        nv = [k for k in KEY_CHECKS if k in res and res[k]['outcome'] == 'NON_VERIFICABILE']
+        was = [k for k in KEY_CHECKS if res0.get(k, {}).get('outcome') == 'CONFLITTO']
+        solved = [k for k in was if res.get(k, {}).get('outcome') in ('COMPATIBILE_IPOTESI', 'SUPERATO', 'OK')]
+        open_ = [k for k in was if res.get(k, {}).get('outcome') == 'NON_VERIFICABILE']
+        lines += ['', f"**Esito complessivo della variante:** conflitti tolti nelle ipotesi: {', '.join(solved) or 'nessuno'}; "
+                      f"da conflitto a non verificabile (serve il dato): {', '.join(open_) or 'nessuno'}; "
+                      f"conflitti che restano o nascono: {', '.join(conf) or 'nessuno'}; non verificabili per dati mancanti: "
+                      f"{', '.join(nv) or 'nessuno'}. La variante non è una soluzione chiusa finché restano conflitti o dati mancanti."]
         new = [r for r in res.values() if r['outcome'] in ('CONFLITTO', 'AVVISO') and r['id'] not in res0]
         if new:
             lines += ['', 'Nuove segnalazioni della variante:', ''] + [f"- {r['id']}: {r['text']}" for r in new]
@@ -1082,15 +1108,23 @@ def proposals(model):
 # --- Generazione -----------------------------------------------------------------------
 
 def render_status(model):
-    """Render attesi dalla configurazione corrente e loro presenza."""
+    """Render attesi dalla configurazione corrente: presenza, revisione e impronta di modello e codice."""
+    from .model import model_fingerprint
     cfg = json.loads((ROOT / 'config' / 'render.json').read_text(encoding='utf-8'))
+    fp = model_fingerprint()
+    meta_path = OUT / 'render' / 'render_meta.json'
+    try:
+        meta = json.loads(meta_path.read_text(encoding='utf-8'))
+    except (OSError, ValueError):
+        meta = {}
     rows = []
     for cam in cfg['cameras']:
         f = OUT / 'render' / f"R01_{cam['name']}.png"
-        rev = None
-        meta = OUT / 'render' / 'render_meta.json'
-        if meta.exists():
-            rev = json.loads(meta.read_text(encoding='utf-8')).get(f.name)
+        m = meta.get(f.name)
+        if isinstance(m, dict):
+            rev = m.get('revision') if m.get('fingerprint') == fp else f"{m.get('revision')} (modello o codice cambiati dopo il render)"
+        else:
+            rev = None
         rows.append((cam['name'], f, f.exists(), rev))
     return rows
 

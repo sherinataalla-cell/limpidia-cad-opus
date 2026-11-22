@@ -1,6 +1,6 @@
 # Criticità e verifiche (generato dal modello)
 
-Revisione modello: P02. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato; «coerente» riguarda solo la geometria.
+Revisione modello: P03. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato; «coerente» riguarda solo la geometria.
 
 ## Riepilogo
 
@@ -9,7 +9,7 @@ Revisione modello: P02. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | Conflitto | 3 |
 | Non verificabile (dato mancante) | 21 |
 | Avviso | 4 |
-| Compatibile nelle ipotesi attuali | 8 |
+| Compatibile nelle ipotesi attuali | 10 |
 | Coerente (solo geometria) | 16 |
 
 ## Requisiti della committenza
@@ -43,6 +43,8 @@ Revisione modello: P02. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | FP02 | Compatibile nelle ipotesi attuali | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti: residuo 230 mm; seduta occupata: residuo 580 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 | FP04 | Compatibile nelle ipotesi attuali | C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 | FP05 | Compatibile nelle ipotesi attuali | SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo 700 mm; cassetti C4 aperti: residuo 1100 mm; seduta occupata e cassetti aperti (simultaneità da confermare): residuo 350 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
+| FP08 | Compatibile nelle ipotesi attuali | C1–SCALE (uso dei cassetti C1 e passaggio fra C1 e il foro scala): distanza statica 1087 mm; mobili chiusi: residuo 1087 mm; cassetti C1 aperti: residuo 995 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
+| FP08-PERCORSO | Compatibile nelle ipotesi attuali | C1–SCALE: percorso/accesso nello scenario «cassetti C1 aperti»: residuo 995 mm ≥ soglia di screening 900 mm (parametro di progetto, non requisito normativo). | ipotesi |
 
 ## Porte
 
@@ -52,8 +54,8 @@ Revisione modello: P02. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | CLEAR-P_ING | Non verificabile (dato mancante) | P_ING: luce netta di passaggio non documentata. | da definire |
 | SWING-P_ING | Compatibile nelle ipotesi attuali | P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini): ipotesi. | ipotesi |
 | SWING-P_SAL | Compatibile nelle ipotesi attuali | P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini): ipotesi. | ipotesi |
-| HOST-P_ING | Coerente (solo geometria) | P_ING: vano, muro ospite, cerniera e verso coerenti. | ipotesi |
-| HOST-P_SAL | Coerente (solo geometria) | P_SAL: vano, muro ospite, cerniera e verso coerenti. | ipotesi |
+| HOST-P_ING | Coerente (solo geometria) | P_ING: vano e muro ospite coerenti; cerniera, anta e verso coerenti. | ipotesi |
+| HOST-P_SAL | Coerente (solo geometria) | P_SAL: vano e muro ospite coerenti; cerniera, anta e verso coerenti. | ipotesi |
 
 ## Accostamenti dichiarati (muro e lato)
 
