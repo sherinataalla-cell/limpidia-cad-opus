@@ -28,6 +28,7 @@ python -m src.generate        # tavole DXF + PDF, registro quote, criticità
 pytest -q
 pip install bpy pillow        # solo per i render (Blender come modulo Python)
 python -m src.render          # anteprime 3D in outputs/render/ (--fast per una bozza)
+python -m src.render --variante=V5   # anteprime della proposta V5 in outputs/render/V5/
 ```
 
 I file generati sono in `outputs/`:
@@ -39,7 +40,9 @@ I file generati sono in `outputs/`:
 | `F01`–`F04_*.dxf/.pdf` | Prospetti ricavati dalle facce di parete del modello (fondo/cassa, parete smart, fronte saletta, laterale consulenza), A3 1:20 |
 | `D01_dettagli_schema_preliminare.dxf/.pdf` | Schema preliminare di mensole, cubotti, LED e colonne listelli dai componenti comuni, A3 1:10 |
 | `A01_V1_proposta.dxf/.pdf` | Variante di layout da approvare (cassa sul fondo, requisito scala–cassa) |
-| `proposte_layout.md` | Proposte quotate V1–V4 per gli spazi ancora critici, con confronto dei controlli |
+| `A01_V5_proposta.dxf/.pdf`, `E01_V5_proposta.dxf/.pdf` | Proposta V5 (cassa verso Smart, scrivania parallela a VET_2) e punti utenza riallineati |
+| `proposte_layout.md` | Proposte quotate V1–V5 con confronto dei controlli; per V5 anche la tabella delle distanze con fonti |
+| `proposta_V5.md` | Rapporto della proposta V5: confronto con P03, incompatibilità aperte, misure da rilevare |
 | `E01_registro_utenze.md` | Registro utenze con quantità, percorso, accesso e stati |
 | `AB01_abaco_arredi.md` | Abaco arredi di catalogo e distinta dei pezzi su misura |
 | `Q01_quote_aperte.md` | Registro completo di quote aperte, conflitti e decisioni (`quote_da_rilevare.md` vi rimanda) |

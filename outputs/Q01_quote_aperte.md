@@ -1,6 +1,6 @@
 # Q01 - Registro quote aperte, conflitti e decisioni
 
-Revisione P03, generato il 2026-11-22 da config/geometry.json. Ogni riga resta aperta finché il dato non è inserito con stato `verified` e fonte (rilievo, scheda firmata).
+Revisione P04, generato il 2026-11-23 da config/geometry.json. Ogni riga resta aperta finché il dato non è inserito con stato `verified` e fonte (rilievo, scheda firmata).
 
 | Rif. | Dato | Valore attuale | Stato | Fonte |
 | --- | --- | --- | --- | --- |
@@ -28,6 +28,7 @@ Revisione P03, generato il 2026-11-22 da config/geometry.json. Ogni riga resta a
 | SALETTA | dimensioni nette (dal poligono netto) | 4010 × 1970 / 1520; 7.00 m² | ipotesi | S1/S3: 4,01 m di larghezza netta; 1,97 m e 1,52 m di profondita' netta; 7,00 m2 netti di progetto; poligoni ricavati dai tramezzi W_SAL_O e W_SAL_S1 (bounded_by) |
 | SCALE | posizione e dimensioni | - | ipotesi | S1 (posizione) e S3 (foro 0,85 x 2,40 m) |
 | RINGHIERA | posizione e dimensioni (spessore e sporgenza corrimano) | - | ipotesi | S1; spessore e sporgenza del corrimano da rilevare |
+| RINGHIERA_TESTATA | posizione e dimensioni (spessore e sporgenza corrimano) | - | ipotesi | indicazione utente 23/11/2026: protezione sul lato della scala verso C1. Posizione sul bordo del foro come ipotesi topologica; tracciato, estremita', spessore e sporgenze da rilevare |
 | SCALE | fine della scala lato fondo, parapetto in testa: confronto P00 (y 1450–3850) / S1 (y 1500–3900) | 3900 | ipotesi | S1 scelta in P01; da rilevare (determina la luce scala-cassa) |
 | CASSA | prodotto L × P (lungo il fronte × profondità) | 1200 × 600 | da definire | DEC: fianco a muro sinistro; ingombro segnaposto |
 | CASSA | posizione nel locale | x 0, y 4150, fronte -y | ipotesi | DEC: fianco a muro sinistro; ingombro segnaposto |
@@ -57,6 +58,7 @@ Revisione P03, generato il 2026-11-22 da config/geometry.json. Ogni riga resta a
 | USO | operator_zone: lato operatore della cassa non definito | 800 | da definire | PROP |
 | USO | screening_passage: soglia di screening, non requisito normativo | 900 | ipotesi | PROP |
 | USO | railing_thickness: spessore e sporgenza del corrimano rispetto all'asse | - | da definire | rilievo |
+| USO | drawer_user_zone: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi | - | da definire | PROP |
 | REQ_SCALA_CASSA | requisito committenza: luce netta fra il limite fisico più sporgente di scala/parapetto/corrimano e l'ingombro completo della cassa (top compreso), a banco chiuso | ≥ 1000 (obiettivo 1000–1200) | requisito | committenza, indicazione del 21/11/2026: «tra la scala e la cassa un metro / un metro e venti» |
 | SMART | fascia smart | 1820 | ipotesi | S2: fascia smart riservata 1,82 m (precedente progetto, da riconciliare) |
 | SMART | telaio esterno / immagine / distanza libera / interasse / altezza / base | 410 / 380 / 60 / 470 / 700 / 1150 | ipotesi | PROP da S4: quattro pannelli con immagine e titolo |
@@ -115,7 +117,11 @@ Revisione P03, generato il 2026-11-22 da config/geometry.json. Ogni riga resta a
 | FP05-PERCORSO | Non verificabile (dato mancante) | SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criterio di passaggio e simultaneità degli usi non stabiliti (accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti). |
 | FP06 | Non verificabile (dato mancante) | SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenze e uso del bordo da rilevare. |
 | FP07 | Non verificabile (dato mancante) | ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza statica 50 mm; luce netta: manca railing_thickness. |
+| FP08 | Non verificabile (dato mancante) | C1–SCALE (uso di C1: cassetti aperti e persona davanti a C1 verso il foro scala (l'accesso alla scala e' dal lato vetrina, ACC-SCALE)): distanza statica 1087 mm; mobili chiusi: residuo 1087 mm; cassetti C1 aperti: residuo 995 mm; persona che usa C1 a cassetti aperti: manca drawer_user_zone. |
+| PROT-CASSA-RINGHIERA | Non verificabile (dato mancante) | CASSA verso la protezione RINGHIERA: 250 mm a mobile chiuso, 250 mm con le fasce d'uso, misurati dall'asse della protezione; spessore, sporgenze e tracciato della protezione da rilevare: la distanza reale è minore. Non dimostra l'uso del mobile. |
+| PROT-CASSA-RINGHIERA_TESTATA | Non verificabile (dato mancante) | CASSA verso la protezione RINGHIERA_TESTATA: 250 mm a mobile chiuso, 250 mm con le fasce d'uso, misurati dall'asse della protezione; spessore, sporgenze e tracciato della protezione da rilevare: la distanza reale è minore. Non dimostra l'uso del mobile. |
 | USE-door_leaf_island | Non verificabile (dato mancante) | door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato. |
+| USE-drawer_user_zone | Non verificabile (dato mancante) | drawer_user_zone per C1, C2, C3, C4: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi; verifica da eseguire con il dato. |
 | USE-operator_zone | Non verificabile (dato mancante) | operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato. |
 | EL-E07 | Non verificabile (dato mancante) | E07 (Scala: illuminazione gradini e corrimano): posizione da definire. |
 | EL-E08 | Non verificabile (dato mancante) | E08 (Saletta: strumenti di refrazione, poltrona, rete): posizione da definire. |

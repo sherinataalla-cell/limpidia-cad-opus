@@ -1,7 +1,7 @@
 {
   "project": "Limpidia - Via Andrea Solari 3 Milano",
-  "revision": "P03",
-  "revision_date": "2026-11-22",
+  "revision": "P04",
+  "revision_date": "2026-11-23",
   "units": "mm",
   "coordinate_system": "origine nell'angolo vetrina sinistro (guardando il negozio dalla strada); X verso destra; Y verso la parete di fondo; Z verso l'alto dal pavimento finito",
   "coordinate_system_note": "Orientamento della planimetria S1: strada e vetrina in basso, ingresso e scala a sinistra, saletta sul fondo a destra. Introdotto il 21/11/2026 (commit bd07984) con una sola trasformazione Y' = 4750 - Y rispetto a P00; distanze e superfici invariate.",
@@ -235,7 +235,10 @@
       "depth": 2400,
       "status": "assumed",
       "source": "S1 (posizione) e S3 (foro 0,85 x 2,40 m)",
-      "opening_in_ceiling": false
+      "opening_in_ceiling": false,
+      "access_side": "-y",
+      "access_source": "indicazione utente 23/11/2026: accesso e discesa dal lato vetrina; il lato verso C1 non e' un accesso",
+      "access_status": "assumed"
     },
     {
       "id": "RINGHIERA",
@@ -250,7 +253,24 @@
       ],
       "thickness": null,
       "status": "assumed",
-      "source": "S1; spessore e sporgenza del corrimano da rilevare"
+      "source": "S1; spessore e sporgenza del corrimano da rilevare",
+      "guards": "SCALE"
+    },
+    {
+      "id": "RINGHIERA_TESTATA",
+      "type": "line",
+      "guards": "SCALE",
+      "start": [
+        0,
+        3900
+      ],
+      "end": [
+        850,
+        3900
+      ],
+      "thickness": null,
+      "status": "assumed",
+      "source": "indicazione utente 23/11/2026: protezione sul lato della scala verso C1. Posizione sul bordo del foro come ipotesi topologica; tracciato, estremita', spessore e sporgenze da rilevare"
     }
   ],
   "furniture": [
@@ -502,6 +522,18 @@
       "status": "pending",
       "source": "rilievo",
       "note": "spessore e sporgenza del corrimano rispetto all'asse"
+    },
+    "drawer_user_zone": {
+      "value": null,
+      "status": "pending",
+      "source": "PROP",
+      "applies_to": [
+        "C1",
+        "C2",
+        "C3",
+        "C4"
+      ],
+      "note": "spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi"
     }
   },
   "functional_pairs": [
@@ -543,6 +575,13 @@
           "uses": [
             "chair_zone"
           ]
+        },
+        {
+          "name": "seduta occupata e cassetti C3 aperti",
+          "uses": [
+            "chair_zone",
+            "drawer_extension"
+          ]
         }
       ],
       "path": {
@@ -550,6 +589,40 @@
         "criterion": "screening_passage",
         "scenario": "cassetti C3 aperti",
         "note": "percorso verso la saletta dichiarato su questo intervallo in P01"
+      }
+    },
+    {
+      "id": "FP09",
+      "a": "C2",
+      "b": "SCRIVANIA",
+      "function": "uso cassetti C2 e sedute della scrivania",
+      "scenarios": [
+        {
+          "name": "mobili chiusi",
+          "uses": []
+        },
+        {
+          "name": "cassetti C2 aperti",
+          "uses": [
+            "drawer_extension"
+          ]
+        },
+        {
+          "name": "seduta occupata",
+          "uses": [
+            "chair_zone"
+          ]
+        },
+        {
+          "name": "seduta occupata e cassetti C2 aperti",
+          "uses": [
+            "chair_zone",
+            "drawer_extension"
+          ]
+        }
+      ],
+      "path": {
+        "required": false
       }
     },
     {
@@ -655,7 +728,7 @@
       "id": "FP08",
       "a": "C1",
       "b": "SCALE",
-      "function": "uso dei cassetti C1 e passaggio fra C1 e il foro scala",
+      "function": "uso di C1: cassetti aperti e persona davanti a C1 verso il foro scala (l'accesso alla scala e' dal lato vetrina, ACC-SCALE)",
       "scenarios": [
         {
           "name": "mobili chiusi",
@@ -666,13 +739,17 @@
           "uses": [
             "drawer_extension"
           ]
+        },
+        {
+          "name": "persona che usa C1 a cassetti aperti",
+          "uses": [
+            "drawer_user_zone"
+          ]
         }
       ],
       "path": {
-        "required": true,
-        "criterion": "screening_passage",
-        "scenario": "cassetti C1 aperti",
-        "note": "R02-audit: restringimento da verificare quando C1 si avvicina alla scala (V1); persona e uso della cassettiera"
+        "required": false,
+        "note": "P04: non e' un percorso obbligatorio verso la scala (accesso dal lato vetrina, indicazione utente 23/11). Collisione con le protezioni nei controlli PROT-."
       }
     }
   ],
@@ -1250,6 +1327,78 @@
           }
         }
       }
+    },
+    {
+      "id": "V5",
+      "sheet": true,
+      "render": true,
+      "title": "Cassa verso Smart, C1 a sinistra, scrivania parallela a VET_2",
+      "source": "indicazioni utente 23/11/2026 (Limpidia_variante_V5_per_Claude)",
+      "why": "Proposta dell'utente: cassa sulla parte destra della parete di fondo vicino alla parete Smart, C1 con la sua esposizione sulla parte sinistra; scrivania 1600 x 700 con il lato lungo parallelo a VET_2 (asse X). Stesse posizioni di cassa e C1 della V1. La distanza cassa-foro scala di circa 1031 mm e' DIAGONALE fra ingombri (850,3900 - 1850,4150): non e' un passaggio ne' una luce verificata dalle protezioni.",
+      "impact": "Studio da approvare: cassa non piu' sul muro sinistro (vincolo P03). P03 resta la base di confronto.",
+      "focus": [
+        "REQ-REQ_SCALA_CASSA",
+        "FP09",
+        "FP02",
+        "FP05"
+      ],
+      "furniture": {
+        "CASSA": {
+          "x": 1850
+        },
+        "C1": {
+          "x": 0
+        },
+        "SCRIVANIA": {
+          "x": 4250,
+          "y": 750,
+          "width": 1600,
+          "depth": 700,
+          "front": "+y",
+          "source": "V5: lato lungo parallelo a VET_2; fronte +y ipotesi di modello, posti cliente/operatore non assegnati"
+        }
+      },
+      "slat_columns": {
+        "LS3": {
+          "x": 1515
+        }
+      },
+      "adjacencies": {
+        "ADJ_CASSA_SINISTRA": null,
+        "ADJ_CASSA_FONDO": {
+          "id": "ADJ_CASSA_FONDO",
+          "a": "CASSA",
+          "side": "y1",
+          "to": {
+            "envelope": "FONDO"
+          },
+          "relation": "retro contro la parete di fondo (V5)",
+          "tolerance": 10,
+          "source": "V5"
+        }
+      },
+      "electrical_points": {
+        "E01": {
+          "x": 2450,
+          "y": 4750,
+          "support": "parete di fondo dietro la cassa (V5)",
+          "xy_source": "V5: centro del retro della cassa, solo riferimento grafico; posizione da definire con l'elettricista in base al lato operatore",
+          "access": "da definire: dal retro cassa o con passacavi nel piano; lato operatore non definito"
+        },
+        "E02": {
+          "x": 750,
+          "y": 4750,
+          "xy_source": "V5: centro del retro di C1, solo riferimento grafico; da documentare con l'elettricista"
+        },
+        "E06": {
+          "x": 5050,
+          "y": 1100,
+          "xy_source": "V5: centro della scrivania ruotata, solo riferimento grafico; lato contenitore e sedute da verificare sul prodotto reale",
+          "support": "pavimento sotto la scrivania: da decidere (la parete C4 e' a 1250 mm)"
+        }
+      },
+      "distance_table": true,
+      "short": "Cassa verso Smart, scrivania // VET_2"
     }
   ]
 }

@@ -1,18 +1,18 @@
 {
   "R01_ingresso_verso_cassa.png": {
-    "revision": "P03",
-    "fingerprint": "549da0f0d646f813"
+    "revision": "P04",
+    "fingerprint": "884f60060b4b57dc"
   },
   "R01_consulenza_verso_saletta.png": {
-    "revision": "P03",
-    "fingerprint": "549da0f0d646f813"
+    "revision": "P04",
+    "fingerprint": "884f60060b4b57dc"
   },
   "R01_parete_smart.png": {
-    "revision": "P03",
-    "fingerprint": "549da0f0d646f813"
+    "revision": "P04",
+    "fingerprint": "884f60060b4b57dc"
   },
   "R01_pianta_dall_alto.png": {
-    "revision": "P03",
-    "fingerprint": "549da0f0d646f813"
+    "revision": "P04",
+    "fingerprint": "884f60060b4b57dc"
   }
 }

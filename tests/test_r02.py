@@ -337,8 +337,8 @@ def test_T25_stair_cash_clearance(model, g, ok):
         assert r['outcome'] == 'CONFLITTO'
     else:
         assert r['outcome'] == 'NON_VERIFICABILE'     # parapetto/corrimano non rilevati
-        rail = next(z for z in m['room_features'] if z['type'] == 'line')
-        rail['thickness'] = 0                         # fixture: limite fisico noto
+        for rail in [z for z in m['room_features'] if z['type'] == 'line']:
+            rail['thickness'] = 0                     # fixture: limite fisico noto per TUTTE le protezioni
         assert by_id(checks.requirements(m))['REQ-REQ_SCALA_CASSA']['outcome'] == 'COMPATIBILE_IPOTESI'
 
 
@@ -372,9 +372,10 @@ def _v1(model):
 @pytest.mark.parametrize('end_y,th,exp', [(3900, 50, 'COMPATIBILE_IPOTESI'), (4400, 50, 'CONFLITTO'), (3900, None, 'NON_VERIFICABILE')])
 def test_A1_railing_position_and_extent(model, end_y, th, exp):
     m = _v1(model)
-    rail = next(z for z in m['room_features'] if z['type'] == 'line')
+    for g in [z for z in m['room_features'] if z['type'] == 'line']:
+        g['thickness'] = th                        # tutte le protezioni, non solo la prima linea
+    rail = next(z for z in m['room_features'] if z['id'] == 'RINGHIERA')
     rail['end'] = [rail['end'][0], end_y]          # ringhiera sintetica: estensione verso la cassa
-    rail['thickness'] = th
     r = by_id(checks.requirements(m))['REQ-REQ_SCALA_CASSA']
     assert r['outcome'] == exp
     if end_y == 4400:
@@ -384,11 +385,15 @@ def test_A1_railing_position_and_extent(model, end_y, th, exp):
 def test_A2_v1_c1_stair_and_diagonal(model):
     res = by_id(checks.run_all(_v1(model)))
     assert round(res['FP08']['mm']) == 450
-    assert res['FP08-PERCORSO']['outcome'] == 'CONFLITTO' and round(res['FP08-PERCORSO']['mm']) == 100
+    # P04: il lato C1 non e' un accesso alla scala (indicazione utente 23/11): nessun percorso obbligatorio,
+    # ma la vicinanza dei cassetti alle protezioni resta una criticita' d'uso non verificabile
+    assert 'FP08-PERCORSO' not in res
+    assert res['PROT-C1-RINGHIERA_TESTATA']['outcome'] == 'NON_VERIFICABILE'
+    assert round(res['PROT-C1-RINGHIERA_TESTATA']['mm']) == 100
     assert res['REQ-REQ_SCALA_CASSA']['outcome'] == 'NON_VERIFICABILE'
     assert 'non la larghezza di un percorso' in res['REQ-REQ_SCALA_CASSA']['text']
     txt = gen.proposals(model)
-    assert 'DIAGONALE' in txt and 'non è una soluzione chiusa' in txt and 'FP08-PERCORSO' in txt
+    assert 'DIAGONALE' in txt and 'non è una soluzione chiusa' in txt and 'PROT-C1-RINGHIERA_TESTATA' in txt
 
 
 def test_A3_access_zone_depends_on_neighbours(model):

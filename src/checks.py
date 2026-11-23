@@ -17,7 +17,7 @@ solo campi strutturati: le descrizioni libere non cambiano gli esiti.
 from shapely.geometry import LineString, Point, Polygon, box as sbox
 
 from .model import (bounds, rect_poly, envelope_poly, stair_poly, areas, front_band, door_sweep, smart_layout,
-                    weakest, placement_status, product_dims, envelope_edges, outward, room, rooms, STATUS_LABEL)
+                    weakest, placement_status, use_bands, guards, product_dims, envelope_edges, outward, room, rooms, STATUS_LABEL)
 from .components import all_components, furniture_components, union_bounds, unexplained_overlaps
 
 PROSSIMITA_MM = 300    # sotto questa distanza due oggetti non dichiarati vengono segnalati
@@ -242,14 +242,7 @@ def _bands(model, obj, oid, n, u, other, d):
     o = obj[oid]
     if o.get('kind') != 'mobile' or oid not in u.get('applies_to', []):
         return []
-    item = o['item']
-    if n == 'chair_zone':
-        x0, y0, x1, y1 = bounds(item)
-        v = u['value']
-        cands = [(x0 - v, y0, x0, y1), (x1, y0, x1 + v, y1)] if (y1 - y0) >= (x1 - x0) \
-            else [(x0, y0 - v, x1, y0), (x0, y1, x1, y1 + v)]
-    else:
-        cands = [front_band(item, u['value'])]
+    cands = use_bands(o['item'], n, u['value'], model.get('use_assumptions', {}))
     return [(n, u, sbox(*bb)) for bb in cands if sbox(*bb).distance(other) < d - 1]
 
 
@@ -358,7 +351,7 @@ def requirements(model):
         if req['type'] != 'clear_distance':
             continue
         stair = next(z for z in model['room_features'] if z['id'] == req['a'])
-        rail = next((z for z in model['room_features'] if z['type'] == 'line'), None)
+        rails = guards(model, req['a'])   # tutte le protezioni, non solo la prima linea
         ga = rect_poly(bounds(stair))
         cs = [c for c in comps if c['owner'] == req['b']]
         ub = union_bounds(cs)
@@ -366,11 +359,9 @@ def requirements(model):
         d_hole = ga.distance(gb)
         f = furn[req['b']]
         st = weakest(stair['status'], placement_status(f), f['status'])
-        th = None
-        if rail is not None:
-            th = rail.get('thickness')
-            if th is None:
-                th = model.get('use_assumptions', {}).get('railing_thickness', {}).get('value')
+        th_def = model.get('use_assumptions', {}).get('railing_thickness', {}).get('value')
+        ths = {r['id']: (r.get('thickness') if r.get('thickness') is not None else th_def) for r in rails}
+        unknown = [rid for rid, t in ths.items() if t is None]
         target = req['target']
         info = (f"luce netta {d_hole:.0f} mm fra {req['a']} (bordo del foro) e ingombro completo di {req['b']}; "
                 f"richiesta committenza ≥ {req['min']} mm, obiettivo {target[0]}–{target[1]} mm")
@@ -384,17 +375,21 @@ def requirements(model):
             out.append(_r('REQ-' + req['id'], 'requisiti', 'CONFLITTO', f"{info}: insufficiente{extra}.", d_hole, st,
                           [req['a'], req['b']]))
             continue
-        if rail is None or th is None:
+        if not rails or unknown:
+            what = ('protezioni non modellate' if not rails else
+                    f"spessore e sporgenze non rilevati per {', '.join(unknown)}")
             out.append(_r('REQ-' + req['id'], 'requisiti', 'NON_VERIFICABILE',
                           f"{info}: criterio numerico soddisfatto sul solo foro, ma sagoma, estremità e spessore di "
-                          "parapetto/corrimano non rilevati: la luce reale può essere minore. È una distanza minima fra "
-                          "ingombri, non la larghezza di un percorso.", d_hole, st, [req['a'], req['b']]))
+                          f"parapetto/corrimano da rilevare ({what}): la luce reale può essere minore. È una distanza minima fra "
+                          "ingombri, non la larghezza di un percorso.", d_hole, st, [req['a'], req['b']] + [r['id'] for r in rails]))
             continue
-        # ingombro fisico: foro scala + ringhiera lungo la sua linea reale, estremità comprese
-        rl = LineString([tuple(rail['start']), tuple(rail['end'])]).buffer(th / 2, cap_style='square')
-        phys = ga.union(rl)
+        # ingombro fisico: foro scala + ogni protezione lungo la sua linea reale, estremità comprese
+        from shapely.ops import unary_union
+        phys = unary_union([ga] + [LineString([tuple(r['start']), tuple(r['end'])]).buffer(ths[r['id']] / 2, cap_style='square')
+                                   for r in rails])
         d = phys.distance(gb)
-        st = weakest(st, rail['status'])
+        st = weakest(st, *[r['status'] for r in rails])
+        rail = {'id': '+'.join(r['id'] for r in rails)}
         if d < req['min']:
             out.append(_r('REQ-' + req['id'], 'requisiti', 'CONFLITTO',
                           f"{info}; dall'ingombro fisico di scala e ringhiera (estremità comprese) {d:.0f} mm: insufficiente.",
@@ -405,6 +400,80 @@ def requirements(model):
                           + (f"; oltre {target[1]} mm: da motivare nel layout" if d > target[1] else '')
                           + '. Solo distanza minima a banco chiuso: percorso, operatore e usi adiacenti a parte.',
                           d, st, [req['a'], req['b'], rail['id']]))
+    return out
+
+
+def stair_access(model):
+    """Accesso alla scala dal lato dichiarato: fascia libera davanti all'imbocco (ipotesi di screening)."""
+    out = []
+    use = model.get('use_assumptions', {})
+    sp = use.get('screening_passage', {})
+    for z in model['room_features']:
+        side = z.get('access_side')
+        if z['type'] != 'zone' or not side:
+            continue
+        x0, y0, x1, y1 = bounds(z)
+        v = sp.get('value')
+        st = weakest(z['status'], z.get('access_status', 'assumed'), sp.get('status'))
+        if v is None:
+            out.append(_r('ACC-' + z['id'], 'uso', 'NON_VERIFICABILE', f"Accesso a {z['id']}: profondità di sbarco non definita.",
+                          status='pending', items=[z['id']]))
+            continue
+        zone = sbox(*{'-y': (x0, y0 - v, x1, y0), '+y': (x0, y1, x1, y1 + v),
+                      '-x': (x0 - v, y0, x0, y1), '+x': (x1, y0, x1 + v, y1)}[side])
+        hits = []
+        for f in model['furniture']:
+            bands = [sbox(*bounds(f))] + [sbox(*b) for k, u in use.items()
+                                          if isinstance(u, dict) and f['id'] in u.get('applies_to', []) and u.get('value') is not None
+                     and u.get('status') != 'pending'
+                                          for b in use_bands(f, k, u['value'], use)]
+            if any(g.intersection(zone).area > 1 for g in bands):
+                hits.append(f['id'])
+        if hits:
+            out.append(_r('ACC-' + z['id'], 'uso', 'CONFLITTO',
+                          f"Accesso a {z['id']} dal lato {side} ({z.get('access_source', '')}): la fascia di sbarco di {v} mm "
+                          f"(soglia di screening) è occupata da {', '.join(hits)}.", 0, st, [z['id']] + hits))
+        else:
+            out.append(_r('ACC-' + z['id'], 'uso', _ok_or_ipotesi(st),
+                          f"Accesso a {z['id']} dal lato {side} ({z.get('access_source', '')}): fascia di sbarco {v} mm × "
+                          f"{x1 - x0 if side in ('-y', '+y') else y1 - y0} mm libera da mobili e fasce d'uso nelle ipotesi. "
+                          "Soglia di screening, non verifica normativa; gradini, alzate e corrimano da rilevare.", v, st, [z['id']]))
+    return out
+
+
+def guard_clearance(model):
+    """Mobili e fasce d'uso vicino a TUTTE le protezioni della scala (non solo la prima linea)."""
+    out = []
+    use = model.get('use_assumptions', {})
+    th_def = use.get('railing_thickness', {}).get('value')
+    for g in [z for z in model['room_features'] if z['type'] == 'line']:
+        axis = LineString([tuple(g['start']), tuple(g['end'])])
+        th = g.get('thickness') if g.get('thickness') is not None else th_def
+        for f in model['furniture']:
+            body = sbox(*bounds(f))
+            bands = [(k, u, sbox(*b)) for k, u in use.items()
+                     if isinstance(u, dict) and f['id'] in u.get('applies_to', []) and u.get('value') is not None
+                     and u.get('status') != 'pending'
+                     for b in use_bands(f, k, u['value'], use)]
+            d_body = body.distance(axis)
+            d_use = min([d_body] + [b.distance(axis) for _, _, b in bands])
+            if d_use >= PROSSIMITA_MM:
+                continue
+            if any(fr.get('a') == f['id'] and fr.get('to', {}).get('line') == g['id'] for fr in model.get('adjacencies', [])):
+                continue   # accostamento dichiarato (es. isola lungo la ringhiera): verificato in ADJ/FP07
+            st = weakest(g['status'], placement_status(f), *[u['status'] for _, u, _ in bands])
+            rid = f"PROT-{f['id']}-{g['id']}"
+            txt = (f"{f['id']} verso la protezione {g['id']}: {d_body:.0f} mm a mobile chiuso, {d_use:.0f} mm con le fasce d'uso, "
+                   "misurati dall'asse della protezione")
+            if d_use <= 0:
+                out.append(_r(rid, 'uso', 'CONFLITTO', txt + ': interferenza.', d_use, st, [f['id'], g['id']]))
+            elif th is None:
+                out.append(_r(rid, 'uso', 'NON_VERIFICABILE', txt + '; spessore, sporgenze e tracciato della protezione da '
+                              'rilevare: la distanza reale è minore. Non dimostra l\'uso del mobile.', d_use, st, [f['id'], g['id']]))
+            else:
+                net = d_use - th / 2
+                out.append(_r(rid, 'uso', 'CONFLITTO' if net <= 0 else _ok_or_ipotesi(st),
+                              txt + f'; dal filo della protezione {net:.0f} mm.', net, st, [f['id'], g['id']]))
     return out
 
 
@@ -604,7 +673,7 @@ def area_checks(model):
 
 def run_all(model):
     res = (containment(model) + components_check(model) + decisions_check(model) + adjacency(model) + proximity(model)
-           + functional_pairs(model) + use_open(model) + requirements(model) + doors(model) + smart(model)
+           + functional_pairs(model) + use_open(model) + requirements(model) + stair_access(model) + guard_clearance(model) + doors(model) + smart(model)
            + electrical(model) + area_checks(model))
     res.sort(key=lambda r: (ORDER[r['outcome']], r['cat'], r['id']))
     return res

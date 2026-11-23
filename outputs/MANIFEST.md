@@ -1,6 +1,6 @@
 # Manifesto degli elaborati generati
 
-Revisione modello P03, generati il 2026-11-22 con `python -m src.generate`. Tutte le tavole sono PRELIMINARE - NON PER CANTIERE; DXF in mm 1:1, PDF A3 da stampare al 100%.
+Revisione modello P04, generati il 2026-11-23 con `python -m src.generate`. Tutte le tavole sono PRELIMINARE - NON PER CANTIERE; DXF in mm 1:1, PDF A3 da stampare al 100%.
 
 | Codice | Contenuto | Scala di stampa | File |
 | --- | --- | --- | --- |
@@ -12,7 +12,9 @@ Revisione modello P03, generati il 2026-11-22 con `python -m src.generate`. Tutt
 | F04 | Prospetto parete laterale consulenza, C4 | 1:20 | F04_prospetto_laterale.dxf, F04_prospetto_laterale.pdf |
 | D01 | Schema preliminare dettagli dai componenti comuni (non esecutivo, dati pending) | 1:10 | D01_dettagli_schema_preliminare.dxf, D01_dettagli_schema_preliminare.pdf |
 | A01-V1 | Proposta V1: Cassa sulla parete di fondo | 1:50 | A01_V1_proposta.dxf, A01_V1_proposta.pdf |
-| Q01 | Registro quote aperte (95 righe) | - | Q01_quote_aperte.md |
+| A01-V5 | Proposta V5: Cassa verso Smart, C1 a sinistra, scrivania parallela a VET_2 | 1:50 | A01_V5_proposta.dxf, A01_V5_proposta.pdf |
+| E01-V5 | Punti utenza riallineati alla proposta V5 | 1:50 | E01_V5_proposta.dxf, E01_V5_proposta.pdf |
+| Q01 | Registro quote aperte (97 righe) | - | Q01_quote_aperte.md |
 | AB01 | Abaco arredi, distinta su misura e distinta componenti | - | AB01_abaco_arredi.md |
 | E01 | Registro utenze completo | - | E01_registro_utenze.md |
 | - | Proposte di layout quotate | - | proposte_layout.md |
@@ -22,9 +24,20 @@ Revisione modello P03, generati il 2026-11-22 con `python -m src.generate`. Tutt
 
 | Vista | File | Presente | Revisione del modello |
 | --- | --- | --- | --- |
-| ingresso_verso_cassa | render/R01_ingresso_verso_cassa.png | sì | P03 |
-| consulenza_verso_saletta | render/R01_consulenza_verso_saletta.png | sì | P03 |
-| parete_smart | render/R01_parete_smart.png | sì | P03 |
-| pianta_dall_alto | render/R01_pianta_dall_alto.png | sì | P03 |
+| ingresso_verso_cassa | render/R01_ingresso_verso_cassa.png | sì | P04 |
+| consulenza_verso_saletta | render/R01_consulenza_verso_saletta.png | sì | P04 |
+| parete_smart | render/R01_parete_smart.png | sì | P04 |
+| pianta_dall_alto | render/R01_pianta_dall_alto.png | sì | P04 |
 
 Set di render completo e della revisione corrente.
+
+### Render della proposta V5 (`python -m src.render --variante=V5`)
+
+| Vista | File | Presente | Revisione del modello |
+| --- | --- | --- | --- |
+| ingresso_verso_cassa | render/V5/R01_ingresso_verso_cassa.png | sì | P04-V5 |
+| consulenza_verso_saletta | render/V5/R01_consulenza_verso_saletta.png | sì | P04-V5 |
+| parete_smart | render/V5/R01_parete_smart.png | sì | P04-V5 |
+| pianta_dall_alto | render/V5/R01_pianta_dall_alto.png | sì | P04-V5 |
+
+Set completo e della revisione corrente.

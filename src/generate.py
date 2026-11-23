@@ -26,7 +26,7 @@ import json
 from shapely.ops import nearest_points
 from shapely.geometry import box, LineString, Polygon
 
-from .model import (load, bounds, OUT, ROOT, STATUS_LABEL, weakest, placement_status, front_band, door_open_leaf,
+from .model import (apply_overrides, use_bands, guards, load, bounds, OUT, ROOT, STATUS_LABEL, weakest, placement_status, front_band, door_open_leaf,
                     smart_layout, smart_wall_geom, areas, room, faces, face_of, view_frame, to_u, product_dims,
                     envelope_edges, outward, rooms)
 from .checks import run_all, clearances, write_report, LABEL as OUTCOME_LABEL
@@ -60,7 +60,7 @@ ezdxf.options.write_fixed_meta_data_for_testing = True
 LAYERS = [
     ('WALLS', 7, 50), ('WALLS_NEW', 8, 35), ('FACADE', 7, 25), ('DOORS', 7, 25), ('STAIR', 8, 18),
     ('ROOMS', 8, 18), ('FURNITURE_ASSUMED', 30, 35), ('FURNITURE_PENDING', 1, 35), ('FURNITURE_CATALOG', 3, 35),
-    ('FURNITURE_VERIFIED', 7, 35), ('FRONT', 7, 50), ('USE', 140, 13), ('ELECTRICAL', 5, 35),
+    ('FURNITURE_VERIFIED', 7, 35), ('FRONT', 7, 50), ('USE', 140, 13), ('USE_SEAT', 200, 13), ('ELECTRICAL', 5, 35),
     ('DIM_ENVELOPE', 7, 18), ('DIM_FURNITURE', 8, 18), ('DIM_CLEARANCE', 6, 18), ('TEXT', 7, 18),
     ('WARNING', 1, 35), ('SHEET', 7, 25), ('DISPLAY', 8, 18), ('BRICK', 32, 18),
 ]
@@ -270,14 +270,9 @@ def draw_use(sh, model):
             continue
         for fid in u['applies_to']:
             f = furn[fid]
-            if key == 'chair_zone':
-                x0, y0, x1, y1 = bounds(f)
-                v = u['value']
-                bands = [(x0 - v, y0, x0, y1), (x1, y0, x1 + v, y1)]
-            else:
-                bands = [front_band(f, u['value'])]
-            for b in bands:
-                sh.rect(b, 'USE', linetype='DASHED', ltscale=4)
+            bands = use_bands(f, key, u['value'], use)
+            for b in bands:   # sedute su layer proprio: mobili chiusi, aperture e sedute distinti
+                sh.rect(b, 'USE_SEAT' if key == 'chair_zone' else 'USE', linetype='DASHED', ltscale=4)
     for fid, u in [(k, v) for k, v in use.items() if isinstance(v, dict) and v.get('status') == 'pending']:
         pass
 
@@ -426,7 +421,7 @@ def plan_limits(model, pad_mm=2000):
 
 
 LEGEND_A01 = [(7, 'Muratura esistente (ipotesi)'), (8, 'Tramezzo proposto 10 cm'), (30, 'Mobile, misure ipotesi'),
-              (3, 'Mobile da catalogo'), (1, 'Mobile da definire'), (140, "Ingombro d'uso ipotizzato"),
+              (3, 'Mobile da catalogo'), (1, 'Mobile da definire'), (140, "Cassetti/ante aperti (ipotesi)"), (200, 'Fascia seduta 750 (ipotesi)'),
               (6, 'Distanza funzionale (FPxx) e luce richiesta')]
 LEGEND_E01 = [(7, 'Muratura esistente (ipotesi)'), (8, 'Tramezzo proposto'), (30, 'Ingombro mobili'),
               (5, 'Punto utenza: X/Y ipotesi, Z da rilevare')]
@@ -465,7 +460,7 @@ def build_a01(model, code='A01', title=None, notes=None):
     return sh.doc
 
 
-def build_e01(model):
+def build_e01(model, code='E01', title=None):
     sh = Sheet(50)
     draw_plan(sh, model, labels=True)
     draw_furniture(sh, model, labels=True, layer_override='FURNITURE_ASSUMED')
@@ -496,7 +491,7 @@ def build_e01(model):
             t(f"         supporto: {p['support']}; accesso: {p['access']}; alimentatore: {p['driver']}; percorso: {p['route']}"[:200],
               15, y, 1.5)
             y -= 3.3
-    sh.layout('E01', ['Punti utenza energia/dati', 'e alimentazioni LED', 'Piano terra'], LEGEND_E01, model,
+    sh.layout(code, title or ['Punti utenza energia/dati', 'e alimentazioni LED', 'Piano terra'], LEGEND_E01, model,
               plan_limits(model), (12, 118, 302, 285),
               notes=['Simbolo: cerchio energia, croce dati,', 'cerchio interno alimentazione LED.',
                      'Le luci dei render non sono potenze.'], extra=table)
@@ -1030,22 +1025,9 @@ def e01_register(model):
 
 # --- Proposte di layout quotate -----------------------------------------------------------
 
-def apply_overrides(model, ov):
-    m = copy.deepcopy(model)
-    for fid, fields in ov.get('furniture', {}).items():
-        next(f for f in m['furniture'] if f['id'] == fid).update(fields)
-    for cid, fields in ov.get('slat_columns', {}).items():
-        next(c for c in m['display_proposal']['slat_columns'] if c['id'] == cid).update(fields)
-    for pid, fields in ov.get('functional_pairs', {}).items():
-        next(p for p in m['functional_pairs'] if p['id'] == pid).update(fields)
-    for k, v in ov.get('display_proposal', {}).items():
-        m['display_proposal'][k] = v
-    m['revision'] = model['revision'] + '-' + ov['id']
-    return m
-
-
-KEY_CHECKS = ['REQ-REQ_SCALA_CASSA', 'ADJ_CASSA_SINISTRA', 'FP01', 'FP03', 'FP07', 'FP08', 'FP08-PERCORSO', 'FP02',
-              'FP02-PERCORSO', 'FP05', 'FP05-PERCORSO', 'APPR-P_SAL', 'FP04']
+KEY_CHECKS = ['REQ-REQ_SCALA_CASSA', 'ADJ_CASSA_SINISTRA', 'ADJ_CASSA_FONDO', 'ACC-SCALE', 'FP01', 'FP03', 'FP07', 'FP08',
+              'PROT-C1-RINGHIERA', 'PROT-C1-RINGHIERA_TESTATA', 'FP02', 'FP02-PERCORSO', 'FP09', 'FP05', 'FP05-PERCORSO',
+              'FP06', 'APPR-P_SAL', 'FP04']
 
 
 def proposals(model):
@@ -1075,12 +1057,20 @@ def proposals(model):
                   '| Elemento | Prima | Dopo |', '| --- | --- | --- |']
         for fid, fields in v.get('furniture', {}).items():
             f0 = next(f for f in model['furniture'] if f['id'] == fid)
-            lines.append(f"| {fid} | " + ', '.join(f"{k} {f0[k]}" for k in fields) + ' | ' + ', '.join(f"{k} {val}" for k, val in fields.items()) + ' |')
+            ks = [k for k in fields if k != 'source']
+            lines.append(f"| {fid} | " + ', '.join(f"{k} {f0[k]}" for k in ks) + ' | ' + ', '.join(f"{k} {fields[k]}" for k in ks) + ' |')
         for cid, fields in v.get('slat_columns', {}).items():
             c0 = next(c for c in model['display_proposal']['slat_columns'] if c['id'] == cid)
             lines.append(f"| {cid} | " + ', '.join(f"{k} {c0[k]}" for k in fields) + ' | ' + ', '.join(f"{k} {val}" for k, val in fields.items()) + ' |')
         for pid, fields in v.get('functional_pairs', {}).items():
             lines.append(f"| {pid} | criterio di percorso base | {json.dumps(fields.get('path', fields), ensure_ascii=False)} |")
+        for aid, a in v.get('adjacencies', {}).items():
+            lines.append(f"| {aid} | {'accostamento della base' if a is None or any(x['id'] == aid for x in model['adjacencies']) else '-'} | "
+                         f"{'non più valido nella variante' if a is None else a['relation']} |")
+        for eid, fields in v.get('electrical_points', {}).items():
+            e0 = next(e for e in model['electrical_points'] if e['id'] == eid)
+            lines.append(f"| {eid} | x {e0['x']}, y {e0['y']} | x {fields.get('x', e0['x'])}, y {fields.get('y', e0['y'])} "
+                         f"(fonte: {fields.get('xy_source', 'invariata')}; Z da rilevare) |")
         lines += ['', '| Controllo | Base | Variante |', '| --- | --- | --- |']
         for k in KEY_CHECKS:
             if k in res0 or k in res:
@@ -1098,6 +1088,8 @@ def proposals(model):
                       f"da conflitto a non verificabile (serve il dato): {', '.join(open_) or 'nessuno'}; "
                       f"conflitti che restano o nascono: {', '.join(conf) or 'nessuno'}; non verificabili per dati mancanti: "
                       f"{', '.join(nv) or 'nessuno'}. La variante non è una soluzione chiusa finché restano conflitti o dati mancanti."]
+        if v.get('distance_table'):
+            lines += [''] + distance_table(m, res)
         new = [r for r in res.values() if r['outcome'] in ('CONFLITTO', 'AVVISO') and r['id'] not in res0]
         if new:
             lines += ['', 'Nuove segnalazioni della variante:', ''] + [f"- {r['id']}: {r['text']}" for r in new]
@@ -1105,21 +1097,76 @@ def proposals(model):
     return '\n'.join(lines) + '\n'
 
 
+def _gap(a, b):
+    return box(*a).distance(box(*b))
+
+
+def distance_table(m, res):
+    """Distanze della variante con fonte e ipotesi (dalle stesse geometrie di controlli e tavole)."""
+    use = m['use_assumptions']
+    F = {f['id']: f for f in m['furniture']}
+    de, ch = use['drawer_extension']['value'], use['chair_zone']['value']
+    stair = next(z for z in m['room_features'] if z['id'] == 'SCALE')
+    comps = all_components(m)
+    ub = union_bounds([c for c in comps if c['owner'] == 'CASSA'])
+    cassa = (ub[0], ub[1], ub[3], ub[4])
+    smart = [c for c in comps if c['owner'] == 'SMART' and c['box'][5] > 0]
+    d_smart = min(box(c['box'][0], c['box'][1], c['box'][3], c['box'][4]).distance(box(*cassa)) for c in smart) if smart else None
+    desk = bounds(F['SCRIVANIA'])
+    c23 = [bounds(F[k]) for k in ('C2', 'C3') if bounds(F[k])[2] > desk[0] and bounds(F[k])[0] < desk[2]]
+    y_c23 = min(b[1] for b in c23) if c23 else None
+    rows = [
+        ('Cassa – foro scala (minima)', f"{res['REQ-REQ_SCALA_CASSA']['mm']:.0f}", 'modello: S1 (scala), ingombro completo cassa (componenti)',
+         'DIAGONALE fra spigoli: non è un passaggio né la luce dalle protezioni'),
+        ('Cassa – protezioni scala', 'da rilevare', 'RINGHIERA, RINGHIERA_TESTATA: spessore e sporgenze non rilevati',
+         'la richiesta 1000–1200 mm non si dichiara soddisfatta'),
+        ('C1 chiusa – foro / testata (asse)', f"{_gap(bounds(F['C1']), bounds(stair)):.0f}", 'modello; testata = ipotesi topologica da indicazione utente',
+         'distanza dal bordo del foro'),
+        ('C1 cassetti aperti – foro / testata (asse)', f"{_gap(front_band(F['C1'], de), bounds(stair)):.0f}", f'corsa cassetti {de} mm (ipotesi)',
+         "criticità d'uso; non comprende spessore della protezione né la persona"),
+        ('C1 – cassa', f"{_gap(bounds(F['C1']), cassa):.0f}", 'modello', 'non è un accesso operatore finché lato di lavoro e posto cassa non sono definiti'),
+        ('Cassa – primo elemento Smart (in pianta)', f"{d_smart:.0f}" if d_smart is not None else '-', 'componenti SMART (telai, cartellini, mensole)',
+         'il tratto fino alla parete Smart contiene elementi sporgenti'),
+        ('Scrivania – C4 chiusa', f"{_gap(desk, bounds(F['C4'])):.0f}", 'modello', ''),
+        ('Scrivania – C4 cassetti aperti', f"{_gap(desk, front_band(F['C4'], de)):.0f}", f'corsa {de} mm (ipotesi)',
+         'pari alla soglia di screening 900: nessuna tolleranza, non è verifica di percorso'),
+    ]
+    if y_c23 is not None:
+        av = y_c23 - desk[3]
+        rows += [
+            ('Scrivania – fronti C2/C3 chiusi', f"{av:.0f}", 'modello', ''),
+            ('Scrivania – C2/C3 cassetti aperti', f"{av - de:.0f}", f'corsa {de} mm (ipotesi)', ''),
+            (f'Fascia seduta {ch} lato C2/C3 – fronti chiusi', f"{av - ch:.0f}", f'seduta {ch} mm (ipotesi)', ''),
+            (f'Fascia seduta {ch} lato C2/C3 – cassetti aperti', f"{av - ch - de:.0f}", 'ipotesi', 'valore negativo = sovrapposizione degli usi'),
+            (f'Fascia seduta {ch} lato vetrina – fronte y 0', f"{desk[1] - ch:.0f}", 'ipotesi; serramento non rilevato', 'nessun margine'),
+            ('Sedute 2 × {0} + piano {1} + cassetti {2} contro vetrina–C2/C3'.format(ch, desk[3] - desk[1], de),
+             f"{2 * ch + (desk[3] - desk[1]) + de} / {y_c23:.0f}", 'ipotesi di screening',
+             f"mancano {2 * ch + (desk[3] - desk[1]) + de - y_c23:.0f} mm: traslare in Y non basta"),
+        ]
+    out = ['**Distanze della variante** (mm; quote del modello, non rilievo):', '',
+           '| Misura | Valore | Fonte e ipotesi | Nota |', '| --- | --- | --- | --- |']
+    out += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in rows]
+    return out
+
+
 # --- Generazione -----------------------------------------------------------------------
 
-def render_status(model):
-    """Render attesi dalla configurazione corrente: presenza, revisione e impronta di modello e codice."""
+def render_status(model, variant=None):
+    """Render attesi dalla configurazione corrente: presenza, revisione e impronta di modello e codice.
+
+    Con `variant` controlla outputs/render/<variante>/, generati con `python -m src.render --variante=<id>`."""
     from .model import model_fingerprint
     cfg = json.loads((ROOT / 'config' / 'render.json').read_text(encoding='utf-8'))
     fp = model_fingerprint()
-    meta_path = OUT / 'render' / 'render_meta.json'
+    folder = OUT / 'render' / variant if variant else OUT / 'render'
+    meta_path = folder / 'render_meta.json'
     try:
         meta = json.loads(meta_path.read_text(encoding='utf-8'))
     except (OSError, ValueError):
         meta = {}
     rows = []
     for cam in cfg['cameras']:
-        f = OUT / 'render' / f"R01_{cam['name']}.png"
+        f = folder / f"R01_{cam['name']}.png"
         m = meta.get(f.name)
         if isinstance(m, dict):
             rev = m.get('revision') if m.get('fingerprint') == fp else f"{m.get('revision')} (modello o codice cambiati dopo il render)"
@@ -1150,9 +1197,13 @@ def generate(pdf=True):
         if v.get('sheet'):
             m = apply_overrides(model, v)
             code = f"A01-{v['id']}"
-            emit(code, build_a01(m, code, ['PROPOSTA ' + v['id'] + ' (non approvata)', v['title'][:40], 'Piano terra'],
-                                 ['Variante da approvare: la base', 'resta A01. ' + v['impact'][:40]]),
+            emit(code, build_a01(m, code, ['PROPOSTA ' + v['id'] + ' (non approvata)', v.get('short', v['title'])[:40], 'Piano terra'],
+                                 ['Variante da approvare: la base resta A01.'] + __import__('textwrap').wrap(v['impact'], 44)[:4]),
                  f"A01_{v['id']}_proposta", f"Proposta {v['id']}: {v['title']}", '1:50')
+            if v.get('electrical_points'):
+                emit(f"E01-{v['id']}", build_e01(m, f"E01-{v['id']}", ['Punti utenza ' + v['id'] + ' (non approvata)',
+                                                                      'riallineati alla variante', 'Piano terra']),
+                     f"E01_{v['id']}_proposta", f"Punti utenza riallineati alla proposta {v['id']}", '1:50')
     text, n = q01(model)
     (OUT / 'Q01_quote_aperte.md').write_text(text, encoding='utf-8')
     (OUT / 'AB01_abaco_arredi.md').write_text(ab01(model), encoding='utf-8')
@@ -1176,6 +1227,15 @@ def generate(pdf=True):
         complete &= ok and rev == model['revision']
     lines += ['', 'Set di render ' + ('completo e della revisione corrente.' if complete else
                                        '**incompleto o di revisione diversa: rigenerare con `python -m src.render`.**')]
+    for v in [v for v in model.get('layout_proposals', []) if v.get('render')]:
+        exp = model['revision'] + '-' + v['id']
+        lines += ['', f"### Render della proposta {v['id']} (`python -m src.render --variante={v['id']}`)", '',
+                  '| Vista | File | Presente | Revisione del modello |', '| --- | --- | --- | --- |']
+        ok_v = True
+        for name, f, ok, rev in render_status(model, v['id']):
+            lines.append(f"| {name} | render/{v['id']}/{f.name} | {'sì' if ok else 'NO'} | {rev or 'non identificata'} |")
+            ok_v &= ok and rev == exp
+        lines += ['', 'Set ' + ('completo e della revisione corrente.' if ok_v else '**incompleto o di revisione diversa.**')]
     (OUT / 'MANIFEST.md').write_text('\n'.join(lines) + '\n', encoding='utf-8')
     (OUT / 'quote_da_rilevare.md').write_text(
         '# Quote da rilevare\n\nIl registro completo delle quote aperte, dei conflitti e delle decisioni da prendere è '

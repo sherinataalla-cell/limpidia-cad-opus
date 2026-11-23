@@ -1,6 +1,6 @@
 # E01 - Registro utenze
 
-Revisione P03 (2026-11-22). Stessi ID della tavola E01 e dei prospetti. Le utenze indicano predisposizioni, non circuiti: sezioni, protezioni, potenze e fissaggi sono del tecnico incaricato. Le luci dei render non sono potenze di progetto.
+Revisione P04 (2026-11-23). Stessi ID della tavola E01 e dei prospetti. Le utenze indicano predisposizioni, non circuiti: sezioni, protezioni, potenze e fissaggi sono del tecnico incaricato. Le luci dei render non sono potenze di progetto.
 
 | ID | Servizio / mobile | Tipo | Quantità | X, Y (stato) | Fonte X, Y | Z (stato) | Fonte Z | Supporto | Accesso manutenzione | Alimentatore | Percorso | Dati necessari |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |

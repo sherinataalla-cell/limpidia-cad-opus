@@ -15,7 +15,7 @@ import json
 import math
 import sys
 
-from .model import (load, bounds, rect_cells, floor_poly, envelope_edges, outward, faces, model_fingerprint, ROOT, OUT)
+from .model import (apply_overrides, guards, load, bounds, rect_cells, floor_poly, envelope_edges, outward, faces, model_fingerprint, ROOT, OUT)
 from .components import all_components
 
 RENDER_CFG = ROOT / 'config' / 'render.json'
@@ -287,14 +287,21 @@ def build_scene(bpy, model, cfg):
                 M['walls'])
 
     # Ringhiera lungo la linea del modello (spessore non rilevato: ipotesi visiva)
-    rail = next(z for z in model['room_features'] if z['id'] == 'RINGHIERA')
-    rx = rail['start'][0]
-    ry0, ry1 = sorted((rail['start'][1], rail['end'][1]))
+    # Tutte le protezioni della scala lungo le linee del modello (spessore non rilevato: ipotesi visiva)
     rh = V['railing_height']
-    box(bpy, 'corrimano', rx - 20, ry0, rh - 40, rx + 20, ry1, rh, M['steel'])
-    for k in range(int((ry1 - ry0) / 600) + 1):
-        y = min(ry0 + k * 600, ry1 - 20)
-        box(bpy, f'montante_{k}', rx - 15, y, -400, rx + 15, y + 20, rh - 40, M['steel'])
+    for g in guards(model):
+        (ax, ay), (bx, by) = g['start'], g['end']
+        L = math.hypot(bx - ax, by - ay)
+        ux, uy = (bx - ax) / L, (by - ay) / L
+        x0_, x1_ = sorted((ax, bx))
+        y0_, y1_ = sorted((ay, by))
+        hx, hy = (20 if ux == 0 else 0), (20 if uy == 0 else 0)
+        box(bpy, f"{g['id']}_corrimano", x0_ - hx, y0_ - hy, rh - 40, x1_ + hx, y1_ + hy, rh, M['steel'])
+        for k in range(int(L / 600) + 1):
+            t = min(k * 600, L - 20)
+            px, py = ax + ux * t, ay + uy * t
+            box(bpy, f"{g['id']}_montante_{k}", px - (15 if ux == 0 else 0), py - (15 if uy == 0 else 0), -400,
+                px + (15 if ux == 0 else 20 * abs(ux)), py + (15 if uy == 0 else 20 * abs(uy)), rh - 40, M['steel'])
 
     # Mobili, proposta espositiva e parete smart: gli STESSI componenti di tavole, abaco e controlli
     # (src/components.py). Nessuna quota propria del render.
@@ -360,9 +367,12 @@ def build_scene(bpy, model, cfg):
     return sc, ceil
 
 
-def render(fast=False, only=None):
+def render(fast=False, only=None, variant=None):
+    """Render della base o di una variante (stessa geometria della tavola A01-<variante>)."""
     bpy = _bpy()
     model = load()
+    if variant:
+        model = apply_overrides(model, next(v for v in model['layout_proposals'] if v['id'] == variant))
     cfg = json.loads(RENDER_CFG.read_text(encoding='utf-8'))
     sc, ceil = build_scene(bpy, model, cfg)
     sc.render.engine = 'CYCLES'
@@ -376,7 +386,7 @@ def render(fast=False, only=None):
     sc.render.resolution_x = rx // (2 if fast else 1)
     sc.render.resolution_y = ry // (2 if fast else 1)
     sc.render.image_settings.file_format = 'PNG'
-    folder = OUT / 'render'
+    folder = OUT / 'render' / variant if variant else OUT / 'render'
     folder.mkdir(parents=True, exist_ok=True)
     done = []
     xs = [v[0] for v in model['envelope']['vertices']]
@@ -445,5 +455,6 @@ def caption(path, model, note=''):
 
 if __name__ == '__main__':
     args = [a for a in sys.argv[1:] if not a.startswith('--')]
-    for p in render(fast='--fast' in sys.argv, only=args or None):
+    var = next((a.split('=', 1)[1] for a in sys.argv[1:] if a.startswith('--variante=')), None)
+    for p in render(fast='--fast' in sys.argv, only=args or None, variant=var):
         print(p)

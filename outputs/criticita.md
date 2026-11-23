@@ -1,13 +1,13 @@
 # Criticità e verifiche (generato dal modello)
 
-Revisione modello: P03. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato; «coerente» riguarda solo la geometria.
+Revisione modello: P04. Controlli geometrici e di uso sotto ipotesi dichiarate; da validare con il tecnico. Un controllo «non verificabile» non è superato; «coerente» riguarda solo la geometria.
 
 ## Riepilogo
 
 | Esito | Numero |
 | --- | ---: |
 | Conflitto | 3 |
-| Non verificabile (dato mancante) | 21 |
+| Non verificabile (dato mancante) | 25 |
 | Avviso | 4 |
 | Compatibile nelle ipotesi attuali | 10 |
 | Coerente (solo geometria) | 16 |
@@ -38,13 +38,17 @@ Revisione modello: P03. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | FP05-PERCORSO | Non verificabile (dato mancante) | SCRIVANIA–C4: percorso/accesso nello scenario «seduta occupata e cassetti aperti (simultaneità da confermare)»: residuo 350 mm; criterio di passaggio e simultaneità degli usi non stabiliti (accesso all'esposizione C4 e passaggio verso la saletta: criterio e simultaneità non stabiliti). | ipotesi |
 | FP06 | Non verificabile (dato mancante) | SCRIVANIA–FACCIATA (serramento, pulizia e sporgenze verso la vetrina): distanza statica 100 mm; manca il criterio: serramento, sporgenze e uso del bordo da rilevare. | ipotesi |
 | FP07 | Non verificabile (dato mancante) | ISOLA_SMART–RINGHIERA (luce netta tra isola e corrimano): distanza statica 50 mm; luce netta: manca railing_thickness. | ipotesi |
+| FP08 | Non verificabile (dato mancante) | C1–SCALE (uso di C1: cassetti aperti e persona davanti a C1 verso il foro scala (l'accesso alla scala e' dal lato vetrina, ACC-SCALE)): distanza statica 1087 mm; mobili chiusi: residuo 1087 mm; cassetti C1 aperti: residuo 995 mm; persona che usa C1 a cassetti aperti: manca drawer_user_zone. | ipotesi |
+| PROT-CASSA-RINGHIERA | Non verificabile (dato mancante) | CASSA verso la protezione RINGHIERA: 250 mm a mobile chiuso, 250 mm con le fasce d'uso, misurati dall'asse della protezione; spessore, sporgenze e tracciato della protezione da rilevare: la distanza reale è minore. Non dimostra l'uso del mobile. | da definire |
+| PROT-CASSA-RINGHIERA_TESTATA | Non verificabile (dato mancante) | CASSA verso la protezione RINGHIERA_TESTATA: 250 mm a mobile chiuso, 250 mm con le fasce d'uso, misurati dall'asse della protezione; spessore, sporgenze e tracciato della protezione da rilevare: la distanza reale è minore. Non dimostra l'uso del mobile. | da definire |
 | USE-door_leaf_island | Non verificabile (dato mancante) | door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato. | da definire |
+| USE-drawer_user_zone | Non verificabile (dato mancante) | drawer_user_zone per C1, C2, C3, C4: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi; verifica da eseguire con il dato. | da definire |
 | USE-operator_zone | Non verificabile (dato mancante) | operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato. | da definire |
-| FP02 | Compatibile nelle ipotesi attuali | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti: residuo 230 mm; seduta occupata: residuo 580 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
+| ACC-SCALE | Compatibile nelle ipotesi attuali | Accesso a SCALE dal lato -y (indicazione utente 23/11/2026: accesso e discesa dal lato vetrina; il lato verso C1 non e' un accesso): fascia di sbarco 900 mm × 850 mm libera da mobili e fasce d'uso nelle ipotesi. Soglia di screening, non verifica normativa; gradini, alzate e corrimano da rilevare. | ipotesi |
+| FP02 | Compatibile nelle ipotesi attuali | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti: residuo 230 mm; seduta occupata: residuo 580 mm; seduta occupata e cassetti C3 aperti: residuo 230 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 | FP04 | Compatibile nelle ipotesi attuali | C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 | FP05 | Compatibile nelle ipotesi attuali | SCRIVANIA–C4 (sedia operatore e cassetti C4 aperti): distanza statica 1450 mm; mobili chiusi: residuo 1450 mm; seduta occupata: residuo 700 mm; cassetti C4 aperti: residuo 1100 mm; seduta occupata e cassetti aperti (simultaneità da confermare): residuo 350 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
-| FP08 | Compatibile nelle ipotesi attuali | C1–SCALE (uso dei cassetti C1 e passaggio fra C1 e il foro scala): distanza statica 1087 mm; mobili chiusi: residuo 1087 mm; cassetti C1 aperti: residuo 995 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
-| FP08-PERCORSO | Compatibile nelle ipotesi attuali | C1–SCALE: percorso/accesso nello scenario «cassetti C1 aperti»: residuo 995 mm ≥ soglia di screening 900 mm (parametro di progetto, non requisito normativo). | ipotesi |
+| FP09 | Compatibile nelle ipotesi attuali | C2–SCRIVANIA (uso cassetti C2 e sedute della scrivania): distanza statica 599 mm; mobili chiusi: residuo 599 mm; cassetti C2 aperti: residuo 275 mm; seduta occupata: residuo 580 mm; seduta occupata e cassetti C2 aperti: residuo 230 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 
 ## Porte
 

@@ -162,6 +162,51 @@ def front_band(item, depth):
             '-x': (x0 - depth, y0, x0, y1), '+x': (x1, y0, x1 + depth, y1)}[item['front']]
 
 
+def use_bands(item, key, value, use=None):
+    """Fasce d'uso di un mobile (stessa regola per tavole e controlli).
+
+    Sedute (`chair_zone`): sui due lati lunghi del piano, qualunque sia l'orientamento.
+    Persona ai cassetti (`drawer_user_zone`): oltre la corsa dei cassetti.
+    Altri usi: davanti al frontale dichiarato.
+    """
+    x0, y0, x1, y1 = bounds(item)
+    if key == 'chair_zone':
+        if (y1 - y0) >= (x1 - x0):
+            return [(x0 - value, y0, x0, y1), (x1, y0, x1 + value, y1)]
+        return [(x0, y0 - value, x1, y0), (x0, y1, x1, y1 + value)]
+    if key == 'drawer_user_zone':
+        de = ((use or {}).get('drawer_extension') or {}).get('value') or 0
+        return [front_band(item, de + value)]
+    return [front_band(item, value)]
+
+
+def guards(model, stair_id='SCALE'):
+    """Tutte le protezioni (linee) di una scala: ringhiera longitudinale, testata, ecc."""
+    return [z for z in model['room_features'] if z['type'] == 'line' and z.get('guards', stair_id) == stair_id]
+
+
+def apply_overrides(model, ov):
+    """Modello di una variante: copia della base con le sole modifiche dichiarate nella proposta."""
+    import copy
+    m = copy.deepcopy(model)
+    for fid, fields in ov.get('furniture', {}).items():
+        next(f for f in m['furniture'] if f['id'] == fid).update(fields)
+    for cid, fields in ov.get('slat_columns', {}).items():
+        next(c for c in m['display_proposal']['slat_columns'] if c['id'] == cid).update(fields)
+    for pid, fields in ov.get('functional_pairs', {}).items():
+        next(p for p in m['functional_pairs'] if p['id'] == pid).update(fields)
+    for k, v in ov.get('display_proposal', {}).items():
+        m['display_proposal'][k] = v
+    for aid, a in ov.get('adjacencies', {}).items():   # None = accostamento non piu' valido nella variante
+        m['adjacencies'] = [x for x in m['adjacencies'] if x['id'] != aid]
+        if a is not None:
+            m['adjacencies'].append(a)
+    for eid, fields in ov.get('electrical_points', {}).items():
+        next(e for e in m['electrical_points'] if e['id'] == eid).update(fields)
+    m['revision'] = model['revision'] + '-' + ov['id']
+    return m
+
+
 def back_side(item):
     """Lato del retro, opposto al frontale dichiarato."""
     return {'-y': 'y1', '+y': 'y0', '-x': 'x1', '+x': 'x0'}[item['front']]

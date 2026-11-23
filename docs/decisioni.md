@@ -17,6 +17,14 @@
 - Luce netta fra scala e cassa: **100–120 cm, minimo 100 cm**, misurata fra il limite fisico più sporgente di scala/parapetto/corrimano e l'ingombro completo della cassa (top compreso). Requisito di progetto, non misura rilevata né soglia normativa. Nel modello: `requirements.REQ_SCALA_CASSA`.
 - Con la cassa sul muro sinistro e la scala fino a y 3900 (ipotesi P02) la luce è 250 mm: il requisito **non è soddisfatto**. Non si sposta né si accorcia la scala; le alternative quotate sono in `outputs/proposte_layout.md` (V1 = deroga al vincolo «cassa sul muro sinistro», da approvare).
 
+## Indicazioni dell'utente del 23/11/2026 (P04)
+
+Queste indicazioni correggono l'interpretazione della scala e aprono una nuova proposta. Non sostituiscono la configurazione P03, che resta la base di confronto.
+
+- **Scala:** accesso e discesa dal lato vetrina. Sul lato verso C1 c'è una protezione (ringhiera), non un accesso. Nel modello: `SCALE.access_side = -y` e linea `RINGHIERA_TESTATA` sul bordo del foro a y 3900, **ipotesi topologica** con fonte utente: tracciato, estremità, spessore e sporgenze da rilevare. Il vecchio controllo «percorso C1–scala» (FP08-PERCORSO) è stato tolto; restano la vicinanza dei cassetti alle protezioni (PROT-) e l'accesso dal lato vetrina (ACC-SCALE).
+- **Requisito scala–cassa 1000–1200 mm:** non revocato. Resta obiettivo di progetto, da verificare sulle protezioni reali e sull'uso del luogo.
+- **Proposta V5 (da approvare):** cassa sulla parte destra della parete di fondo, vicino alla parete Smart; C1 e la sua esposizione sulla parte sinistra; scrivania 1600 × 700 con il lato lungo parallelo a VET_2. Il vincolo «cassa al muro sinistro» descrive la configurazione P03 e non impedisce di studiare V5, ma V5 non è una scelta definitiva.
+
 ## Preferenze dimensionali da verificare
 
 - Cassettiere sul fronte saletta: due da 120 cm sono ipotesi preferita, NON ordine confermato.
