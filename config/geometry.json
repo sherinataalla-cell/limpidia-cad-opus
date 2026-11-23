@@ -482,7 +482,7 @@
         "C3",
         "C4"
       ],
-      "note": "corsa cassetti; da scheda Lumio"
+      "note": "corsa cassetti; da scheda Lumio; cassetti normalmente chiusi, aperti brevemente all'occorrenza (indicazione utente 23/11/2026)"
     },
     "door_leaf_island": {
       "value": 390,
@@ -500,7 +500,7 @@
       "applies_to": [
         "SCRIVANIA"
       ],
-      "note": "sedia occupata e arretrata; lati da definire"
+      "note": "sedia occupata e arretrata; lati da definire; fascia convenzionale storica (P01-V5), non prescrizione approvata: in V5b sostituita dalle sedute reali"
     },
     "operator_zone": {
       "value": 800,
@@ -534,6 +534,33 @@
         "C4"
       ],
       "note": "spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi"
+    },
+    "seat_operator": {
+      "value": null,
+      "status": "pending",
+      "source": "indicazione utente 23/11/2026 (V5b)",
+      "applies_to": [
+        "SCRIVANIA"
+      ],
+      "note": "ingombro della sedia reale dell'operatore occupata (uso compatto, parte sotto il piano): da scheda della sedia; non sostituito con 750"
+    },
+    "seat_client": {
+      "value": null,
+      "status": "pending",
+      "source": "indicazione utente 23/11/2026 (V5b)",
+      "applies_to": [
+        "SCRIVANIA"
+      ],
+      "note": "ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750"
+    },
+    "seat_move": {
+      "value": null,
+      "status": "pending",
+      "source": "indicazione utente 23/11/2026 (V5b)",
+      "applies_to": [
+        "SCRIVANIA"
+      ],
+      "note": "manovra occasionale della seduta (avvicinamento, alzata, arretramento): da rilevare con la sedia reale"
     }
   },
   "functional_pairs": [
@@ -1399,6 +1426,179 @@
       },
       "distance_table": true,
       "short": "Cassa verso Smart, scrivania // VET_2"
+    },
+    {
+      "id": "V5b",
+      "extends": "V5",
+      "sheet": true,
+      "render": true,
+      "title": "V5 con scrivania verso vetrina e ringhiera, cassetti ad apertura breve",
+      "short": "V5b: scrivania verso vetrina e ringhiera",
+      "source": "indicazioni utente 23/11/2026 (Limpidia_V5b_indicazioni_per_Claude)",
+      "why": "Scrivania 1600 x 700 parallela a VET_2 spostata di 300 mm verso la ringhiera e di 150 mm verso la vetrina (x 3950-5550, y 600-1300). Lungo Y: 600 vetrina-scrivania + 700 piano + 980 scrivania-fronti C2/C3 + 400 cassettiere = 2680 (2680 e' facciata-muro saletta, non netta dalle cassettiere). Cassetti normalmente chiusi e aperti brevemente; nessun passaggio simultaneo richiesto nella fascia dei cassetti aperti. Sedute da sedia reale (dato mancante), non fascia fissa 750.",
+      "impact": "Studio da approvare sulla base di V5. Operatore lato vetrina e cliente lato interno sono ipotesi della prova. Alternativa vicina: y 550-1250.",
+      "focus": [
+        "FP02",
+        "FP09",
+        "FP05",
+        "FP06"
+      ],
+      "furniture": {
+        "SCRIVANIA": {
+          "x": 3950,
+          "y": 600,
+          "seats": [
+            {
+              "role": "operatore",
+              "side": "-y",
+              "use": "seat_operator",
+              "status": "assumed",
+              "source": "V5b: ipotesi della prova, da coordinare con lato contenitore e accesso alla seduta; non confermata"
+            },
+            {
+              "role": "cliente",
+              "side": "+y",
+              "use": "seat_client",
+              "status": "assumed",
+              "source": "V5b: ipotesi della prova; non confermata"
+            }
+          ],
+          "source": "V5b: posizione proposta dall'utente; 600 mm dalla vetrina non e' un minimo ergonomico"
+        }
+      },
+      "functional_pairs": {
+        "FP02": {
+          "function": "C3-scrivania: uso ordinario, movimento seduta e apertura breve dei cassetti C3 (V5b)",
+          "scenarios": [
+            {
+              "name": "A uso ordinario: cassetti chiusi, sedute occupate",
+              "uses": [
+                "seat_client",
+                "seat_operator"
+              ],
+              "mode": "ordinario"
+            },
+            {
+              "name": "mobili chiusi, senza sedute",
+              "uses": [],
+              "mode": "ordinario"
+            },
+            {
+              "name": "B movimento occasionale della seduta",
+              "uses": [
+                "seat_move"
+              ],
+              "mode": "occasionale"
+            },
+            {
+              "name": "C apertura breve cassetti C3",
+              "uses": [
+                "drawer_extension"
+              ],
+              "mode": "occasionale"
+            },
+            {
+              "name": "C apertura breve cassetti C3 con cliente seduto",
+              "uses": [
+                "drawer_extension",
+                "seat_client"
+              ],
+              "mode": "occasionale"
+            }
+          ],
+          "path": {
+            "required": true,
+            "criterion": "screening_passage",
+            "scenario": "A uso ordinario: cassetti chiusi, sedute occupate",
+            "note": "V5b: percorso ordinario a cassetti chiusi; nessun transito richiesto con i cassetti aperti"
+          }
+        },
+        "FP09": {
+          "function": "C2-scrivania: uso ordinario, movimento seduta e apertura breve dei cassetti C2 (V5b)",
+          "scenarios": [
+            {
+              "name": "A uso ordinario: cassetti chiusi, sedute occupate",
+              "uses": [
+                "seat_client",
+                "seat_operator"
+              ],
+              "mode": "ordinario"
+            },
+            {
+              "name": "mobili chiusi, senza sedute",
+              "uses": [],
+              "mode": "ordinario"
+            },
+            {
+              "name": "B movimento occasionale della seduta",
+              "uses": [
+                "seat_move"
+              ],
+              "mode": "occasionale"
+            },
+            {
+              "name": "C apertura breve cassetti C2",
+              "uses": [
+                "drawer_extension"
+              ],
+              "mode": "occasionale"
+            },
+            {
+              "name": "C apertura breve cassetti C2 con cliente seduto",
+              "uses": [
+                "drawer_extension",
+                "seat_client"
+              ],
+              "mode": "occasionale"
+            }
+          ],
+          "path": {
+            "required": false
+          }
+        },
+        "FP05": {
+          "function": "scrivania-C4: percorso ordinario verso saletta ed esposizione C4; apertura breve cassetti separata (V5b)",
+          "scenarios": [
+            {
+              "name": "A uso ordinario: cassetti chiusi",
+              "uses": [],
+              "mode": "ordinario"
+            },
+            {
+              "name": "C apertura breve cassetti C4",
+              "uses": [
+                "drawer_extension"
+              ],
+              "mode": "occasionale"
+            }
+          ],
+          "path": {
+            "required": true,
+            "criterion": "screening_passage",
+            "scenario": "A uso ordinario: cassetti chiusi",
+            "note": "V5b: percorso ordinario verso saletta lato C4"
+          }
+        }
+      },
+      "electrical_points": {
+        "E06": {
+          "x": 4750,
+          "y": 950,
+          "xy_source": "V5b: centro della scrivania spostata, solo riferimento di coordinamento; non posizione di allaccio verificata",
+          "support": "da decidere: pavimento sotto la scrivania; fronte C4 a 1550 mm, muro destro a 1950 mm; percorso cavi da decidere"
+        }
+      },
+      "distance_table": true,
+      "alternatives": [
+        {
+          "name": "y 550-1250",
+          "furniture": {
+            "SCRIVANIA": {
+              "y": 550
+            }
+          }
+        }
+      ]
     }
   ]
 }

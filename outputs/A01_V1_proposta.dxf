@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-40A
+407
   9
 $SURFTAB1
  70
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3613,7 +3613,7 @@ ACAD
   0
 APPID
   5
-407
+404
 330
 3
 100
@@ -3627,7 +3627,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-408
+405
 330
 3
 100
@@ -18409,7 +18409,7 @@ AcDbText
  40
 2.2
   1
-Cassetti/ante aperti (ipotesi)
+Apertura breve cassetti/ante (ipotesi)
   7
 OpenSans
  11
@@ -18473,7 +18473,7 @@ AcDbText
  40
 2.2
   1
-Fascia seduta 750 (ipotesi)
+Seduta: fascia o ruolo (ipotesi)
   7
 OpenSans
  11
@@ -21283,7 +21283,7 @@ AcDbText
  40
 1.7
   1
-DEC-ISOLA-P
+USE-seat_client
   7
 OpenSans
  11
@@ -21317,7 +21317,7 @@ AcDbText
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+Non verificabile (dato mancante)
   7
 OpenSans
  11
@@ -21351,7 +21351,7 @@ AcDbText
  40
 1.7
   1
-Isola: profondità esterna 390 mm (prodotto P 390 mm), limite approvato 400 mm.
+seat_client per SCRIVANIA: ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750; verifica da eseguire con il
   7
 OpenSans
  11
@@ -21377,21 +21377,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-26.600000000000094
+27.200000000000095
  30
 0.0
  40
 1.7
   1
-SWING-P_ING
+dato.
   7
 OpenSans
  11
-15.0
+104.0
  21
-26.600000000000094
+27.200000000000095
  31
 0.0
 100
@@ -21411,21 +21411,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-26.600000000000094
+24.000000000000092
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+USE-seat_move
   7
 OpenSans
  11
-52.0
+15.0
  21
-26.600000000000094
+24.000000000000092
  31
 0.0
 100
@@ -21445,21 +21445,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-26.600000000000094
+24.000000000000092
  30
 0.0
  40
 1.7
   1
-P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini):
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-104.0
+52.0
  21
-26.600000000000094
+24.000000000000092
  31
 0.0
 100
@@ -21487,7 +21487,7 @@ AcDbText
  40
 1.7
   1
-ipotesi.
+seat_move per SCRIVANIA: manovra occasionale della seduta (avvicinamento, alzata, arretramento): da rilevare con la sedia reale; verifica da eseguire
   7
 OpenSans
  11
@@ -21513,21 +21513,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-20.80000000000009
+21.40000000000009
  30
 0.0
  40
 1.7
   1
-SWING-P_SAL
+con il dato.
   7
 OpenSans
  11
-15.0
+104.0
  21
-20.80000000000009
+21.40000000000009
  31
 0.0
 100
@@ -21547,21 +21547,21 @@ TEXT
 100
 AcDbText
  10
-52.0
+15.0
  20
-20.80000000000009
+18.200000000000088
  30
 0.0
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+USE-seat_operator
   7
 OpenSans
  11
-52.0
+15.0
  21
-20.80000000000009
+18.200000000000088
  31
 0.0
 100
@@ -21581,21 +21581,21 @@ TEXT
 100
 AcDbText
  10
-104.0
+52.0
  20
-20.80000000000009
+18.200000000000088
  30
 0.0
  40
 1.7
   1
-P_SAL: vano 900 mm, anta 850 mm (verso l'interno della saletta, cerniera a destra): nessuna interferenza; stato delle dipendenze (porta, muro,
+Non verificabile (dato mancante)
   7
 OpenSans
  11
-104.0
+52.0
  21
-20.80000000000009
+18.200000000000088
  31
 0.0
 100
@@ -21623,7 +21623,7 @@ AcDbText
  40
 1.7
   1
-ostacoli vicini): ipotesi.
+seat_operator per SCRIVANIA: ingombro della sedia reale dell'operatore occupata (uso compatto, parte sotto il piano): da scheda della sedia; non
   7
 OpenSans
  11
@@ -21649,123 +21649,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-15.000000000000089
+15.600000000000088
  30
 0.0
  40
 1.7
   1
-ACC-SCALE
-  7
-OpenSans
- 11
-15.0
- 21
-15.000000000000089
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-404
-330
-389
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-52.0
- 20
-15.000000000000089
- 30
-0.0
- 40
-1.7
-  1
-Compatibile nelle ipotesi attuali
-  7
-OpenSans
- 11
-52.0
- 21
-15.000000000000089
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-405
-330
-389
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-104.0
- 20
-15.000000000000089
- 30
-0.0
- 40
-1.7
-  1
-Accesso a SCALE dal lato -y (indicazione utente 23/11/2026: accesso e discesa dal lato vetrina; il lato verso C1 non e' un accesso): fascia di sbarco
+sostituito con 750; verifica da eseguire con il dato.
   7
 OpenSans
  11
 104.0
  21
-15.000000000000089
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-406
-330
-389
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-104.0
- 20
-12.40000000000009
- 30
-0.0
- 40
-1.7
-  1
-900 mm × 850 mm libera da mobili e fasce d'uso nelle ipotesi. Soglia di screening, non verifica normativa; gradini, alzate e corrimano da rilevare.
-  7
-OpenSans
- 11
-104.0
- 21
-12.40000000000009
+15.600000000000088
  31
 0.0
 100
@@ -24169,9 +24067,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24205,9 +24103,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24241,9 +24139,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24277,9 +24175,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24313,9 +24211,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24421,9 +24319,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -28013,7 +27911,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-409
+406
   0
 DICTIONARYVAR
   5
@@ -28857,7 +28755,7 @@ A01-V1
   0
 DICTIONARYVAR
   5
-409
+406
 330
 2D
 100

@@ -52,13 +52,16 @@ Revisione P04, generato il 2026-11-23 da config/geometry.json. Ogni riga resta a
 | ISOLA_SMART | posizione nel locale | x 900, y 1500, fronte +x | ipotesi | DEC: Monfero 1600 x 390 x 830 da confermare sulla variante; lato lungo lungo la ringhiera, ante verso la vendita |
 | ISOLA_SMART | altezza | 830 | da catalogo | scheda prodotto da archiviare |
 | PARTI | zoccoli, top e pannelli dei mobili (spessori) | vedi furniture_parts | ipotesi | PROP |
-| USO | drawer_extension: corsa cassetti; da scheda Lumio | 350 | ipotesi | PROP |
+| USO | drawer_extension: corsa cassetti; da scheda Lumio; cassetti normalmente chiusi, aperti brevemente all'occorrenza (indicazione utente 23/11/2026) | 350 | ipotesi | PROP |
 | USO | door_leaf_island: apertura ante Monfero; da scheda | 390 | da definire | PROP |
-| USO | chair_zone: sedia occupata e arretrata; lati da definire | 750 | ipotesi | PROP |
+| USO | chair_zone: sedia occupata e arretrata; lati da definire; fascia convenzionale storica (P01-V5), non prescrizione approvata: in V5b sostituita dalle sedute reali | 750 | ipotesi | PROP |
 | USO | operator_zone: lato operatore della cassa non definito | 800 | da definire | PROP |
 | USO | screening_passage: soglia di screening, non requisito normativo | 900 | ipotesi | PROP |
 | USO | railing_thickness: spessore e sporgenza del corrimano rispetto all'asse | - | da definire | rilievo |
 | USO | drawer_user_zone: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi | - | da definire | PROP |
+| USO | seat_operator: ingombro della sedia reale dell'operatore occupata (uso compatto, parte sotto il piano): da scheda della sedia; non sostituito con 750 | - | da definire | indicazione utente 23/11/2026 (V5b) |
+| USO | seat_client: ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750 | - | da definire | indicazione utente 23/11/2026 (V5b) |
+| USO | seat_move: manovra occasionale della seduta (avvicinamento, alzata, arretramento): da rilevare con la sedia reale | - | da definire | indicazione utente 23/11/2026 (V5b) |
 | REQ_SCALA_CASSA | requisito committenza: luce netta fra il limite fisico più sporgente di scala/parapetto/corrimano e l'ingombro completo della cassa (top compreso), a banco chiuso | ≥ 1000 (obiettivo 1000–1200) | requisito | committenza, indicazione del 21/11/2026: «tra la scala e la cassa un metro / un metro e venti» |
 | SMART | fascia smart | 1820 | ipotesi | S2: fascia smart riservata 1,82 m (precedente progetto, da riconciliare) |
 | SMART | telaio esterno / immagine / distanza libera / interasse / altezza / base | 410 / 380 / 60 / 470 / 700 / 1150 | ipotesi | PROP da S4: quattro pannelli con immagine e titolo |
@@ -123,6 +126,9 @@ Revisione P04, generato il 2026-11-23 da config/geometry.json. Ogni riga resta a
 | USE-door_leaf_island | Non verificabile (dato mancante) | door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato. |
 | USE-drawer_user_zone | Non verificabile (dato mancante) | drawer_user_zone per C1, C2, C3, C4: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi; verifica da eseguire con il dato. |
 | USE-operator_zone | Non verificabile (dato mancante) | operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato. |
+| USE-seat_client | Non verificabile (dato mancante) | seat_client per SCRIVANIA: ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750; verifica da eseguire con il dato. |
+| USE-seat_move | Non verificabile (dato mancante) | seat_move per SCRIVANIA: manovra occasionale della seduta (avvicinamento, alzata, arretramento): da rilevare con la sedia reale; verifica da eseguire con il dato. |
+| USE-seat_operator | Non verificabile (dato mancante) | seat_operator per SCRIVANIA: ingombro della sedia reale dell'operatore occupata (uso compatto, parte sotto il piano): da scheda della sedia; non sostituito con 750; verifica da eseguire con il dato. |
 | EL-E07 | Non verificabile (dato mancante) | E07 (Scala: illuminazione gradini e corrimano): posizione da definire. |
 | EL-E08 | Non verificabile (dato mancante) | E08 (Saletta: strumenti di refrazione, poltrona, rete): posizione da definire. |
 | EL-E09 | Non verificabile (dato mancante) | E09 (Illuminazione generale ed esposizione (binari a soffitto)): posizione da definire. |

@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-416
+413
   9
 $SURFTAB1
  70
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3613,7 +3613,7 @@ ACAD
   0
 APPID
   5
-413
+410
 330
 3
 100
@@ -3627,7 +3627,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-414
+411
 330
 3
 100
@@ -18675,7 +18675,7 @@ AcDbText
  40
 2.2
   1
-Cassetti/ante aperti (ipotesi)
+Apertura breve cassetti/ante (ipotesi)
   7
 OpenSans
  11
@@ -18739,7 +18739,7 @@ AcDbText
  40
 2.2
   1
-Fascia seduta 750 (ipotesi)
+Seduta: fascia o ruolo (ipotesi)
   7
 OpenSans
  11
@@ -21719,7 +21719,7 @@ AcDbText
  40
 1.7
   1
-DEC-ISOLA-P
+USE-seat_client
   7
 OpenSans
  11
@@ -21753,7 +21753,7 @@ AcDbText
  40
 1.7
   1
-Compatibile nelle ipotesi attuali
+Non verificabile (dato mancante)
   7
 OpenSans
  11
@@ -21787,7 +21787,7 @@ AcDbText
  40
 1.7
   1
-Isola: profondità esterna 390 mm (prodotto P 390 mm), limite approvato 400 mm.
+seat_client per SCRIVANIA: ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750; verifica da eseguire con il
   7
 OpenSans
  11
@@ -21813,123 +21813,21 @@ TEXT
 100
 AcDbText
  10
-15.0
+104.0
  20
-15.600000000000081
+16.20000000000008
  30
 0.0
  40
 1.7
   1
-SWING-P_ING
-  7
-OpenSans
- 11
-15.0
- 21
-15.600000000000081
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-410
-330
-398
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-52.0
- 20
-15.600000000000081
- 30
-0.0
- 40
-1.7
-  1
-Compatibile nelle ipotesi attuali
-  7
-OpenSans
- 11
-52.0
- 21
-15.600000000000081
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-411
-330
-398
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-104.0
- 20
-15.600000000000081
- 30
-0.0
- 40
-1.7
-  1
-P_ING: vano 900 mm, anta 900 mm (verso l'interno, cerniera a sinistra): nessuna interferenza; stato delle dipendenze (porta, muro, ostacoli vicini):
+dato.
   7
 OpenSans
  11
 104.0
  21
-15.600000000000081
- 31
-0.0
-100
-AcDbText
-  0
-TEXT
-  5
-412
-330
-398
-100
-AcDbEntity
- 67
-1
-  8
-TEXT
-100
-AcDbText
- 10
-104.0
- 20
-13.000000000000082
- 30
-0.0
- 40
-1.7
-  1
-ipotesi.
-  7
-OpenSans
- 11
-104.0
- 21
-13.000000000000082
+16.20000000000008
  31
 0.0
 100
@@ -24331,9 +24229,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24367,9 +24265,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24403,9 +24301,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24439,9 +24337,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24475,9 +24373,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -24583,9 +24481,9 @@ AcDbEntity
   8
 USE
   6
-DASHED
+DOT
  48
-4.0
+8.0
 100
 AcDbPolyline
  90
@@ -28229,7 +28127,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-415
+412
   0
 DICTIONARYVAR
   5
@@ -29073,7 +28971,7 @@ A01-V5
   0
 DICTIONARYVAR
   5
-415
+412
 330
 2D
 100

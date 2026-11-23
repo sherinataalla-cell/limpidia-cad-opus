@@ -170,6 +170,13 @@ def use_bands(item, key, value, use=None):
     Altri usi: davanti al frontale dichiarato.
     """
     x0, y0, x1, y1 = bounds(item)
+    seats = item.get('seats') or []
+    if key.startswith('seat_'):
+        # sedute dichiarate per lato (V5b): solo sui lati dove c'e' una seduta con quel dato
+        sides = [st['side'] for st in seats if st.get('use') == key or key == 'seat_move']
+        side_box = {'-y': (x0, y0 - value, x1, y0), '+y': (x0, y1, x1, y1 + value),
+                    '-x': (x0 - value, y0, x0, y1), '+x': (x1, y0, x1 + value, y1)}
+        return [side_box[sd] for sd in sides]
     if key == 'chair_zone':
         if (y1 - y0) >= (x1 - x0):
             return [(x0 - value, y0, x0, y1), (x1, y0, x1 + value, y1)]
@@ -188,7 +195,12 @@ def guards(model, stair_id='SCALE'):
 def apply_overrides(model, ov):
     """Modello di una variante: copia della base con le sole modifiche dichiarate nella proposta."""
     import copy
-    m = copy.deepcopy(model)
+    if ov.get('extends'):   # variante di una variante (es. V5b su V5): prima le modifiche del genitore
+        parent = next(v for v in model['layout_proposals'] if v['id'] == ov['extends'])
+        m = apply_overrides(model, parent)
+        m['revision'] = model['revision']
+    else:
+        m = copy.deepcopy(model)
     for fid, fields in ov.get('furniture', {}).items():
         next(f for f in m['furniture'] if f['id'] == fid).update(fields)
     for cid, fields in ov.get('slat_columns', {}).items():

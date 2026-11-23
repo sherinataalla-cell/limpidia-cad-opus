@@ -250,7 +250,7 @@ def _scenario(model, obj, a, b, ga, gb, d, sc):
     use = model.get('use_assumptions', {})
     missing = [n for n in sc['uses'] if n not in use or use[n].get('value') is None or use[n]['status'] == 'pending']
     if missing:
-        return {'name': sc['name'], 'missing': missing, 'collision': False, 'resid': None, 'notes': [], 'used': []}
+        return {'name': sc['name'], 'missing': missing, 'collision': False, 'alt': False, 'resid': None, 'notes': [], 'used': []}
     facing = {a: [], b: []}
     for n in sc['uses']:
         u = use[n]
@@ -262,18 +262,26 @@ def _scenario(model, obj, a, b, ga, gb, d, sc):
             if g.intersection(other).area > 1:
                 coll = True
                 notes.append(f"{n} di {oid} ({u['value']} mm) interferisce con {oname}")
+    alt = False
+    occasional = sc.get('mode') == 'occasionale'
     for na, ua, g1 in facing[a]:
         for nb, ub, g2 in facing[b]:
             if g1.intersection(g2).area > 1:
-                coll = True
-                notes.append(f"{na} di {a} e {nb} di {b} si sovrappongono")
+                if occasional:
+                    # azioni alternative, non richieste insieme: non e' una collisione fisica
+                    alt = True
+                    notes.append(f"{na} di {a} e {nb} di {b} si sovrappongono: azioni alternative, "
+                                 "possibile breve spostamento da verificare con la seduta reale")
+                else:
+                    coll = True
+                    notes.append(f"{na} di {a} e {nb} di {b} si sovrappongono")
     used = [u['status'] for side in facing.values() for _, u, _ in side]
     # residuo geometrico fra ingombri statici più fasce d'uso (vale anche per coppie in diagonale)
     from shapely.ops import unary_union
     ea = unary_union([ga] + [g for _, _, g in facing[a]])
     eb = unary_union([gb] + [g for _, _, g in facing[b]])
-    resid = 0.0 if coll else ea.distance(eb)
-    return {'name': sc['name'], 'missing': [], 'collision': coll, 'resid': resid, 'notes': notes, 'used': used}
+    resid = 0.0 if (coll or alt) else ea.distance(eb)
+    return {'name': sc['name'], 'missing': [], 'collision': coll, 'alt': alt, 'resid': resid, 'notes': notes, 'used': used}
 
 
 def functional_pairs(model):
@@ -304,6 +312,9 @@ def functional_pairs(model):
                           f"{head}; manca il criterio: {fp.get('criterion_missing', 'da definire')}.", d, st, [a, b]))
         elif any(r['missing'] for r in res):
             out.append(_r(fp['id'], 'uso', 'NON_VERIFICABILE', f"{head}; {desc}.", d, stt, [a, b]))
+        elif any(r.get('alt') for r in res):
+            out.append(_r(fp['id'], 'uso', 'AVVISO', f"{head}; {desc}. Nessuna collisione fisica: sovrapposizione fra "
+                          "azioni alternative da verificare con seduta e cassetto reali.", d, stt, [a, b]))
         else:
             out.append(_r(fp['id'], 'uso', _ok_or_ipotesi(stt),
                           f"{head}; {desc}. Esito limitato alla non sovrapposizione degli ingombri d'uso.", d, stt, [a, b]))

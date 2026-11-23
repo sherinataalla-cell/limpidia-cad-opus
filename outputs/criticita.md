@@ -7,7 +7,7 @@ Revisione modello: P04. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | Esito | Numero |
 | --- | ---: |
 | Conflitto | 3 |
-| Non verificabile (dato mancante) | 25 |
+| Non verificabile (dato mancante) | 28 |
 | Avviso | 4 |
 | Compatibile nelle ipotesi attuali | 10 |
 | Coerente (solo geometria) | 16 |
@@ -44,6 +44,9 @@ Revisione modello: P04. Controlli geometrici e di uso sotto ipotesi dichiarate; 
 | USE-door_leaf_island | Non verificabile (dato mancante) | door_leaf_island per ISOLA_SMART: apertura ante Monfero; da scheda; verifica da eseguire con il dato. | da definire |
 | USE-drawer_user_zone | Non verificabile (dato mancante) | drawer_user_zone per C1, C2, C3, C4: spazio della persona davanti ai cassetti aperti (oltre la corsa): dato da definire, non sostituito da ipotesi; verifica da eseguire con il dato. | da definire |
 | USE-operator_zone | Non verificabile (dato mancante) | operator_zone per CASSA: lato operatore della cassa non definito; verifica da eseguire con il dato. | da definire |
+| USE-seat_client | Non verificabile (dato mancante) | seat_client per SCRIVANIA: ingombro della sedia reale del cliente occupata: da scheda della sedia; non sostituito con 750; verifica da eseguire con il dato. | da definire |
+| USE-seat_move | Non verificabile (dato mancante) | seat_move per SCRIVANIA: manovra occasionale della seduta (avvicinamento, alzata, arretramento): da rilevare con la sedia reale; verifica da eseguire con il dato. | da definire |
+| USE-seat_operator | Non verificabile (dato mancante) | seat_operator per SCRIVANIA: ingombro della sedia reale dell'operatore occupata (uso compatto, parte sotto il piano): da scheda della sedia; non sostituito con 750; verifica da eseguire con il dato. | da definire |
 | ACC-SCALE | Compatibile nelle ipotesi attuali | Accesso a SCALE dal lato -y (indicazione utente 23/11/2026: accesso e discesa dal lato vetrina; il lato verso C1 non e' un accesso): fascia di sbarco 900 mm × 850 mm libera da mobili e fasce d'uso nelle ipotesi. Soglia di screening, non verifica normativa; gradini, alzate e corrimano da rilevare. | ipotesi |
 | FP02 | Compatibile nelle ipotesi attuali | C3–SCRIVANIA (uso cassetti C3, sedute e percorso verso la saletta): distanza statica 580 mm; mobili chiusi: residuo 580 mm; cassetti C3 aperti: residuo 230 mm; seduta occupata: residuo 580 mm; seduta occupata e cassetti C3 aperti: residuo 230 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |
 | FP04 | Compatibile nelle ipotesi attuali | C4–P_SAL (cassetti C4 aperti vicino alla porta della saletta): distanza statica 879 mm; cassetti C4 aperti: residuo 879 mm. Esito limitato alla non sovrapposizione degli ingombri d'uso. | ipotesi |

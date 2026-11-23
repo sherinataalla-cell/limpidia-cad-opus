@@ -549,7 +549,7 @@ $SPLINESEGS
   9
 $HANDSEED
   5
-298
+29E
   9
 $SURFTAB1
  70
@@ -1323,9 +1323,9 @@ ISM
   0
 CLASS
   1
-ACDBPLACEHOLDER
+LAYOUT
   2
-AcDbPlaceHolder
+AcDbLayout
   3
 ObjectDBX Classes
  90
@@ -1339,9 +1339,9 @@ ObjectDBX Classes
   0
 CLASS
   1
-LAYOUT
+ACDBPLACEHOLDER
   2
-AcDbLayout
+AcDbPlaceHolder
   3
 ObjectDBX Classes
  90
@@ -3613,7 +3613,7 @@ ACAD
   0
 APPID
   5
-295
+29B
 330
 3
 100
@@ -3627,7 +3627,7 @@ HATCHBACKGROUNDCOLOR
   0
 APPID
   5
-296
+29C
 330
 3
 100
@@ -13243,7 +13243,7 @@ AcDbText
  40
 1.5
   1
-         supporto: parete di fondo dietro la cassa (V5); accesso: da definire: dal retro cassa o con passacavi nel piano; lato operatore non definito; alimentatore: non pertinente; percorso: da defini
+         supporto: parete di fondo dietro la cassa (V5); accesso: da definire: dal retro cassa o con passacavi nel piano; lato operatore non definito; alimentatore: non pertinente; percorso: da
   7
 OpenSans
  11
@@ -13271,19 +13271,19 @@ AcDbText
  10
 15.0
  20
-97.60000000000001
+98.5
  30
 0.0
  40
-1.75
+1.5
   1
-E02    C1: due linee LED frontali e luci mensole fondo        energia/LED    750 / 4750 (ipotesi) DA RILEVARE da definire
+         definire
   7
 OpenSans
  11
 15.0
  21
-97.60000000000001
+98.5
  31
 0.0
 100
@@ -13305,19 +13305,19 @@ AcDbText
  10
 15.0
  20
-94.60000000000001
+95.19999999999999
  30
 0.0
  40
-1.5
+1.75
   1
-         supporto: parete di fondo; accesso: vano driver ispezionabile nel mobile (dettaglio D01 da sviluppare); alimentatore: da scheda prodotto / falegname; percorso: da definire
+E02    C1: due linee LED frontali e luci mensole fondo        energia/LED    750 / 4750 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-94.60000000000001
+95.19999999999999
  31
 0.0
 100
@@ -13339,19 +13339,19 @@ AcDbText
  10
 15.0
  20
-91.30000000000001
+92.19999999999999
  30
 0.0
  40
-1.75
+1.5
   1
-E03A   C2: LED frontali e luci mensole                        energia/LED    3550 / 2680 (ipotesi) DA RILEVARE da definire
+         supporto: parete di fondo; accesso: vano driver ispezionabile nel mobile (dettaglio D01 da sviluppare); alimentatore: da scheda prodotto / falegname; percorso: da definire
   7
 OpenSans
  11
 15.0
  21
-91.30000000000001
+92.19999999999999
  31
 0.0
 100
@@ -13373,19 +13373,19 @@ AcDbText
  10
 15.0
  20
-88.30000000000001
+88.89999999999998
  30
 0.0
  40
-1.5
+1.75
   1
-         supporto: tramezzo saletta W_SAL_S1, lato negozio; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: nel tramezzo in cartongesso, da progettare
+E03A   C2: LED frontali e luci mensole                        energia/LED    3550 / 2680 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-88.30000000000001
+88.89999999999998
  31
 0.0
 100
@@ -13407,19 +13407,19 @@ AcDbText
  10
 15.0
  20
-85.00000000000001
+85.89999999999998
  30
 0.0
  40
-1.75
+1.5
   1
-E03B   C3: LED frontali e luci mensole                        energia/LED    6080 / 2680 (ipotesi) DA RILEVARE da definire
+         supporto: tramezzo saletta W_SAL_S1, lato negozio; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: nel tramezzo in cartongesso, da
   7
 OpenSans
  11
 15.0
  21
-85.00000000000001
+85.89999999999998
  31
 0.0
 100
@@ -13441,19 +13441,19 @@ AcDbText
  10
 15.0
  20
-82.00000000000001
+83.49999999999997
  30
 0.0
  40
 1.5
   1
-         supporto: tramezzo saletta W_SAL_S1, lato negozio; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: nel tramezzo in cartongesso, da progettare
+         progettare
   7
 OpenSans
  11
 15.0
  21
-82.00000000000001
+83.49999999999997
  31
 0.0
 100
@@ -13475,19 +13475,19 @@ AcDbText
  10
 15.0
  20
-78.70000000000002
+80.19999999999996
  30
 0.0
  40
 1.75
   1
-E03C   C4: LED frontali e luci mensole                        energia/LED    7500 / 1900 (ipotesi) DA RILEVARE da definire
+E03B   C3: LED frontali e luci mensole                        energia/LED    6080 / 2680 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-78.70000000000002
+80.19999999999996
  31
 0.0
 100
@@ -13509,19 +13509,19 @@ AcDbText
  10
 15.0
  20
-75.70000000000002
+77.19999999999996
  30
 0.0
  40
 1.5
   1
-         supporto: parete laterale destra; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: da definire
+         supporto: tramezzo saletta W_SAL_S1, lato negozio; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: nel tramezzo in cartongesso, da
   7
 OpenSans
  11
 15.0
  21
-75.70000000000002
+77.19999999999996
  31
 0.0
 100
@@ -13543,19 +13543,19 @@ AcDbText
  10
 15.0
  20
-72.40000000000002
+74.79999999999995
  30
 0.0
  40
-1.75
+1.5
   1
-E04    Parete smart: quattro telai con immagine e luce prodot energia/LED    3370 / 3715 (ipotesi) DA RILEVARE 4 utenze telaio (numero prese da definire)
+         progettare
   7
 OpenSans
  11
 15.0
  21
-72.40000000000002
+74.79999999999995
  31
 0.0
 100
@@ -13577,19 +13577,19 @@ AcDbText
  10
 15.0
  20
-69.40000000000002
+71.49999999999994
  30
 0.0
  40
-1.5
+1.75
   1
-         supporto: tramezzo W_SAL_O, lato scala, sotto il rivestimento; accesso: da definire: dietro i telai o da vano ispezionabile; alimentatore: da scheda dei telai; percorso: nel tramezzo, da prog
+E03C   C4: LED frontali e luci mensole                        energia/LED    7500 / 1900 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-69.40000000000002
+71.49999999999994
  31
 0.0
 100
@@ -13611,19 +13611,19 @@ AcDbText
  10
 15.0
  20
-66.10000000000002
+68.49999999999994
  30
 0.0
  40
-1.75
+1.5
   1
-E05    Isola smart: ricarica e luce espositiva                energia        1070 / 2450 (ipotesi) DA RILEVARE da definire
+         supporto: parete laterale destra; accesso: vano driver ispezionabile (D01); alimentatore: da scheda prodotto / falegname; percorso: da definire
   7
 OpenSans
  11
 15.0
  21
-66.10000000000002
+68.49999999999994
  31
 0.0
 100
@@ -13645,19 +13645,19 @@ AcDbText
  10
 15.0
  20
-63.10000000000002
+65.19999999999993
  30
 0.0
  40
-1.5
+1.75
   1
-         supporto: pavimento sotto l'isola oppure parapetto: da decidere; accesso: punto dentro l'ingombro dell'isola: serve dettaglio di collegamento e apertura per manutenzione; alimentatore: non pe
+E04    Parete smart: quattro telai con immagine e luce prodot energia/LED    3370 / 3715 (ipotesi) DA RILEVARE 4 utenze telaio (numero prese da definire)
   7
 OpenSans
  11
 15.0
  21
-63.10000000000002
+65.19999999999993
  31
 0.0
 100
@@ -13679,19 +13679,19 @@ AcDbText
  10
 15.0
  20
-59.800000000000026
+62.19999999999993
  30
 0.0
  40
-1.75
+1.5
   1
-E06    Scrivania consulenza: presa integrata, PC, rete        energia/dati   5050 / 1100 (ipotesi) DA RILEVARE da definire
+         supporto: tramezzo W_SAL_O, lato scala, sotto il rivestimento; accesso: da definire: dietro i telai o da vano ispezionabile; alimentatore: da scheda dei telai; percorso: nel tramezzo, da
   7
 OpenSans
  11
 15.0
  21
-59.800000000000026
+62.19999999999993
  31
 0.0
 100
@@ -13713,19 +13713,19 @@ AcDbText
  10
 15.0
  20
-56.800000000000026
+59.79999999999993
  30
 0.0
  40
 1.5
   1
-         supporto: pavimento sotto la scrivania: da decidere (la parete C4 e' a 1250 mm); accesso: punto dentro l'ingombro della scrivania: serve passacavi e accesso da sotto il piano; alimentatore: n
+         progettare
   7
 OpenSans
  11
 15.0
  21
-56.800000000000026
+59.79999999999993
  31
 0.0
 100
@@ -13747,19 +13747,19 @@ AcDbText
  10
 15.0
  20
-53.50000000000003
+56.499999999999936
  30
 0.0
  40
 1.75
   1
-E07    Scala: illuminazione gradini e corrimano               energia/LED    - / - (da definire)  DA RILEVARE da definire
+E05    Isola smart: ricarica e luce espositiva                energia        1070 / 2450 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-53.50000000000003
+56.499999999999936
  31
 0.0
 100
@@ -13781,19 +13781,19 @@ AcDbText
  10
 15.0
  20
-50.50000000000003
+53.499999999999936
  30
 0.0
  40
 1.5
   1
-         supporto: da definire; accesso: da definire; alimentatore: da definire; percorso: da definire
+         supporto: pavimento sotto l'isola oppure parapetto: da decidere; accesso: punto dentro l'ingombro dell'isola: serve dettaglio di collegamento e apertura per manutenzione; alimentatore: non
   7
 OpenSans
  11
 15.0
  21
-50.50000000000003
+53.499999999999936
  31
 0.0
 100
@@ -13815,19 +13815,19 @@ AcDbText
  10
 15.0
  20
-47.20000000000003
+51.09999999999994
  30
 0.0
  40
-1.75
+1.5
   1
-E08    Saletta: strumenti di refrazione, poltrona, rete       energia/dati   - / - (da definire)  DA RILEVARE da definire con l'optometrista
+         pertinente; percorso: da definire (scala adiacente)
   7
 OpenSans
  11
 15.0
  21
-47.20000000000003
+51.09999999999994
  31
 0.0
 100
@@ -13849,19 +13849,19 @@ AcDbText
  10
 15.0
  20
-44.20000000000003
+47.79999999999994
  30
 0.0
  40
-1.5
+1.75
   1
-         supporto: da definire dentro la saletta; accesso: da definire; alimentatore: non pertinente; percorso: da definire
+E06    Scrivania consulenza: presa integrata, PC, rete        energia/dati   5050 / 1100 (ipotesi) DA RILEVARE da definire
   7
 OpenSans
  11
 15.0
  21
-44.20000000000003
+47.79999999999994
  31
 0.0
 100
@@ -13883,19 +13883,19 @@ AcDbText
  10
 15.0
  20
-40.900000000000034
+44.79999999999994
  30
 0.0
  40
-1.75
+1.5
   1
-E09    Illuminazione generale ed esposizione (binari a soffit energia        - / - (da definire)  DA RILEVARE da progetto illuminotecnico
+         supporto: pavimento sotto la scrivania: da decidere (la parete C4 e' a 1250 mm); accesso: punto dentro l'ingombro della scrivania: serve passacavi e accesso da sotto il piano; alimentatore:
   7
 OpenSans
  11
 15.0
  21
-40.900000000000034
+44.79999999999994
  31
 0.0
 100
@@ -13917,7 +13917,211 @@ AcDbText
  10
 15.0
  20
-37.900000000000034
+42.39999999999994
+ 30
+0.0
+ 40
+1.5
+  1
+         non pertinente; percorso: da definire
+  7
+OpenSans
+ 11
+15.0
+ 21
+42.39999999999994
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+295
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+39.099999999999945
+ 30
+0.0
+ 40
+1.75
+  1
+E07    Scala: illuminazione gradini e corrimano               energia/LED    - / - (da definire)  DA RILEVARE da definire
+  7
+OpenSans
+ 11
+15.0
+ 21
+39.099999999999945
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+296
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+36.099999999999945
+ 30
+0.0
+ 40
+1.5
+  1
+         supporto: da definire; accesso: da definire; alimentatore: da definire; percorso: da definire
+  7
+OpenSans
+ 11
+15.0
+ 21
+36.099999999999945
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+297
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+32.79999999999995
+ 30
+0.0
+ 40
+1.75
+  1
+E08    Saletta: strumenti di refrazione, poltrona, rete       energia/dati   - / - (da definire)  DA RILEVARE da definire con l'optometrista
+  7
+OpenSans
+ 11
+15.0
+ 21
+32.79999999999995
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+298
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+29.799999999999947
+ 30
+0.0
+ 40
+1.5
+  1
+         supporto: da definire dentro la saletta; accesso: da definire; alimentatore: non pertinente; percorso: da definire
+  7
+OpenSans
+ 11
+15.0
+ 21
+29.799999999999947
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+299
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+26.49999999999995
+ 30
+0.0
+ 40
+1.75
+  1
+E09    Illuminazione generale ed esposizione (binari a soffit energia        - / - (da definire)  DA RILEVARE da progetto illuminotecnico
+  7
+OpenSans
+ 11
+15.0
+ 21
+26.49999999999995
+ 31
+0.0
+100
+AcDbText
+  0
+TEXT
+  5
+29A
+330
+253
+100
+AcDbEntity
+ 67
+1
+  8
+TEXT
+100
+AcDbText
+ 10
+15.0
+ 20
+23.49999999999995
  30
 0.0
  40
@@ -13929,7 +14133,7 @@ OpenSans
  11
 15.0
  21
-37.900000000000034
+23.49999999999995
  31
 0.0
 100
@@ -19375,7 +19579,7 @@ CREATED_BY_EZDXF
   3
 WRITTEN_BY_EZDXF
 350
-297
+29D
   0
 DICTIONARYVAR
   5
@@ -20219,7 +20423,7 @@ E01-V5
   0
 DICTIONARYVAR
   5
-297
+29D
 330
 2D
 100

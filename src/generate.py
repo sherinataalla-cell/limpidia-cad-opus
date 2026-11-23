@@ -28,7 +28,7 @@ from shapely.geometry import box, LineString, Polygon
 
 from .model import (apply_overrides, use_bands, guards, load, bounds, OUT, ROOT, STATUS_LABEL, weakest, placement_status, front_band, door_open_leaf,
                     smart_layout, smart_wall_geom, areas, room, faces, face_of, view_frame, to_u, product_dims,
-                    envelope_edges, outward, rooms)
+                    envelope_edges, outward, rooms, host_face)
 from .checks import run_all, clearances, write_report, LABEL as OUTCOME_LABEL
 from .components import all_components, union_bounds
 
@@ -278,8 +278,18 @@ def draw_use(sh, model):
         for fid in u['applies_to']:
             f = furn[fid]
             bands = use_bands(f, key, u['value'], use)
-            for b in bands:   # sedute su layer proprio: mobili chiusi, aperture e sedute distinti
-                sh.rect(b, 'USE_SEAT' if key == 'chair_zone' else 'USE', linetype='DASHED', ltscale=4)
+            for b in bands:   # sedute su layer proprio; aperture brevi a puntini: mobili chiusi, aperture e sedute distinti
+                seat = key == 'chair_zone' or key.startswith('seat_')
+                sh.rect(b, 'USE_SEAT' if seat else 'USE', linetype='DASHED' if seat else 'DOT', ltscale=4 if seat else 8)
+    # posizioni dichiarate delle sedute (ruolo per lato): ipotesi, ingombro della sedia reale da rilevare
+    for f in model['furniture']:
+        x0, y0, x1, y1 = bounds(f)
+        for st in f.get('seats') or []:
+            u = use.get(st['use'], {})
+            lab = st['role'].upper() + (' (ipotesi, sedia da rilevare)' if u.get('value') is None else ' (ipotesi)')
+            pos = {'-y': ((x0 + x1) / 2, y0 - 2.2 * sh.S), '+y': ((x0 + x1) / 2, y1 + 1.2 * sh.S),
+                   '-x': (x0 - 2.2 * sh.S, (y0 + y1) / 2), '+x': (x1 + 1.2 * sh.S, (y0 + y1) / 2)}[st['side']]
+            sh.text(lab, pos[0], pos[1], 'USE_SEAT', 1.6 * sh.S, TextEntityAlignment.MIDDLE_CENTER)
     for fid, u in [(k, v) for k, v in use.items() if isinstance(v, dict) and v.get('status') == 'pending']:
         pass
 
@@ -428,7 +438,7 @@ def plan_limits(model, pad_mm=2000):
 
 
 LEGEND_A01 = [(7, 'Muratura esistente (ipotesi)'), (8, 'Tramezzo proposto 10 cm'), (30, 'Mobile, misure ipotesi'),
-              (3, 'Mobile da catalogo'), (1, 'Mobile da definire'), (140, "Cassetti/ante aperti (ipotesi)"), (200, 'Fascia seduta 750 (ipotesi)'),
+              (3, 'Mobile da catalogo'), (1, 'Mobile da definire'), (140, "Apertura breve cassetti/ante (ipotesi)"), (200, 'Seduta: fascia o ruolo (ipotesi)'),
               (6, 'Distanza funzionale (FPxx) e luce richiesta')]
 LEGEND_E01 = [(7, 'Muratura esistente (ipotesi)'), (8, 'Tramezzo proposto'), (30, 'Ingombro mobili'),
               (5, 'Punto utenza: X/Y ipotesi, Z da rilevare')]
@@ -495,9 +505,11 @@ def build_e01(model, code='E01', title=None):
             z = 'DA RILEVARE' if p['z'] is None else f"{p['z']} ({STATUS_LABEL[p['z_status']]})"
             t(f"{p['id']:<6} {p['service'][:54]:<54} {'/'.join(p['kinds']):<14} {xy:<20} {z:<11} {p['quantity']}", 15, y, 1.75)
             y -= 3.0
-            t(f"         supporto: {p['support']}; accesso: {p['access']}; alimentatore: {p['driver']}; percorso: {p['route']}"[:200],
-              15, y, 1.5)
-            y -= 3.3
+            import textwrap
+            for ln in textwrap.wrap(f"supporto: {p['support']}; accesso: {p['access']}; alimentatore: {p['driver']}; percorso: {p['route']}", 190)[:2]:
+                t('         ' + ln, 15, y, 1.5)   # note a capo, non troncate
+                y -= 2.4
+            y -= 0.9
     sh.layout(code, title or ['Punti utenza energia/dati', 'e alimentazioni LED', 'Piano terra'], LEGEND_E01, model,
               plan_limits(model), (12, 118, 302, 285),
               notes=['Simbolo: cerchio energia, croce dati,', 'cerchio interno alimentazione LED.',
@@ -527,7 +539,7 @@ def elevation_geometry(model, spec):
     return face, fr, items
 
 
-def build_elevation(model, spec):
+def build_elevation(model, spec, code=None):
     sh = Sheet(20)
     S, TXT = sh.S, sh.TXT
     H = model['ceiling']['height']
@@ -660,7 +672,7 @@ def build_elevation(model, spec):
                 sh.text(f"{pnt['id']} Z DA RILEVARE", u + 40, 330, 'ELECTRICAL', TXT * 0.75, rot=90)
     sh.text(f"faccia {face['id']}: lato sinistro guardando la parete", 0, -14 * S, 'TEXT', TXT * 0.7)
     lim = (-12 * S, -18 * S, L + 14 * S, H + 6 * S)
-    sh.layout(spec['code'], spec['title'] + [f"faccia {face['id']}"],
+    sh.layout(code or spec['code'], spec['title'] + [f"faccia {face['id']}"],
               [(7, 'Muratura / tramezzo'), (30, 'Mobile, misure ipotesi'), (8, 'Mensole, listelli (proposta)'),
                (2, 'Linee LED (asse)'), (5, 'Utenza'), (32, 'Rivestimento mattoni')], model, lim, (14, 14, 302, 285),
               notes=['Componenti dalla geometria comune', '(src/components.py): stessi solidi del 3D.',
@@ -1060,35 +1072,41 @@ def proposals(model):
     for v in model.get('layout_proposals', []):
         m = apply_overrides(model, v)
         res = {r['id']: r for r in run_all(m)}
+        # confronto con il genitore per le varianti di variante (V5b su V5), altrimenti con la base
+        ref = apply_overrides(model, next(p for p in model['layout_proposals'] if p['id'] == v['extends'])) if v.get('extends') else model
+        rref = {r['id']: r for r in run_all(ref)} if v.get('extends') else res0
+        ref_name = v['extends'] if v.get('extends') else 'Base'
         lines += [f"## {v['id']} — {v['title']}", '', v['why'], '', f"**Vincoli toccati:** {v['impact']}", '',
                   '| Elemento | Prima | Dopo |', '| --- | --- | --- |']
         for fid, fields in v.get('furniture', {}).items():
-            f0 = next(f for f in model['furniture'] if f['id'] == fid)
+            f0 = next(f for f in ref['furniture'] if f['id'] == fid)
             ks = [k for k in fields if k != 'source']
-            lines.append(f"| {fid} | " + ', '.join(f"{k} {f0[k]}" for k in ks) + ' | ' + ', '.join(f"{k} {fields[k]}" for k in ks) + ' |')
+            fmt = lambda k, val: (f"sedute: {', '.join(st['role'] + ' ' + st['side'] for st in val)} (ipotesi)" if k == 'seats'
+                                  else f"{k} {val}")
+            lines.append(f"| {fid} | " + ', '.join(fmt(k, f0[k]) for k in ks if k in f0) + ' | ' + ', '.join(fmt(k, fields[k]) for k in ks) + ' |')
         for cid, fields in v.get('slat_columns', {}).items():
-            c0 = next(c for c in model['display_proposal']['slat_columns'] if c['id'] == cid)
+            c0 = next(c for c in ref['display_proposal']['slat_columns'] if c['id'] == cid)
             lines.append(f"| {cid} | " + ', '.join(f"{k} {c0[k]}" for k in fields) + ' | ' + ', '.join(f"{k} {val}" for k, val in fields.items()) + ' |')
         for pid, fields in v.get('functional_pairs', {}).items():
             lines.append(f"| {pid} | criterio di percorso base | {json.dumps(fields.get('path', fields), ensure_ascii=False)} |")
         for aid, a in v.get('adjacencies', {}).items():
-            lines.append(f"| {aid} | {'accostamento della base' if a is None or any(x['id'] == aid for x in model['adjacencies']) else '-'} | "
+            lines.append(f"| {aid} | {'accostamento della base' if a is None or any(x['id'] == aid for x in ref['adjacencies']) else '-'} | "
                          f"{'non più valido nella variante' if a is None else a['relation']} |")
         for eid, fields in v.get('electrical_points', {}).items():
-            e0 = next(e for e in model['electrical_points'] if e['id'] == eid)
+            e0 = next(e for e in ref['electrical_points'] if e['id'] == eid)
             lines.append(f"| {eid} | x {e0['x']}, y {e0['y']} | x {fields.get('x', e0['x'])}, y {fields.get('y', e0['y'])} "
                          f"(fonte: {fields.get('xy_source', 'invariata')}; Z da rilevare) |")
-        lines += ['', '| Controllo | Base | Variante |', '| --- | --- | --- |']
+        lines += ['', f'| Controllo | {ref_name} | Variante |', '| --- | --- | --- |']
         for k in KEY_CHECKS:
-            if k in res0 or k in res:
-                a = res0.get(k)
+            if k in rref or k in res:
+                a = rref.get(k)
                 b = res.get(k)
                 fa = f"{OUTCOME_LABEL[a['outcome']]}" + (f", {a['mm']:.0f} mm" if a and a['mm'] is not None else '') if a else '-'
                 fb = f"{OUTCOME_LABEL[b['outcome']]}" + (f", {b['mm']:.0f} mm" if b and b['mm'] is not None else '') if b else '-'
                 lines.append(f"| {k} | {fa} | {fb} |")   # verifica completa dei percorsi, non solo le differenze
         conf = [k for k, r in res.items() if r['outcome'] == 'CONFLITTO']
         nv = [k for k in KEY_CHECKS if k in res and res[k]['outcome'] == 'NON_VERIFICABILE']
-        was = [k for k in KEY_CHECKS if res0.get(k, {}).get('outcome') == 'CONFLITTO']
+        was = [k for k in KEY_CHECKS if rref.get(k, {}).get('outcome') == 'CONFLITTO']
         solved = [k for k in was if res.get(k, {}).get('outcome') in ('COMPATIBILE_IPOTESI', 'SUPERATO', 'OK')]
         open_ = [k for k in was if res.get(k, {}).get('outcome') == 'NON_VERIFICABILE']
         lines += ['', f"**Esito complessivo della variante:** conflitti tolti nelle ipotesi: {', '.join(solved) or 'nessuno'}; "
@@ -1097,7 +1115,12 @@ def proposals(model):
                       f"{', '.join(nv) or 'nessuno'}. La variante non è una soluzione chiusa finché restano conflitti o dati mancanti."]
         if v.get('distance_table'):
             lines += [''] + distance_table(m, res)
-        new = [r for r in res.values() if r['outcome'] in ('CONFLITTO', 'AVVISO') and r['id'] not in res0]
+        for alt in v.get('alternatives', []):
+            ma = apply_overrides(model, {**v, 'furniture': {k: {**v['furniture'].get(k, {}), **f} for k, f in alt['furniture'].items()},
+                                         'id': v['id'] + '-alt'})
+            ra = {r['id']: r for r in run_all(ma)}
+            lines += ['', f"**Alternativa vicina ({alt['name']})**, solo le distanze della scrivania:", ''] + distance_table(ma, ra, True)[2:]
+        new = [r for r in res.values() if r['outcome'] in ('CONFLITTO', 'AVVISO') and r['id'] not in rref]
         if new:
             lines += ['', 'Nuove segnalazioni della variante:', ''] + [f"- {r['id']}: {r['text']}" for r in new]
         lines.append('')
@@ -1108,7 +1131,7 @@ def _gap(a, b):
     return box(*a).distance(box(*b))
 
 
-def distance_table(m, res):
+def distance_table(m, res, desk_only=False):
     """Distanze della variante con fonte e ipotesi (dalle stesse geometrie di controlli e tavole)."""
     use = m['use_assumptions']
     F = {f['id']: f for f in m['furniture']}
@@ -1134,13 +1157,34 @@ def distance_table(m, res):
         ('C1 – cassa', f"{_gap(bounds(F['C1']), cassa):.0f}", 'modello', 'non è un accesso operatore finché lato di lavoro e posto cassa non sono definiti'),
         ('Cassa – primo elemento Smart (in pianta)', f"{d_smart:.0f}" if d_smart is not None else '-', 'componenti SMART (telai, cartellini, mensole)',
          'il tratto fino alla parete Smart contiene elementi sporgenti'),
-        ('Scrivania – C4 chiusa', f"{_gap(desk, bounds(F['C4'])):.0f}", 'modello', ''),
-        ('Scrivania – C4 cassetti aperti', f"{_gap(desk, front_band(F['C4'], de)):.0f}", f'corsa {de} mm (ipotesi)',
-         'pari alla soglia di screening 900: nessuna tolleranza, non è verifica di percorso'),
     ]
-    if y_c23 is not None:
+    seats = F['SCRIVANIA'].get('seats')
+    if y_c23 is not None and seats:
+        # V5b: sedute reali per lato (dato mancante), nessuna fascia fissa 750; cassetti ad apertura breve
+        av = y_c23 - desk[3]
+        wall_x = max(v[0] for v in m['envelope']['vertices'])
+        role = {st['side']: st['role'] for st in seats}
+        rows += [
+            ('Catena Y: vetrina–scrivania + piano + scrivania–C2/C3 + cassettiere',
+             f"{desk[1]:.0f} + {desk[3] - desk[1]:.0f} + {av:.0f} + {bounds(F['C2'])[3] - y_c23:.0f} = {bounds(F['C2'])[3]:.0f}",
+             'modello; 2680 = facciata–muro saletta, non netta dalle cassettiere', ''),
+            (f"Scrivania – facciata (lato {role.get('-y', '-')})", f"{desk[1]:.0f}", 'proposta di posizionamento',
+             'non è un minimo ergonomico; serramento non rilevato'),
+            (f"Scrivania – fronti C2/C3 chiusi (lato {role.get('+y', '-')})", f"{av:.0f}", 'modello', 'uso ordinario A'),
+            ('Scrivania – C2/C3 aperti (apertura breve)', f"{av - de:.0f}", f'corsa {de} mm (ipotesi)',
+             'scenario C, sedute e persona escluse; nessun passaggio simultaneo richiesto'),
+            ('Sedia operatore / cliente occupata', 'da rilevare', 'sedia reale da scheda (seat_operator, seat_client)',
+             'la fascia 750 non è usata in V5b'),
+            ('Scrivania – C4 chiusa', f"{_gap(desk, bounds(F['C4'])):.0f}", 'modello', 'percorso ordinario verso saletta'),
+            ('Scrivania – C4 aperta', f"{_gap(desk, front_band(F['C4'], de)):.0f}", f'corsa {de} mm (ipotesi)', 'apertura breve'),
+            ('Scrivania – muro destro', f"{wall_x - desk[2]:.0f}", 'modello', 'per il percorso cavi E06'),
+        ]
+    elif y_c23 is not None:
         av = y_c23 - desk[3]
         rows += [
+            ('Scrivania – C4 chiusa', f"{_gap(desk, bounds(F['C4'])):.0f}", 'modello', ''),
+            ('Scrivania – C4 cassetti aperti', f"{_gap(desk, front_band(F['C4'], de)):.0f}", f'corsa {de} mm (ipotesi)',
+             'pari alla soglia di screening 900: nessuna tolleranza, non è verifica di percorso'),
             ('Scrivania – fronti C2/C3 chiusi', f"{av:.0f}", 'modello', ''),
             ('Scrivania – C2/C3 cassetti aperti', f"{av - de:.0f}", f'corsa {de} mm (ipotesi)', ''),
             (f'Fascia seduta {ch} lato C2/C3 – fronti chiusi', f"{av - ch:.0f}", f'seduta {ch} mm (ipotesi)', ''),
@@ -1150,6 +1194,8 @@ def distance_table(m, res):
              f"{2 * ch + (desk[3] - desk[1]) + de} / {y_c23:.0f}", 'ipotesi di screening',
              f"mancano {2 * ch + (desk[3] - desk[1]) + de - y_c23:.0f} mm: traslare in Y non basta"),
         ]
+    if desk_only:
+        rows = [r for r in rows if r[0].startswith(('Catena', 'Scrivania'))]
     out = ['**Distanze della variante** (mm; quote del modello, non rilievo):', '',
            '| Misura | Valore | Fonte e ipotesi | Nota |', '| --- | --- | --- | --- |']
     out += [f"| {a} | {b} | {c} | {d} |" for a, b, c, d in rows]
@@ -1207,6 +1253,18 @@ def generate(pdf=True):
             emit(code, build_a01(m, code, ['PROPOSTA ' + v['id'] + ' (non approvata)', v.get('short', v['title'])[:40], 'Piano terra'],
                                  ['Variante da approvare: la base resta A01.'] + __import__('textwrap').wrap(v['impact'], 44)[:4]),
                  f"A01_{v['id']}_proposta", f"Proposta {v['id']}: {v['title']}", '1:50')
+            (OUT / f"AB01_{v['id']}_abaco.md").write_text(ab01(m), encoding='utf-8')
+            (OUT / f"E01_{v['id']}_registro_utenze.md").write_text(e01_register(m), encoding='utf-8')
+            manifest.append((f"AB01-{v['id']}", f"Abaco arredi della proposta {v['id']}", '-', [f"AB01_{v['id']}_abaco.md"]))
+            manifest.append((f"E01-{v['id']}", f"Registro utenze della proposta {v['id']}", '-', [f"E01_{v['id']}_registro_utenze.md"]))
+            moved = set(v.get('furniture', {}))
+            par = next((p for p in model['layout_proposals'] if p['id'] == v.get('extends')), {})
+            moved |= set(par.get('furniture', {}))
+            for spec in model['elevations']:
+                hosted = {c['owner'] for c in all_components(m)} & moved
+                if any(face_of(m, spec['host'])['id'] == host_face(m, f) for f in m['furniture'] if f['id'] in hosted):
+                    emit(f"{spec['code']}-{v['id']}", build_elevation(m, spec, f"{spec['code']}-{v['id']}"), f"{elevation_name(spec)}_{v['id']}",
+                         f"{' '.join(spec['title'])} - proposta {v['id']}", '1:20')
             if v.get('electrical_points'):
                 emit(f"E01-{v['id']}", build_e01(m, f"E01-{v['id']}", ['Punti utenza ' + v['id'] + ' (non approvata)',
                                                                       'riallineati alla variante', 'Piano terra']),

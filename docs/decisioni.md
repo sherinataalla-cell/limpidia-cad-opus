@@ -25,6 +25,8 @@ Queste indicazioni correggono l'interpretazione della scala e aprono una nuova p
 - **Requisito scala–cassa 1000–1200 mm:** non revocato. Resta obiettivo di progetto, da verificare sulle protezioni reali e sull'uso del luogo.
 - **Proposta V5 (da approvare):** cassa sulla parte destra della parete di fondo, vicino alla parete Smart; C1 e la sua esposizione sulla parte sinistra; scrivania 1600 × 700 con il lato lungo parallelo a VET_2. Il vincolo «cassa al muro sinistro» descrive la configurazione P03 e non impedisce di studiare V5, ma V5 non è una scelta definitiva.
 
+- **Proposta V5b (23/11/2026, da approvare):** come V5, con la scrivania a x 3950–5550, y 600–1300 (più vicina alla vetrina e verso la ringhiera; alternativa y 550). Cassetti normalmente chiusi e aperti brevemente; nessun passaggio simultaneo richiesto nella fascia dei cassetti aperti. Sedute rappresentate con la sedia reale per ruolo e lato (dato mancante): la fascia fissa da 750 mm è storica, non una prescrizione. Operatore lato vetrina e cliente lato interno sono ipotesi della prova.
+
 ## Preferenze dimensionali da verificare
 
 - Cassettiere sul fronte saletta: due da 120 cm sono ipotesi preferita, NON ordine confermato.

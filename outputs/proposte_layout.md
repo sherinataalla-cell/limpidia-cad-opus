@@ -201,3 +201,70 @@ Proposta dell'utente: cassa sulla parte destra della parete di fondo vicino alla
 | Fascia seduta 750 lato vetrina – fronte y 0 | 0 | ipotesi; serramento non rilevato | nessun margine |
 | Sedute 2 × 750 + piano 700 + cassetti 350 contro vetrina–C2/C3 | 2550 / 2280 | ipotesi di screening | mancano 270 mm: traslare in Y non basta |
 
+## V5b — V5 con scrivania verso vetrina e ringhiera, cassetti ad apertura breve
+
+Scrivania 1600 x 700 parallela a VET_2 spostata di 300 mm verso la ringhiera e di 150 mm verso la vetrina (x 3950-5550, y 600-1300). Lungo Y: 600 vetrina-scrivania + 700 piano + 980 scrivania-fronti C2/C3 + 400 cassettiere = 2680 (2680 e' facciata-muro saletta, non netta dalle cassettiere). Cassetti normalmente chiusi e aperti brevemente; nessun passaggio simultaneo richiesto nella fascia dei cassetti aperti. Sedute da sedia reale (dato mancante), non fascia fissa 750.
+
+**Vincoli toccati:** Studio da approvare sulla base di V5. Operatore lato vetrina e cliente lato interno sono ipotesi della prova. Alternativa vicina: y 550-1250.
+
+| Elemento | Prima | Dopo |
+| --- | --- | --- |
+| SCRIVANIA | x 4250, y 750 | x 3950, y 600, sedute: operatore -y, cliente +y (ipotesi) |
+| FP02 | criterio di percorso base | {"required": true, "criterion": "screening_passage", "scenario": "A uso ordinario: cassetti chiusi, sedute occupate", "note": "V5b: percorso ordinario a cassetti chiusi; nessun transito richiesto con i cassetti aperti"} |
+| FP09 | criterio di percorso base | {"required": false} |
+| FP05 | criterio di percorso base | {"required": true, "criterion": "screening_passage", "scenario": "A uso ordinario: cassetti chiusi", "note": "V5b: percorso ordinario verso saletta lato C4"} |
+| E06 | x 5050, y 1100 | x 4750, y 950 (fonte: V5b: centro della scrivania spostata, solo riferimento di coordinamento; non posizione di allaccio verificata; Z da rilevare) |
+
+| Controllo | V5 | Variante |
+| --- | --- | --- |
+| REQ-REQ_SCALA_CASSA | Non verificabile (dato mancante), 1031 mm | Non verificabile (dato mancante), 1031 mm |
+| ADJ_CASSA_FONDO | Coerente (solo geometria), 0 mm | Coerente (solo geometria), 0 mm |
+| ACC-SCALE | Compatibile nelle ipotesi attuali, 900 mm | Compatibile nelle ipotesi attuali, 900 mm |
+| FP01 | Non verificabile (dato mancante), 1031 mm | Non verificabile (dato mancante), 1031 mm |
+| FP03 | Non verificabile (dato mancante), 350 mm | Non verificabile (dato mancante), 350 mm |
+| FP07 | Non verificabile (dato mancante), 50 mm | Non verificabile (dato mancante), 50 mm |
+| FP08 | Non verificabile (dato mancante), 450 mm | Non verificabile (dato mancante), 450 mm |
+| PROT-C1-RINGHIERA | Non verificabile (dato mancante), 100 mm | Non verificabile (dato mancante), 100 mm |
+| PROT-C1-RINGHIERA_TESTATA | Non verificabile (dato mancante), 100 mm | Non verificabile (dato mancante), 100 mm |
+| FP02 | Conflitto, 830 mm | Non verificabile (dato mancante), 980 mm |
+| FP02-PERCORSO | Conflitto, 480 mm | Non verificabile (dato mancante) |
+| FP09 | Conflitto, 830 mm | Non verificabile (dato mancante), 980 mm |
+| FP05 | Compatibile nelle ipotesi attuali, 1250 mm | Compatibile nelle ipotesi attuali, 1550 mm |
+| FP05-PERCORSO | Non verificabile (dato mancante), 900 mm | Compatibile nelle ipotesi attuali, 1550 mm |
+| FP06 | Non verificabile (dato mancante), 750 mm | Non verificabile (dato mancante), 600 mm |
+| APPR-P_SAL | Conflitto | Conflitto |
+| FP04 | Compatibile nelle ipotesi attuali, 879 mm | Compatibile nelle ipotesi attuali, 879 mm |
+
+**Esito complessivo della variante:** conflitti tolti nelle ipotesi: nessuno; da conflitto a non verificabile (serve il dato): FP02, FP02-PERCORSO, FP09; conflitti che restano o nascono: APPR-P_SAL; non verificabili per dati mancanti: REQ-REQ_SCALA_CASSA, FP01, FP03, FP07, FP08, PROT-C1-RINGHIERA, PROT-C1-RINGHIERA_TESTATA, FP02, FP02-PERCORSO, FP09, FP06. La variante non è una soluzione chiusa finché restano conflitti o dati mancanti.
+
+**Distanze della variante** (mm; quote del modello, non rilievo):
+
+| Misura | Valore | Fonte e ipotesi | Nota |
+| --- | --- | --- | --- |
+| Cassa – foro scala (minima) | 1031 | modello: S1 (scala), ingombro completo cassa (componenti) | DIAGONALE fra spigoli: non è un passaggio né la luce dalle protezioni |
+| Cassa – protezioni scala | da rilevare | RINGHIERA, RINGHIERA_TESTATA: spessore e sporgenze non rilevati | la richiesta 1000–1200 mm non si dichiara soddisfatta |
+| C1 chiusa – foro / testata (asse) | 450 | modello; testata = ipotesi topologica da indicazione utente | distanza dal bordo del foro |
+| C1 cassetti aperti – foro / testata (asse) | 100 | corsa cassetti 350 mm (ipotesi) | criticità d'uso; non comprende spessore della protezione né la persona |
+| C1 – cassa | 350 | modello | non è un accesso operatore finché lato di lavoro e posto cassa non sono definiti |
+| Cassa – primo elemento Smart (in pianta) | 170 | componenti SMART (telai, cartellini, mensole) | il tratto fino alla parete Smart contiene elementi sporgenti |
+| Catena Y: vetrina–scrivania + piano + scrivania–C2/C3 + cassettiere | 600 + 700 + 980 + 400 = 2680 | modello; 2680 = facciata–muro saletta, non netta dalle cassettiere |  |
+| Scrivania – facciata (lato operatore) | 600 | proposta di posizionamento | non è un minimo ergonomico; serramento non rilevato |
+| Scrivania – fronti C2/C3 chiusi (lato cliente) | 980 | modello | uso ordinario A |
+| Scrivania – C2/C3 aperti (apertura breve) | 630 | corsa 350 mm (ipotesi) | scenario C, sedute e persona escluse; nessun passaggio simultaneo richiesto |
+| Sedia operatore / cliente occupata | da rilevare | sedia reale da scheda (seat_operator, seat_client) | la fascia 750 non è usata in V5b |
+| Scrivania – C4 chiusa | 1550 | modello | percorso ordinario verso saletta |
+| Scrivania – C4 aperta | 1200 | corsa 350 mm (ipotesi) | apertura breve |
+| Scrivania – muro destro | 1950 | modello | per il percorso cavi E06 |
+
+**Alternativa vicina (y 550-1250)**, solo le distanze della scrivania:
+
+| Misura | Valore | Fonte e ipotesi | Nota |
+| --- | --- | --- | --- |
+| Catena Y: vetrina–scrivania + piano + scrivania–C2/C3 + cassettiere | 550 + 700 + 1030 + 400 = 2680 | modello; 2680 = facciata–muro saletta, non netta dalle cassettiere |  |
+| Scrivania – facciata (lato operatore) | 550 | proposta di posizionamento | non è un minimo ergonomico; serramento non rilevato |
+| Scrivania – fronti C2/C3 chiusi (lato cliente) | 1030 | modello | uso ordinario A |
+| Scrivania – C2/C3 aperti (apertura breve) | 680 | corsa 350 mm (ipotesi) | scenario C, sedute e persona escluse; nessun passaggio simultaneo richiesto |
+| Scrivania – C4 chiusa | 1550 | modello | percorso ordinario verso saletta |
+| Scrivania – C4 aperta | 1200 | corsa 350 mm (ipotesi) | apertura breve |
+| Scrivania – muro destro | 1950 | modello | per il percorso cavi E06 |
+
