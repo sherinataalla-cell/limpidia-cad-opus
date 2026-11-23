@@ -10,7 +10,8 @@ Sei il coordinatore CAD preliminare del negozio Limpidia, via Andrea Solari 3, M
 4. Il codice genera DXF a unità **millimetri**, modello 1:1. Scala 1:50 o 1:20 solo in impaginazione/stampa.
 5. Non inventare misure di porte, ringhiere, prese, quote Z, sezioni cavi, potenze, fissaggi o materiali strutturali.
 6. I simboli elettrici indicano solo utenze/predisposizioni. Il progetto impiantistico e la conformità sono del tecnico competente.
-7. Prima di qualsiasi revisione esegui `pytest -q` e `python -m src.generate`; elenca variazioni, assunzioni e criticità.
+7. Lavora sempre su un branch e apri una pull request: mai push diretti su `main`, mai merge senza l'approvazione di Sherin.
+8. Prima di qualsiasi revisione esegui `pytest -q` e `python -m src.generate`; elenca variazioni, assunzioni e criticità.
 
 ## Consegne richieste
 

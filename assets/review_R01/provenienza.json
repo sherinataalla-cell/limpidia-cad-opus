@@ -1,0 +1,51 @@
+{
+  "audit_id": "REVIEW-R01",
+  "sources": [
+    {
+      "file": "planimetria_preliminare_2026-11-13.pdf",
+      "sha256": "82909e59ea33430c180624b66faeb86573c8146f7bf2896947460a0ab5215934",
+      "size_bytes": 28755,
+      "source_original_filename": "Planimetria_Via_Solari_3.pdf",
+      "source_original_sha256": "82909e59ea33430c180624b66faeb86573c8146f7bf2896947460a0ab5215934",
+      "source_pages": [
+        1
+      ],
+      "method": "Unchanged original PDF",
+      "measurement_status": "preliminary_not_surveyed"
+    },
+    {
+      "file": "studio_cassa_smart_p12.png",
+      "sha256": "11d5cdba8cab53b08cac5520353e2587c8db856c02f2dcea3e38b2a06b30fc1f",
+      "size_bytes": 160911,
+      "source_original_filename": "Limpidia_Zona_Cassa_10_Versioni.pdf",
+      "source_original_sha256": "e274591b9710d9a7c7eae99a274ca38a9f581dfcea32c4ce510e41fec9745a08",
+      "source_pages": [
+        12
+      ],
+      "method": "Full page rasterization at144dpi; no retouching",
+      "measurement_status": "preliminary_not_surveyed"
+    },
+    {
+      "file": "quote_modello_precedente_p30.png",
+      "sha256": "4c6fc697d35aaccdb332ea75e67020acd36b9a39882578dceac197c72c15409a",
+      "size_bytes": 220087,
+      "source_original_filename": "Limpidia_Solari_5_layout_10_allestimenti.pdf",
+      "source_original_sha256": "62fe1877506b85bc454ff562c99496b61a11588a3738164aa317dbf29c964c96",
+      "source_pages": [
+        30
+      ],
+      "method": "Full page rasterization at144dpi; no retouching",
+      "measurement_status": "preliminary_not_surveyed"
+    },
+    {
+      "file": "render_approvato_v6.jpeg",
+      "sha256": "22aa74371ff373e2126d416df2a31972d994a5a03896c3a81d448c03f139e59b",
+      "size_bytes": 634172,
+      "source_original_filename": "59103A4A-60C1-4D51-9C96-6ADE850C2086.jpeg",
+      "source_original_sha256": "22aa74371ff373e2126d416df2a31972d994a5a03896c3a81d448c03f139e59b",
+      "source_pages": null,
+      "method": "Unchanged original approved image",
+      "measurement_status": "aesthetic_reference_only"
+    }
+  ]
+}
