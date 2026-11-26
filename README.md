@@ -1,5 +1,22 @@
 # Limpidia — CAD tecnico per Claude Opus
 
+## Rilievo in negozio del 26 novembre 2026
+
+[Pianta con gli spazi liberi e i cassetti aperti](outputs/rilievo_V5b/spazi_liberi.pdf) · [Pianta CAD quotata](outputs/rilievo_V5b/A01_arredi.pdf) · [DXF modificabile](outputs/rilievo_V5b/A01_arredi.dxf) · [Controlli geometrici](outputs/rilievo_V5b/criticita.md)
+
+| Pianta dall’alto | Ingresso verso la cassa |
+| --- | --- |
+| ![Pianta arredata](outputs/rilievo_V5b/render/pianta_dall_alto.jpg) | ![Ingresso e scala](outputs/rilievo_V5b/render/ingresso_verso_cassa.jpg) |
+| **Consulenza verso la saletta** | **Parete Smart** |
+| ![Zona consulenza](outputs/rilievo_V5b/render/consulenza_verso_saletta.jpg) | ![Esposizione Smart](outputs/rilievo_V5b/render/parete_smart.jpg) |
+
+Il modello P05 applica alla V5b le [misure prese in negozio](config/rilievo_2026-11-26.json), espresse in millimetri. La cassa e C1 seguono il fondo. C4 segue il muro destro. La scrivania conserva la posizione V5b. Il tramezzo frontale della saletta resta a 268 cm dalla facciata come ipotesi progettuale. La larghezza del vano scala è ancora ipotizzata a 85 cm. La misura di 90 cm indica il modulo della porta in vetro. La luce netta del serramento resta da rilevare.
+
+La chiusura ortogonale privilegia la facciata di 749 cm, i lati di 494 e 445 cm e il primo tratto di fondo di 547 cm. Per chiudere il disegno risultano un tratto sul fondo di 202 cm e un salto di 49 cm. Le corrispondenti letture in negozio sono 200 e 46 cm.
+
+Per rigenerare la tavola con le librerie CAD installate, eseguire `python -m src.generate --rilievo`. Le quattro viste usano scena, finiture, camere e componenti della V5b con il modello rilevato. Con Blender Python e le dipendenze render installate, eseguire `python -m src.render_rilievo`. Gli elaborati correnti sono in `outputs/rilievo_V5b/`. Le sezioni successive documentano le revisioni precedenti.
+
+
 Repository di avvio per trasformare il concept approvato del negozio di via Andrea Solari 3 (Milano) in tavole **DXF editabili** e successivi PDF quotati per geometra, elettricista e falegname.
 
 > **STATO: PRELIMINARE / NON ESECUTIVO.** Le quote dell'involucro e alcune posizioni sono ipotesi. Nessun disegno generato da questo repository autorizza taglio, perforazioni o lavori prima del rilievo, della verifica dei fornitori e della validazione dei tecnici incaricati.

@@ -163,16 +163,17 @@ class Sheet:
             t(txt, x + 11, y, 2.2)
             y -= 4.4
         y -= 2
+        source = "V5b + rilievo 26/11/2026" if model.get("survey") else "config/geometry.json"
         for ln in ['* quota non verificata: ipotesi, catalogo o da definire.',
                    'Quote derivate: stato del dato meno affidabile.',
-                   f"Fonte: config/geometry.json, rev. {model['revision']}. Unità mm.",
+                   f"Fonte: {source}, rev. {model['revision']}. Unità mm.",
                    'Origine: angolo vetrina sinistro; vetrina in basso.'] + list(notes):
             t(ln, x, y, 2.0)
             y -= 3.8
         yb = 58
         lay.add_line((col, yb), (W - 10, yb), dxfattribs={'layer': 'SHEET'})
         yy = yb - 6.5
-        for k, v in [('Scala', f'1:{self.S} su A3 al 100%'), ('Revisione', model['revision']), ('Data', TODAY),
+        for k, v in [('Scala', f'1:{self.S} su A3 al 100%'), ('Revisione', model['revision']), ('Data', model.get('revision_date', TODAY)),
                      ('Stato', 'PRELIMINARE'), ('Validazione', 'da tecnico incaricato')]:
             t(k, x, yy, 2.3)
             t(v, x + 27, yy, 2.6)
@@ -458,7 +459,8 @@ def build_a01(model, code='A01', title=None, notes=None):
 
     def table(lay, t):
         y = 112
-        t("REQUISITI, INGOMBRI D'USO E VERIFICHE (dettaglio in outputs/criticita.md)", 15, y, 2.6)
+        report_path = "outputs/rilievo_V5b/criticita.md" if model.get("survey") else "outputs/criticita.md"
+        t(f"REQUISITI, INGOMBRI D'USO E VERIFICHE (dettaglio in {report_path})", 15, y, 2.6)
         y -= 5
         for r in res:
             import textwrap
@@ -1315,4 +1317,8 @@ if __name__ == '__main__':
     if os.environ.get('PYTHONHASHSEED') != '0':
         env = {**os.environ, 'PYTHONHASHSEED': '0'}
         os.execvpe(sys.executable, [sys.executable, '-m', 'src.generate', *sys.argv[1:]], env)
-    print(generate())
+    if '--rilievo' in sys.argv[1:]:
+        from .rilievo import generate as generate_survey
+        print(generate_survey())
+    else:
+        print(generate())
