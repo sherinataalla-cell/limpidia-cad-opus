@@ -8,6 +8,7 @@ on:
       - 'src/**'
       - 'config/**'
       - 'tests/**'
+      - 'impianto/**'
       - 'requirements.txt'
       - '.github/workflows/build-cad.yml'
 permissions:
