@@ -1,0 +1,26 @@
+{
+  "revision": "P05-V5b",
+  "blender": "4.3.2",
+  "resolution": [
+    1600,
+    1000
+  ],
+  "samples": 64,
+  "denoising": false,
+  "inputs": {
+    "config/geometry.json": "a8fd1bf08be4a2a40f772b894230b80abdc0a79cc520a0ea9a5638ca38496b1a",
+    "config/rilievo_2026-11-26.json": "13012bcd39d591f291e9b8dd39e50365fad1583f36ef0d5f6a595d72964c3675",
+    "config/render.json": "c02811680f01eaf7c608721fdd4c23f930f3100c3f97f5aa227bf81d6202bb86",
+    "src/model.py": "e88c956e2b3aaab3710560455ddf65333a32871c6707037e5b532ab53ed4f0ea",
+    "src/components.py": "94a7b3a6d5644a2dc9c511874bc3bec1531eceb013e0c8ca428a228e203399c2",
+    "src/render.py": "9cfbd552dfeeeba71fb41df9bff090eacdd0371a7d340a4e00d98b3a15c48bfc",
+    "src/rilievo.py": "6af47303695d18b20eb6414f39621fe6e8d1f764fbd71616e92ac3cd3b458bb0",
+    "src/render_rilievo.py": "1ebd675a0054fe1f9e1c9f08c200dfd8c743bf64c3ff0a066556a164cac668e7"
+  },
+  "images": {
+    "ingresso_verso_cassa.jpg": "00ccc8b94546b1c5916468bc308ee490ba38651a8aed9375accff522c6234cee",
+    "consulenza_verso_saletta.jpg": "f83a691e5a39d84eafda321dc3b81542a83f7c593ac6589e36d1e0d694283da8",
+    "parete_smart.jpg": "d7b7a669556cb5f65955389cbde5c25e2d550a5572ddee78ee5e8e78111ba95e",
+    "pianta_dall_alto.jpg": "02322737ee53ba0fdebd20d28fb01d843c680305cb7fa492f65d333d07122ada"
+  }
+}

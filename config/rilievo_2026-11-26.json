@@ -1,0 +1,22 @@
+{
+  "date": "2026-11-26",
+  "revision": "P05-V5b",
+  "source": "Rilievo in negozio di Shery, schizzo e chiarimenti del 26 novembre 2026.",
+  "units": "mm",
+  "facade": [
+    ["FAC_PIL_1", "pier", 850],
+    ["VET_FISSO_ING", "glazing", 330],
+    ["P_ING", "door", 900],
+    ["VET_1", "glazing", 1240],
+    ["FAC_PIL_2", "pier", 900],
+    ["VET_2", "glazing", 2500],
+    ["FAC_PIL_3", "pier", 770]
+  ],
+  "left": 4940,
+  "right": 4450,
+  "rear_left": 5470,
+  "rear_right": 2000,
+  "step": 460,
+  "stair_from_facade": 1500,
+  "stair_length": 2320
+}
